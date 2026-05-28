@@ -5,7 +5,8 @@ import { NavLink } from "react-router-dom";
 const navItems = [
   { label: "Accueil", to: "/" },
   { label: "Mariages", to: "/mariages" },
-  { label: "Événements", to: "/evenements" },
+  { label: "Événements privés", to: "/evenements-prives" },
+  { label: "Événements pro", to: "/evenements-pro" },
   { label: "Prestations", to: "/prestations" },
   { label: "Location", to: "/location" },
   { label: "Galerie", to: "/galerie" },
@@ -22,7 +23,7 @@ export function Navbar() {
           FREDMUSIC
         </NavLink>
 
-        <div className="hidden items-center gap-7 lg:flex">
+        <div className="hidden items-center gap-5 lg:flex">
           {navItems.map((item) => (
             <NavLink
               key={item.to}

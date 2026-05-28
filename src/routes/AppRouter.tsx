@@ -3,13 +3,13 @@ import { MainLayout } from "../components/layout/MainLayout";
 import { AdminPage } from "../pages/AdminPage";
 import { ContactPage } from "../pages/ContactPage";
 import { EquipmentDetailPage } from "../pages/EquipmentDetailPage";
-import { EventDetailPage } from "../pages/EventDetailPage";
 import { EventsPage } from "../pages/EventsPage";
 import { GalleryPage } from "../pages/GalleryPage";
 import { HomePage } from "../pages/HomePage";
 import { LegalPage } from "../pages/LegalPage";
 import { MusicRequestPage } from "../pages/MusicRequestPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { ProfessionalEventsPage } from "../pages/ProfessionalEventsPage";
 import { RentalPage } from "../pages/RentalPage";
 import { ServiceDetailPage } from "../pages/ServiceDetailPage";
 import { ServicesPage } from "../pages/ServicesPage";
@@ -22,7 +22,8 @@ export function AppRouter() {
         <Route index element={<HomePage />} />
         <Route path="mariages" element={<WeddingPage />} />
         <Route path="evenements" element={<EventsPage />} />
-        <Route path="evenements/:slug" element={<EventDetailPage />} />
+        <Route path="evenements-prives" element={<EventsPage />} />
+        <Route path="evenements-pro" element={<ProfessionalEventsPage />} />
         <Route path="prestations" element={<ServicesPage />} />
         <Route path="prestations/:slug" element={<ServiceDetailPage />} />
         <Route path="location" element={<RentalPage />} />
