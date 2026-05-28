@@ -1,4 +1,4 @@
-import { CalendarCheck, Headphones, ListMusic, Music2, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { Headphones, ListMusic, Music2, Sparkles, Users } from "lucide-react";
 import { ServiceCard } from "../components/cards/ServiceCard";
 import { TestimonialCard } from "../components/cards/TestimonialCard";
 import { CTASection } from "../components/sections/CTASection";
@@ -8,13 +8,6 @@ import { Badge } from "../components/ui/Badge";
 import { ButtonLink } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import { useAppStore } from "../store/useAppStore";
-
-const proofItems = [
-  { label: "+10 ans", detail: "d'expérience", icon: ShieldCheck },
-  { label: "+300", detail: "événements", icon: CalendarCheck },
-  { label: "Matériel", detail: "haut de gamme", icon: Headphones },
-  { label: "Accompagnement", detail: "sur mesure", icon: Users },
-];
 
 const weddingHighlights = [
   { title: "Ouverture de bal", text: "Un moment magique qui vous ressemble.", icon: Music2 },
@@ -44,27 +37,14 @@ export function HomePage() {
         eyebrow="DJ mariage & événementiel premium"
         title="L'expérience DJ premium pour vos événements"
         description="Mariages, soirées privées, entreprises : une ambiance unique, une sonorisation d'exception et une mise en lumière sur mesure."
-        image="/images/conception/photo2.png"
-        imageAlt="Salle événementielle premium avec mise en lumière bleue et dorée"
-        imageObjectPosition="70% 55%"
+        image="/images/conception/image3.png"
+        imageAlt="DJ Fredmusic face à une salle événementielle premium avec régie et effets lumineux"
+        imageObjectPosition="center 68%"
         primaryLabel="Réserver ma date"
         primaryTo="/contact"
         secondaryLabel="Découvrir nos prestations"
         secondaryTo="/prestations"
-      >
-        <div className="grid max-w-4xl gap-0 border-y border-white/10 sm:grid-cols-2 lg:grid-cols-4">
-          {proofItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div key={item.label} className="border-white/10 px-5 py-4 sm:border-r">
-                <Icon className="h-5 w-5 text-gold-300" aria-hidden="true" />
-                <p className="mt-3 text-sm font-semibold text-ivory">{item.label}</p>
-                <p className="text-xs uppercase text-ivory/58">{item.detail}</p>
-              </div>
-            );
-          })}
-        </div>
-      </HeroSection>
+      />
 
       <section className="bg-night-900 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
