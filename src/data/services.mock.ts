@@ -9,7 +9,7 @@ export const services: Service[] = [
     shortDescription: "Mix sur mesure, transitions fluides et animation élégante pour faire vivre chaque moment.",
     longDescription:
       "Fredmusic construit une progression musicale adaptée à votre événement, de l'accueil des invités jusqu'au dernier titre de la soirée. L'animation reste chic, maîtrisée et centrée sur l'expérience de vos convives.",
-    image: "/images/services/dj-animation.webp",
+    image: "/images/conception/dj-console-gold.png",
     icon: "Headphones",
     benefits: ["Programmation personnalisée", "Animation micro maîtrisée", "Transitions fluides", "Lecture de piste en temps réel"],
     recommendedFor: ["Mariages", "Soirées privées", "Anniversaires", "Événements professionnels"],
@@ -22,7 +22,7 @@ export const services: Service[] = [
     shortDescription: "Création d'ambiances lumineuses raffinées, adaptées au lieu et à chaque temps fort.",
     longDescription:
       "La lumière accompagne la scénographie de votre événement avec des ambiances sobres, chaleureuses ou spectaculaires selon les moments. Chaque installation est pensée pour valoriser le lieu sans le dénaturer.",
-    image: "/images/services/mise-en-lumiere.webp",
+    image: "/images/conception/event-lighting-room.png",
     icon: "Lightbulb",
     benefits: ["Éclairage architectural", "Piste de danse dynamique", "Ambiance dîner chaleureuse", "Mise en valeur du lieu"],
     recommendedFor: ["Mariages", "Entreprises", "Soirées privées", "Salles de réception"],
@@ -35,7 +35,7 @@ export const services: Service[] = [
     shortDescription: "Systèmes professionnels adaptés à la jauge, au lieu et aux prises de parole.",
     longDescription:
       "La sonorisation est dimensionnée selon la capacité de la salle, la configuration du public et le type d'événement. L'objectif : une diffusion claire, fiable et confortable.",
-    image: "/images/services/sonorisation.webp",
+    image: "/images/conception/event-lighting-room.png",
     icon: "Volume2",
     benefits: ["Son clair et équilibré", "Installation discrète", "Micros pour discours", "Adaptation à la capacité de salle"],
     recommendedFor: ["Mariages", "Conférences", "Associations", "Événements professionnels"],
@@ -48,7 +48,7 @@ export const services: Service[] = [
     shortDescription: "Fumée lourde, étincelles froides, CO2 et effets visuels pour marquer les temps forts.",
     longDescription:
       "Les effets premium subliment les moments clés : ouverture de bal, entrée des mariés, lancement de soirée ou temps fort d'entreprise. Ils sont proposés avec un cadre technique sécurisé.",
-    image: "/images/services/effets-speciaux.webp",
+    image: "/images/conception/wedding-sparkles.png",
     icon: "Sparkles",
     benefits: ["Ouverture de bal immersive", "Effets encadrés", "Rendu photo et vidéo premium", "Coordination avec le programme"],
     recommendedFor: ["Mariages", "Soirées privées", "Lancements", "Événements premium"],
@@ -61,7 +61,7 @@ export const services: Service[] = [
     shortDescription: "Matériel DJ, son, lumière et micro disponible en location seule ou avec accompagnement.",
     longDescription:
       "Fredmusic propose du matériel fiable pour les événements qui nécessitent une solution technique propre, avec possibilité d'installation et d'accompagnement par un technicien.",
-    image: "/images/services/location-materiel.webp",
+    image: "/images/conception/dj-console-gold.png",
     icon: "Cable",
     benefits: ["Matériel professionnel", "Installation possible", "Technicien disponible", "Conseil selon votre lieu"],
     recommendedFor: ["Associations", "Entreprises", "Mariages", "Soirées privées"],
@@ -74,7 +74,7 @@ export const services: Service[] = [
     shortDescription: "Conseil musical, lumineux et scénographique pour créer une atmosphère cohérente.",
     longDescription:
       "Au-delà de la technique, Fredmusic accompagne la construction d'une ambiance globale : ton musical, intensité lumineuse, moments de respiration et montée en énergie.",
-    image: "/images/services/creation-ambiance.webp",
+    image: "/images/conception/event-lighting-room.png",
     icon: "Gem",
     benefits: ["Direction artistique", "Cohérence du parcours invité", "Moments clés valorisés", "Expérience haut de gamme"],
     recommendedFor: ["Mariages", "Cocktails", "Dîners", "Événements de marque"],
@@ -87,7 +87,7 @@ export const services: Service[] = [
     shortDescription: "Anniversaires, soirées et lancements privés avec une prestation clé en main.",
     longDescription:
       "Chaque événement privé est préparé avec une approche sur mesure : public, lieu, contraintes horaires, style musical et niveau d'animation attendu.",
-    image: "/images/services/evenements-prives.webp",
+    image: "/images/conception/event-lighting-room.png",
     icon: "Users",
     benefits: ["Prestation clé en main", "Playlist adaptée", "Gestion des temps forts", "Ambiance élégante"],
     recommendedFor: ["Anniversaires", "Soirées privées", "Lancements", "Fêtes familiales"],
@@ -100,7 +100,7 @@ export const services: Service[] = [
     shortDescription: "Accompagnement des mariés du premier échange jusqu'au jour J.",
     longDescription:
       "La prestation mariage couvre la cérémonie, le vin d'honneur, le dîner, l'ouverture de bal et la soirée dansante avec une préparation personnalisée.",
-    image: "/images/services/mariages.webp",
+    image: "/images/conception/wedding-soft-room.png",
     icon: "Heart",
     benefits: ["Préparation personnalisée", "Accompagnement jour J", "Ambiance romantique", "Ouverture de bal soignée"],
     recommendedFor: ["Cérémonies", "Vins d'honneur", "Repas", "Soirées dansantes"],
@@ -113,7 +113,7 @@ export const services: Service[] = [
     shortDescription: "Solutions DJ, son et lumière pour soirées d'entreprise, séminaires et événements de marque.",
     longDescription:
       "Fredmusic accompagne les événements professionnels avec une attention particulière à l'image, aux prises de parole, au timing et à la fiabilité technique.",
-    image: "/images/services/entreprises.webp",
+    image: "/images/conception/event-lighting-room.png",
     icon: "Briefcase",
     benefits: ["Image professionnelle", "Gestion micro", "Timing événementiel", "Ambiance maîtrisée"],
     recommendedFor: ["Séminaires", "Soirées d'entreprise", "Inaugurations", "Événements de marque"],
@@ -126,7 +126,7 @@ export const services: Service[] = [
     shortDescription: "Une soirée fluide, festive et personnalisée pour célébrer un moment important.",
     longDescription:
       "La prestation anniversaire combine animation, playlist personnalisée, sonorisation et lumière pour créer une soirée conviviale et mémorable.",
-    image: "/images/services/anniversaires.webp",
+    image: "/images/conception/wedding-sparkles.png",
     icon: "Gift",
     benefits: ["Playlist personnalisée", "Ambiance festive", "Animation adaptée", "Installation complète"],
     recommendedFor: ["Anniversaires adultes", "Soirées familiales", "Surprises", "Fêtes privées"],
