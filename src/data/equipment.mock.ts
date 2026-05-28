@@ -11,7 +11,7 @@ export const equipment: EquipmentItem[] = [
     longDescription:
       "La Pioneer DJM A9 est une table de mixage professionnelle conçue pour les prestations DJ haut de gamme. Elle permet une régie fiable, confortable et compatible avec des configurations événementielles exigeantes.",
     image: "/images/conception/logo-du-site.png",
-    marketingImage: "/images/conception/page-site-principal.png",
+    marketingImage: "/images/conception/dj-console-gold.png",
     keyFeatures: ["4 voies professionnelles", "Bluetooth intégré", "Effets intégrés", "Qualité audio haute définition"],
     recommendedFor: ["Régie DJ", "Mariages premium", "Soirées privées", "Événements professionnels"],
     availableForRental: true,
@@ -29,7 +29,7 @@ export const equipment: EquipmentItem[] = [
     longDescription:
       "Le Pioneer CDJ 3000 est un lecteur de référence pour les régies DJ professionnelles. Il assure une lecture stable et une expérience de mix précise pour les événements premium.",
     image: "/images/conception/logo-du-site.png",
-    marketingImage: "/images/conception/landing-pages.png",
+    marketingImage: "/images/conception/dj-console-gold.png",
     keyFeatures: ["Lecture multi-format", "Écran tactile", "Performance stable", "Compatibilité régie Pioneer"],
     recommendedFor: ["DJ sets", "Soirées privées", "Événements entreprise", "Mariages"],
     availableForRental: true,
@@ -47,7 +47,7 @@ export const equipment: EquipmentItem[] = [
     longDescription:
       "L'Electro-Voice EKX 15 offre une diffusion claire et robuste pour les événements nécessitant un système professionnel adapté aux jauges importantes.",
     image: "/images/conception/logo-du-site.png",
-    marketingImage: "/images/conception/page-site-principal.png",
+    marketingImage: "/images/conception/event-lighting-room.png",
     keyFeatures: ["Puissance adaptée aux grandes salles", "Diffusion claire", "Système fiable", "Installation événementielle"],
     recommendedFor: ["Mariages", "Associations", "Entreprises", "Soirées jusqu'à 350 personnes"],
     availableForRental: true,
@@ -66,7 +66,7 @@ export const equipment: EquipmentItem[] = [
     longDescription:
       "La Mackie Thump 15 BST convient aux configurations mobiles, aux petites salles et aux besoins de renfort sonore propres et rapides à installer.",
     image: "/images/conception/logo-du-site.png",
-    marketingImage: "/images/conception/landing-pages.png",
+    marketingImage: "/images/conception/event-lighting-room.png",
     keyFeatures: ["Enceinte amplifiée", "Contrôle Bluetooth", "Installation rapide", "Usage polyvalent"],
     recommendedFor: ["Petites soirées", "Discours", "Cocktails", "Renfort sonore"],
     availableForRental: true,
@@ -84,7 +84,7 @@ export const equipment: EquipmentItem[] = [
     longDescription:
       "Le Shure SLX-D assure une captation vocale claire et fiable, idéale pour les prises de parole importantes où la qualité et la stabilité sont essentielles.",
     image: "/images/conception/logo-du-site.png",
-    marketingImage: "/images/conception/wedding-reference.png",
+    marketingImage: "/images/conception/qr-music-request.png",
     keyFeatures: ["Transmission HF numérique", "Capsule Beta 58", "Voix claire", "Fiabilité professionnelle"],
     recommendedFor: ["Cérémonies", "Discours", "Animation", "Conférences"],
     availableForRental: true,
@@ -102,7 +102,7 @@ export const equipment: EquipmentItem[] = [
     longDescription:
       "La Soundcraft UI 16 permet une gestion flexible des sources audio pour les événements nécessitant plusieurs micros, interventions ou configurations live.",
     image: "/images/conception/logo-du-site.png",
-    marketingImage: "/images/conception/page-site-principal.png",
+    marketingImage: "/images/conception/dj-console-gold.png",
     keyFeatures: ["16 pistes", "Contrôle à distance", "Gestion multi-micros", "Adaptée aux prestations live"],
     recommendedFor: ["Discours multiples", "Cérémonies", "Événements entreprise", "Régie son"],
     availableForRental: true,

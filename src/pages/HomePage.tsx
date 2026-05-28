@@ -1,5 +1,4 @@
-import { CalendarCheck, Headphones, Music2, ShieldCheck, Sparkles, Users } from "lucide-react";
-import { EquipmentCard } from "../components/cards/EquipmentCard";
+import { CalendarCheck, Headphones, ListMusic, Music2, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { ServiceCard } from "../components/cards/ServiceCard";
 import { TestimonialCard } from "../components/cards/TestimonialCard";
 import { CTASection } from "../components/sections/CTASection";
@@ -18,27 +17,25 @@ const proofItems = [
 ];
 
 const weddingHighlights = [
-  { title: "Ouverture de bal", text: "Un moment préparé avec soin, au rythme de votre histoire.", icon: Music2 },
-  { title: "Scénographie lumineuse", text: "Des ambiances chaudes et élégantes pour sublimer le lieu.", icon: Sparkles },
-  { title: "Effets premium", text: "Fumée lourde, étincelles et mise en scène des temps forts.", icon: Sparkles },
-  { title: "Suivi jour J", text: "Une préparation claire pour une soirée fluide et rassurante.", icon: ShieldCheck },
+  { title: "Ouverture de bal", text: "Un moment magique qui vous ressemble.", icon: Music2 },
+  { title: "Scénographie lumineuse", text: "Ambiances élégantes et harmonieuses.", icon: Sparkles },
+  { title: "Effets & show haut de gamme", text: "Fumée lourde, étincelles et mise en scène.", icon: Sparkles },
+  { title: "Accompagnement sur mesure", text: "Écoute, conseils et suivi jusqu'au jour J.", icon: Headphones },
 ];
 
-const qrCells = Array.from({ length: 81 }, (_, index) => {
-  const row = Math.floor(index / 9);
-  const column = index % 9;
-  return row < 2 || column < 2 || (row > 5 && column > 5) || [12, 22, 28, 36, 44, 52, 60].includes(index);
-});
+const qrFeatures = [
+  { title: "Demandes en direct", text: "Vos invités suggèrent leurs titres facilement depuis leur téléphone.", icon: Music2 },
+  { title: "Playlist intelligente", text: "Les demandes sont ajoutées à une playlist et triées en live.", icon: ListMusic },
+  { title: "Ambiance fluide", text: "Zéro interruption, 100% danse et satisfaction garantie.", icon: Users },
+];
 
 export function HomePage() {
   const services = useAppStore((state) => state.services);
-  const equipment = useAppStore((state) => state.equipment);
   const galleryItems = useAppStore((state) => state.galleryItems);
   const testimonials = useAppStore((state) => state.testimonials);
 
   const featuredServices = services.slice(0, 4);
-  const featuredEquipment = equipment.slice(0, 3);
-  const featuredGallery = galleryItems.slice(0, 4);
+  const featuredGallery = galleryItems.slice(0, 3);
   const featuredTestimonial = testimonials[0];
 
   return (
@@ -46,21 +43,21 @@ export function HomePage() {
       <HeroSection
         eyebrow="DJ mariage & événementiel premium"
         title="L'expérience DJ premium pour vos événements"
-        description="Mariages, soirées privées et événements professionnels : une ambiance musicale élégante, une sonorisation fiable et une mise en lumière sur mesure."
-        image="/images/conception/page-site-principal.png"
-        imageAlt="Maquette sombre Fredmusic avec DJ, piste de danse et lumières premium"
+        description="Mariages, soirées privées, entreprises : une ambiance unique, une sonorisation d'exception et une mise en lumière sur mesure."
+        image="/images/conception/event-lighting-room.png"
+        imageAlt="Salle événementielle premium avec mise en lumière bleue et dorée"
         primaryLabel="Réserver ma date"
         primaryTo="/contact"
         secondaryLabel="Découvrir nos prestations"
         secondaryTo="/prestations"
       >
-        <div className="grid max-w-4xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid max-w-4xl gap-0 border-y border-white/10 sm:grid-cols-2 lg:grid-cols-4">
           {proofItems.map((item) => {
             const Icon = item.icon;
             return (
-              <div key={item.label} className="border border-white/12 bg-night-950/62 p-4 backdrop-blur">
+              <div key={item.label} className="border-white/10 px-5 py-4 sm:border-r">
                 <Icon className="h-5 w-5 text-gold-300" aria-hidden="true" />
-                <p className="mt-3 text-lg font-semibold text-ivory">{item.label}</p>
+                <p className="mt-3 text-sm font-semibold text-ivory">{item.label}</p>
                 <p className="text-xs uppercase text-ivory/58">{item.detail}</p>
               </div>
             );
@@ -68,15 +65,14 @@ export function HomePage() {
         </div>
       </HeroSection>
 
-      <section className="bg-night-900 px-4 py-18 sm:px-6 lg:px-8">
+      <section className="bg-night-900 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Nos prestations"
             title="Un service complet pour un événement inoubliable"
-            description="Fredmusic réunit animation DJ, lumière, sonorisation, effets premium et accompagnement technique dans une expérience cohérente."
             align="center"
           />
-          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {featuredServices.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
@@ -85,23 +81,24 @@ export function HomePage() {
       </section>
 
       <section className="bg-warm-100 text-night-950">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-18 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.48fr_0.52fr] lg:px-8">
           <div className="flex flex-col justify-center">
-            <Badge variant="wedding">Mariages</Badge>
-            <h2 className="mt-5 max-w-xl font-wedding text-4xl leading-tight sm:text-5xl">
+            <p className="text-xs font-semibold uppercase text-gold-400">Mariages</p>
+            <h2 className="mt-4 max-w-lg font-wedding text-4xl leading-tight sm:text-5xl">
               Votre plus beau jour, notre plus belle mission
             </h2>
-            <p className="mt-5 max-w-xl leading-7 text-night-800">
-              Chaque mariage est unique. Fredmusic prépare une ambiance sur mesure, du vin d'honneur à la soirée dansante, avec élégance et attention.
+            <div className="mt-4 h-px w-12 bg-gold-400" />
+            <p className="mt-5 max-w-lg text-sm leading-6 text-night-800">
+              Chaque mariage est unique. Nous créons une ambiance sur mesure qui vous ressemble et accompagnons chaque moment clé avec élégance et émotion.
             </p>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            <div className="mt-8 grid gap-5 sm:grid-cols-4">
               {weddingHighlights.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <article key={item.title} className="border-l border-warm-400 pl-4">
-                    <Icon className="h-6 w-6 text-gold-400" aria-hidden="true" />
-                    <h3 className="mt-3 font-semibold">{item.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-night-800">{item.text}</p>
+                  <article key={item.title} className="text-center">
+                    <Icon className="mx-auto h-7 w-7 text-gold-400" aria-hidden="true" />
+                    <h3 className="mt-3 text-xs font-semibold">{item.title}</h3>
+                    <p className="mt-2 text-xs leading-5 text-night-800">{item.text}</p>
                   </article>
                 );
               })}
@@ -110,9 +107,9 @@ export function HomePage() {
               Découvrir l'offre mariage
             </ButtonLink>
           </div>
-          <div className="min-h-96 overflow-hidden border border-warm-300 bg-white">
+          <div className="min-h-[420px] overflow-hidden bg-white lg:-mr-8">
             <img
-              src="/images/conception/wedding-reference.png"
+              src="/images/conception/wedding-soft-room.png"
               alt="Ambiance mariage premium lumineuse avec décor romantique"
               className="h-full w-full object-cover"
               loading="lazy"
@@ -121,116 +118,106 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="bg-night-950 px-4 py-18 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <Card className="grid gap-6 p-6 sm:grid-cols-[180px_1fr] sm:items-center">
-            <div className="mx-auto grid h-44 w-44 grid-cols-9 gap-1 border border-white/12 bg-ivory p-4" aria-label="QR code mocké">
-              {qrCells.map((isActive, index) => (
-                <span key={index} className={isActive ? "bg-night-950" : "bg-transparent"} />
-              ))}
+      <section className="bg-night-950 px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.44fr_0.56fr] lg:items-center">
+          <div className="min-h-[360px] overflow-hidden border border-white/10 bg-night-900">
+            <img
+              src="/images/conception/qr-music-request.png"
+              alt="Carte QR code et téléphone Fredmusic pour demander une musique"
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <div>
+            <Badge>Technologie & interaction</Badge>
+            <h2 className="mt-4 max-w-xl font-display text-4xl text-ivory">Demandez vos titres en un scan</h2>
+            <p className="mt-4 max-w-2xl leading-7 text-ivory/70">
+              Vos invités scannent le QR code et proposent leurs chansons en quelques secondes, sans interrompre la fête.
+            </p>
+            <div className="mt-8 grid gap-5 sm:grid-cols-3">
+              {qrFeatures.map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <article key={feature.title}>
+                    <Icon className="h-6 w-6 text-gold-300" aria-hidden="true" />
+                    <h3 className="mt-4 font-semibold text-ivory">{feature.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-ivory/66">{feature.text}</p>
+                  </article>
+                );
+              })}
             </div>
-            <div>
-              <Badge>Technologie & interaction</Badge>
-              <h2 className="mt-4 font-display text-3xl text-ivory">Demandez vos titres en un scan</h2>
-              <p className="mt-4 leading-7 text-ivory/70">
-                Vos invités scannent un QR code, proposent leurs chansons et les demandes remontent dans l'admin mocké pour préparer une playlist fluide.
-              </p>
-              <ButtonLink to="/demande-musique" variant="secondary" className="mt-6" showArrow>
-                Tester la demande musique
-              </ButtonLink>
-            </div>
-          </Card>
-          <div className="grid gap-5 sm:grid-cols-3">
-            {[
-              ["Demandes en direct", "Les invités proposent leurs titres depuis leur téléphone."],
-              ["Playlist intelligente", "Les suggestions sont centralisées pour le DJ."],
-              ["Ambiance fluide", "La soirée garde son rythme sans interruption."],
-            ].map(([title, text]) => (
-              <Card key={title} className="p-5">
-                <Music2 className="h-6 w-6 text-gold-300" aria-hidden="true" />
-                <h3 className="mt-4 font-semibold text-ivory">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-ivory/66">{text}</p>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-night-900 px-4 py-18 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <section className="bg-night-950 px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.44fr_0.56fr] lg:items-center">
+          <div>
             <SectionHeader
-              eyebrow="Galerie"
-              title="Ambiances réelles, énergie maîtrisée"
-              description="Un aperçu de l'univers Fredmusic : mariages, soirées privées, lumière, effets et matériel professionnel."
+              title="Du matériel professionnel pour un rendu exceptionnel"
+              description="Un matériel de pointe sélectionné pour offrir le meilleur du son et de la lumière."
             />
-            <ButtonLink to="/galerie" variant="secondary" showArrow>
+            <ul className="mt-8 grid gap-3 text-sm text-ivory/72">
+              {["Son haute qualité", "Éclairage intelligent", "Installation discrète et soignée", "Fiabilité et sécurité"].map((item) => (
+                <li key={item} className="flex items-center gap-3">
+                  <span className="h-1.5 w-1.5 bg-gold-300" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="min-h-[360px] overflow-hidden">
+            <img
+              src="/images/conception/dj-console-gold.png"
+              alt="Régie DJ professionnelle avec éclairage doré"
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-night-900 px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.36fr_0.28fr_0.36fr] lg:items-start">
+          <div>
+            <p className="text-xs font-semibold uppercase text-gold-300">Galerie</p>
+            <div className="mt-4 grid grid-cols-3 gap-3">
+              {featuredGallery.map((item) => (
+                <img
+                  key={item.id}
+                  src={item.image}
+                  alt={item.alt}
+                  className="aspect-[4/3] w-full border border-white/10 object-cover"
+                  loading="lazy"
+                />
+              ))}
+            </div>
+            <ButtonLink to="/galerie" variant="ghost" className="mt-4 px-0" showArrow>
               Voir plus de photos
             </ButtonLink>
           </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredGallery.map((item) => (
-              <article key={item.id} className="group overflow-hidden border border-white/12 bg-night-950">
-                <img
-                  src={item.image}
-                  alt={item.alt}
-                  className="aspect-[4/3] w-full object-cover opacity-82 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
-                  loading="lazy"
-                />
-                <div className="p-4">
-                  <p className="text-xs font-semibold uppercase text-gold-300">{item.title}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-night-950 px-4 py-18 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          {featuredTestimonial ? (
             <div>
-              <SectionHeader
-                eyebrow="Matériel professionnel"
-                title="Un rendu technique fiable, propre et premium"
-                description="Sonorisation, régie DJ, micros et mixage : le matériel est choisi selon votre lieu, votre jauge et votre niveau d'accompagnement."
-              />
-              <ul className="mt-8 grid gap-3 text-sm text-ivory/72">
-                {["Son haute qualité", "Éclairage intelligent", "Installation discrète et soignée", "Fiabilité et sécurité"].map((item) => (
-                  <li key={item} className="flex items-center gap-3">
-                    <span className="h-1.5 w-1.5 bg-gold-300" aria-hidden="true" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <ButtonLink to="/location" variant="primary" className="mt-8" showArrow>
-                Découvrir la location
-              </ButtonLink>
+              <p className="mb-4 text-xs font-semibold uppercase text-gold-300">Ils nous font confiance</p>
+              <TestimonialCard testimonial={featuredTestimonial} />
             </div>
-            <div className="grid gap-5 md:grid-cols-3">
-              {featuredEquipment.map((item) => (
-                <EquipmentCard key={item.id} item={item} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-night-900 px-4 py-18 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <SectionHeader
-            eyebrow="Ils nous font confiance"
-            title="Une présence rassurante, une soirée qui respire"
-            description="Le ton Fredmusic reste premium, humain et fiable : exactement ce qu'il faut pour des moments qui comptent."
-          />
-          {featuredTestimonial ? <TestimonialCard testimonial={featuredTestimonial} /> : null}
+          ) : null}
+          <Card className="p-6">
+            <p className="text-xs font-semibold uppercase text-gold-300">Prêt à créer votre événement ?</p>
+            <h2 className="mt-3 font-display text-3xl text-ivory">Discutons de votre projet</h2>
+            <p className="mt-4 text-sm leading-6 text-ivory/70">
+              Chaque événement commence par une rencontre. Parlons de vos envies et vérifions ensemble une disponibilité.
+            </p>
+            <ButtonLink to="/contact" variant="primary" className="mt-6" showArrow>
+              Demander un devis
+            </ButtonLink>
+          </Card>
         </div>
       </section>
 
       <CTASection
-        eyebrow="Prêt à créer votre événement ?"
-        title="Discutons de votre projet"
-        description="Chaque événement commence par une rencontre. Parlons de vos envies, de votre lieu et de l'expérience que vous souhaitez offrir."
+        title="Prêt à créer un souvenir inoubliable ?"
+        description="Parlons de votre projet et vérifions ensemble la disponibilité de votre date."
         primaryLabel="Demander un devis"
         primaryTo="/contact"
         secondaryLabel="Voir les prestations"
