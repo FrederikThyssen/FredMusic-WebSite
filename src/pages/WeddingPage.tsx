@@ -53,7 +53,7 @@ export function WeddingPage() {
 
   return (
     <div className="bg-warm-100 text-night-950">
-      <section className="relative overflow-hidden border-b border-warm-300">
+      <section className="relative overflow-hidden border-b border-warm-300/80">
         <div className="absolute inset-y-0 right-0 hidden w-[58%] lg:block">
           <img
             src="/images/conception/wedding-soft-room.png"
@@ -84,7 +84,7 @@ export function WeddingPage() {
             </div>
           </div>
 
-          <div className="mt-10 overflow-hidden border border-white bg-white shadow-glow lg:hidden">
+          <div className="mt-10 overflow-hidden rounded-sm border border-white bg-white shadow-glow lg:hidden">
             <img
               src="/images/conception/wedding-soft-room.png"
               alt="Mariés dans une salle de réception lumineuse avec fumée lourde"
@@ -94,14 +94,14 @@ export function WeddingPage() {
         </div>
       </section>
 
-      <section id="experience" className="border-b border-warm-300 bg-warm-50 px-4 py-10 sm:px-6 lg:px-8">
+      <section id="experience" className="border-b border-warm-300/80 bg-warm-50 px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <p className="font-wedding text-2xl text-night-950">Une expérience sur-mesure</p>
             <div className="mx-auto mt-3 h-px w-16 bg-gold-400" />
           </div>
 
-          <div className="mt-8 grid divide-y divide-warm-300 border-y border-warm-300 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-6">
+          <div className="mt-8 grid divide-y divide-warm-300/80 border-y border-warm-300/80 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-6">
             {weddingMoments.map((moment) => {
               const Icon = moment.icon;
               return (
@@ -136,7 +136,7 @@ export function WeddingPage() {
             </ButtonLink>
           </div>
 
-          <div className="overflow-hidden border border-warm-300 bg-white p-2 shadow-glow">
+          <div className="overflow-hidden rounded-sm border border-warm-300/80 bg-white p-2 shadow-glow">
             <img
               src="/images/conception/photo566.png"
               alt="Mariés accueillis par leurs invités en extérieur avec effets étincelles"
@@ -165,7 +165,7 @@ export function WeddingPage() {
                   key={image.src}
                   src={image.src}
                   alt={image.alt}
-                  className={index === 0 ? "aspect-[4/5] w-full object-cover sm:aspect-[3/4]" : "aspect-[4/5] w-full object-cover sm:aspect-[3/4]"}
+                  className={index === 0 ? "aspect-[4/5] w-full rounded-sm object-cover sm:aspect-[3/4]" : "aspect-[4/5] w-full rounded-sm object-cover sm:aspect-[3/4]"}
                   loading="lazy"
                 />
               ))}
@@ -176,7 +176,7 @@ export function WeddingPage() {
 
       <section className="bg-warm-100 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-center">
-          <div className="overflow-hidden border border-warm-300 bg-white p-2">
+          <div className="overflow-hidden rounded-sm border border-warm-300/80 bg-white p-2">
             <img
               src="/images/conception/photo84.png"
               alt="Ouverture de bal des mariés dans une salle élégante avec fumée lourde et éclairage chaleureux"

@@ -35,7 +35,7 @@ export function EventCard({ event }: EventCardProps) {
       </div>
       <Link
         to={`/evenements/${event.slug}`}
-        className="border border-gold-400 px-4 py-3 text-center text-xs font-semibold uppercase text-gold-200 hover:bg-gold-300 hover:text-night-950"
+        className="rounded-sm border border-gold-400 px-4 py-3 text-center text-xs font-semibold uppercase text-gold-200 hover:bg-gold-300 hover:text-night-950"
       >
         Voir l'événement
       </Link>

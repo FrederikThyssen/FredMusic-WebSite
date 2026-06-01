@@ -36,7 +36,7 @@ export function Modal({ title, isOpen, onClose, children }: ModalProps) {
         aria-modal="true"
         role="dialog"
         aria-labelledby="modal-title"
-        className="max-h-[88vh] w-full max-w-2xl overflow-y-auto border border-white/14 bg-night-900 p-6 text-ivory shadow-glow"
+        className="max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-md border border-white/[0.08] bg-night-900 p-6 text-ivory shadow-glow"
       >
         <div className="flex items-start justify-between gap-4">
           <h2 id="modal-title" className="font-display text-3xl leading-tight">{title}</h2>

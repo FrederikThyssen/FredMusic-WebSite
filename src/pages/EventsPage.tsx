@@ -16,12 +16,48 @@ import { ButtonLink } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 
 const privateEventTypes = [
-  { title: "Anniversaires", text: "Une soirée festive et personnalisée pour rassembler toutes les générations.", icon: Cake },
-  { title: "Baptêmes & communions", text: "Une animation élégante pour accompagner les moments familiaux.", icon: HeartHandshake },
-  { title: "Soirées privées", text: "Un format sur mesure pour vos invités, votre lieu et votre ambiance.", icon: UsersRound },
-  { title: "Soirées à thème", text: "Une programmation musicale cohérente avec votre univers.", icon: Music2 },
-  { title: "Départs en retraite", text: "Un temps fort convivial, bien rythmé et rassurant.", icon: GlassWater },
-  { title: "Garden-party", text: "Son, lumière et ambiance pour profiter d'un cadre extérieur.", icon: PartyPopper },
+  {
+    title: "Anniversaires",
+    text: "Une soirée festive et personnalisée pour rassembler toutes les générations.",
+    icon: Cake,
+    image: "/images/conception/64img.jpg",
+    alt: "Salle décorée pour un anniversaire avec tables hautes et installation DJ",
+  },
+  {
+    title: "Baptêmes & communions",
+    text: "Une animation élégante pour accompagner les moments familiaux.",
+    icon: HeartHandshake,
+    image: "/images/conception/bateme1.jpg",
+    alt: "Salle lumineuse décorée pour un baptême ou une communion",
+  },
+  {
+    title: "Soirées privées",
+    text: "Un format sur mesure pour vos invités, votre lieu et votre ambiance.",
+    icon: UsersRound,
+    image: "/images/conception/IMG_9522.jpeg",
+    alt: "Soirée privée avec ambiance lumineuse et espace de réception",
+  },
+  {
+    title: "Soirées à thème",
+    text: "Une programmation musicale cohérente avec votre univers.",
+    icon: Music2,
+    image: "/images/conception/4555.jpg",
+    alt: "Décoration et éclairage pour une soirée à thème",
+  },
+  {
+    title: "Départs en retraite",
+    text: "Un temps fort convivial, bien rythmé et rassurant.",
+    icon: GlassWater,
+    image: "/images/conception/Fete-depart-en-retraite.jpg",
+    alt: "Fête de départ en retraite avec décoration conviviale",
+  },
+  {
+    title: "Garden-party",
+    text: "Son, lumière et ambiance pour profiter d'un cadre extérieur.",
+    icon: PartyPopper,
+    image: "/images/conception/gardenparty1.png",
+    alt: "Garden-party avec guirlandes lumineuses et ambiance extérieure",
+  },
 ];
 
 const options = [
@@ -38,18 +74,28 @@ const options = [
 ];
 
 const gallery = [
-  {
-    src: "/images/conception/event-lighting-room.png",
-    alt: "Salle événementielle avec mise en lumière premium pour une soirée privée",
+ {
+    src: "/images/conception/22442.jpg",
+    alt: "Soirée privée avec piste de danse, tables dressées et jeux de lumière colorés",
   },
+
   {
-    src: "/images/conception/photo566.png",
-    alt: "Invités réunis en extérieur autour des mariés avec effets étincelles",
+    src: "/images/conception/IMG_0437.jpeg",
+    alt: "Régie DJ installée dans une salle en briques avec invités sur la piste de danse",
   },
+  
   {
-    src: "/images/conception/dj-console-gold.png",
-    alt: "Régie DJ professionnelle avec éclairage doré",
+    src: "/images/conception/IMG_8620.jpeg",
+    alt: "Salle de réception décorée avec tables rondes et éclairage pour une fête privée",
   },
+
+  {
+    src: "/images/conception/console1.jpeg",
+    alt: "Régie DJ face à une soirée privée avec jeux de lumière et invités",
+  },
+
+ 
+  
 ];
 
 export function EventsPage() {
@@ -57,16 +103,17 @@ export function EventsPage() {
     <div className="bg-night-950 text-ivory">
       <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
         <img
-          src="/images/conception/event-lighting-room.png"
+          src="/images/conception/image745.png"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover opacity-34"
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-48"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/48" />
-        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.56fr_0.44fr] lg:items-end">
-          <div>
+        <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/42" />
+        <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-transparent to-transparent" />
+        <div className="relative mx-auto w-full max-w-7xl">
+          <div className="max-w-4xl">
             <Badge>Événements privés</Badge>
-            <h1 className="mt-5 max-w-4xl font-display text-5xl leading-tight text-ivory sm:text-6xl">
+            <h1 className="mt-5 max-w-4xl font-display text-4xl leading-tight text-ivory sm:text-5xl xl:text-6xl">
               Animez vos événements privés avec une ambiance sur mesure
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-ivory/72">
@@ -82,30 +129,38 @@ export function EventsPage() {
               </ButtonLink>
             </div>
           </div>
-          <Card className="p-6">
-            <p className="text-xs font-semibold uppercase text-gold-300">Ambiance personnalisée</p>
-            <p className="mt-4 leading-7 text-ivory/72">
-              La prestation est préparée selon votre public, vos goûts musicaux, le lieu, le timing et les temps forts
-              que vous voulez marquer.
-            </p>
-          </Card>
         </div>
       </section>
 
       <section className="bg-night-900 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase text-gold-300">Moments de vie</p>
+            <div className="flex items-center gap-3">
+              <Sparkles className="h-5 w-5 text-gold-300" aria-hidden="true" />
+              <p className="text-xs font-semibold uppercase text-gold-300">Ambiance personnalisée</p>
+            </div>
             <h2 className="mt-3 font-display text-4xl leading-tight text-ivory">Des formats privés, une vraie présence DJ</h2>
+            <p className="mt-4 leading-7 text-ivory/70">
+              La prestation est préparée selon votre public, vos goûts musicaux, le lieu, le timing et les temps forts
+              que vous voulez marquer.
+            </p>
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {privateEventTypes.map((eventType) => {
               const Icon = eventType.icon;
               return (
-                <Card key={eventType.title} className="p-6">
-                  <Icon className="h-7 w-7 text-gold-300" aria-hidden="true" />
-                  <h3 className="mt-5 font-display text-2xl text-ivory">{eventType.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-ivory/68">{eventType.text}</p>
+                <Card key={eventType.title} className="overflow-hidden p-0">
+                  <img
+                    src={eventType.image}
+                    alt={eventType.alt}
+                    className="aspect-[16/10] w-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="p-6">
+                    <Icon className="h-7 w-7 text-gold-300" aria-hidden="true" />
+                    <h3 className="mt-5 font-display text-2xl text-ivory">{eventType.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-ivory/68">{eventType.text}</p>
+                  </div>
                 </Card>
               );
             })}
@@ -134,7 +189,7 @@ export function EventsPage() {
             ].map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.title} className="border border-white/10 bg-white/[0.03] p-5">
+                <div key={item.title} className="rounded-md border border-white/[0.07] bg-white/[0.03] p-5">
                   <Icon className="h-6 w-6 text-gold-300" aria-hidden="true" />
                   <p className="mt-4 font-semibold text-ivory">{item.title}</p>
                 </div>
@@ -152,7 +207,7 @@ export function EventsPage() {
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {options.map((option) => (
-              <div key={option} className="flex items-center gap-3 border border-white/10 bg-night-950/58 p-4 text-sm text-ivory/76">
+              <div key={option} className="flex items-center gap-3 rounded-md border border-white/[0.07] bg-night-950/58 p-4 text-sm text-ivory/76">
                 <Check className="h-5 w-5 shrink-0 text-gold-300" aria-hidden="true" />
                 {option}
               </div>
@@ -163,13 +218,13 @@ export function EventsPage() {
 
       <section className="bg-night-950 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {gallery.map((image) => (
               <img
                 key={image.src}
                 src={image.src}
                 alt={image.alt}
-                className="aspect-[4/3] w-full border border-white/10 object-cover"
+                className="aspect-[4/3] w-full rounded-sm border border-white/[0.07] object-cover"
                 loading="lazy"
               />
             ))}

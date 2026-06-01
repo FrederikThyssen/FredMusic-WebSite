@@ -37,7 +37,7 @@ export function HomePage() {
         eyebrow="DJ mariage & événementiel premium"
         title="L'expérience DJ premium pour vos événements"
         description="Mariages, soirées privées, entreprises : une ambiance unique, une sonorisation d'exception et une mise en lumière sur mesure."
-        image="/images/conception/image3.png"
+        image="/images/conception/424.jpg"
         imageAlt="DJ Fredmusic face à une salle événementielle premium avec régie et effets lumineux"
         imageObjectPosition="center 68%"
         primaryLabel="Réserver ma date"
@@ -88,7 +88,7 @@ export function HomePage() {
               Découvrir l'offre mariage
             </ButtonLink>
           </div>
-          <div className="min-h-[420px] overflow-hidden bg-white lg:-mr-8">
+          <div className="min-h-[420px] overflow-hidden rounded-sm bg-white lg:-mr-8">
             <img
               src="/images/conception/wedding-soft-room.png"
               alt="Ambiance mariage premium lumineuse avec décor romantique"
@@ -101,7 +101,7 @@ export function HomePage() {
 
       <section className="bg-night-950 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.44fr_0.56fr] lg:items-center">
-          <div className="min-h-[360px] overflow-hidden border border-white/10 bg-night-900">
+          <div className="min-h-[360px] overflow-hidden rounded-sm border border-white/[0.07] bg-night-900">
             <img
               src="/images/conception/qr-music-request.png"
               alt="Carte QR code et téléphone Fredmusic pour demander une musique"
@@ -147,7 +147,7 @@ export function HomePage() {
               ))}
             </ul>
           </div>
-          <div className="min-h-[360px] overflow-hidden">
+          <div className="min-h-[360px] overflow-hidden rounded-sm">
             <img
               src="/images/conception/dj-console-gold.png"
               alt="Régie DJ professionnelle avec éclairage doré"
@@ -158,7 +158,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-white/10 bg-night-900 px-4 py-10 sm:px-6 lg:px-8">
+      <section className="border-t border-white/[0.07] bg-night-900 px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.36fr_0.28fr_0.36fr] lg:items-start">
           <div>
             <p className="text-xs font-semibold uppercase text-gold-300">Galerie</p>
@@ -168,7 +168,7 @@ export function HomePage() {
                   key={item.id}
                   src={item.image}
                   alt={item.alt}
-                  className="aspect-[4/3] w-full border border-white/10 object-cover"
+                  className="aspect-[4/3] w-full rounded-sm border border-white/[0.07] object-cover"
                   loading="lazy"
                 />
               ))}

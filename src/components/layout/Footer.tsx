@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-night-900">
+    <footer className="border-t border-white/[0.07] bg-night-900">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
           <p className="text-xl font-light uppercase text-ivory">FREDMUSIC</p>
