@@ -10,7 +10,7 @@ const equipmentItems = [
     brand: "Pioneer",
     usage: "Régie DJ",
     description: "Table de mixage professionnelle pour une régie fiable, précise et confortable.",
-    image: "/images/conception/IMG_8478.jpeg",
+    image: "/images/conception/Pioneer-DJM-A9.png",
     icon: SlidersHorizontal,
   },
   {
@@ -18,7 +18,7 @@ const equipmentItems = [
     brand: "Pioneer",
     usage: "Lecture & mix",
     description: "Lecteurs professionnels utilisés pour les prestations DJ exigeantes.",
-    image: "/images/conception/IMG_9192.JPG",
+    image: "/images/conception/Pioneer-CDJ-3000.png",
     icon: Cable,
   },
   {
@@ -26,7 +26,7 @@ const equipmentItems = [
     brand: "Electro-Voice",
     usage: "Sonorisation",
     description: "Enceintes adaptées aux salles et événements nécessitant un son clair et puissant.",
-    image: "/images/conception/IMG_9653.jpeg",
+    image: "/images/conception/Electro-Voice-EKX-15.png",
     icon: Speaker,
   },
   {
@@ -34,7 +34,7 @@ const equipmentItems = [
     brand: "Mackie",
     usage: "Renfort sonore",
     description: "Solution polyvalente pour cocktails, discours, petites salles et configurations mobiles.",
-    image: "/images/conception/IMG_9656.jpeg",
+    image: "/images/conception/Mackie-Thump-15-BST.png",
     icon: Speaker,
   },
   {
@@ -42,7 +42,7 @@ const equipmentItems = [
     brand: "Shure",
     usage: "Micro discours",
     description: "Micro sans fil fiable pour cérémonies, discours, animations et prises de parole.",
-    image: "/images/conception/IMG_9192.JPG",
+    image: "/images/conception/image.png",
     icon: Mic2,
   },
   {
@@ -50,7 +50,7 @@ const equipmentItems = [
     brand: "Soundcraft",
     usage: "Gestion du son",
     description: "Console numérique pour gérer plusieurs micros, sources audio et interventions.",
-    image: "/images/conception/console1.jpeg",
+    image: "/images/conception/Soundcraft-UI-16.png",
     icon: Wrench,
   },
 ];
@@ -65,22 +65,29 @@ const reassurance = [
 export function RentalPage() {
   return (
     <div className="bg-night-950 text-ivory">
-      <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
+      <section className="relative min-h-[760px] overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 bg-night-950" aria-hidden="true" />
         <img
-          src="/images/conception/IMG_8478.jpeg"
+          src="/images/conception/image-loc.png"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-40"
+          className="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-18 blur-sm"
+          aria-hidden="true"
+        />
+        <img
+          src="/images/conception/image-loc.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-contain object-center opacity-42"
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/46" />
-        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.56fr_0.44fr] lg:items-end">
-          <div>
+        <div className="relative mx-auto max-w-7xl">
+          <div className="max-w-4xl">
             <Badge>Location & matériel professionnel</Badge>
             <h1 className="mt-5 max-w-4xl font-display text-5xl leading-tight text-ivory sm:text-6xl">
-              Du matériel sérieux pour un son propre et une prestation rassurante
+              Du matériel professionnel pour un son propre et une prestation rassurante
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-ivory/72">
-              Fredmusic utilise du matériel professionnel pour adapter le son, la lumière et les micros à votre lieu,
+              Fredmusic utilise du matériel de qualité pour adapter le son, la lumière et les micros à votre lieu,
               votre public et les moments importants de votre événement.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -91,14 +98,14 @@ export function RentalPage() {
                 Voir les prestations
               </ButtonLink>
             </div>
+            <div className="mt-6 max-w-2xl">
+              <p className="text-xs font-semibold uppercase text-gold-300">Location possible</p>
+              <p className="mt-3 leading-7 text-ivory/72">
+                Certains équipements peuvent être proposés à la location ou intégrés à une prestation complète selon les
+                besoins de votre événement.
+              </p>
+            </div>
           </div>
-          <Card className="p-6">
-            <p className="text-xs font-semibold uppercase text-gold-300">Location possible</p>
-            <p className="mt-4 leading-7 text-ivory/72">
-              Certains équipements peuvent être proposés à la location ou intégrés à une prestation complète selon les
-              besoins de votre événement.
-            </p>
-          </Card>
         </div>
       </section>
 
@@ -119,7 +126,6 @@ export function RentalPage() {
                     <p className="mt-5 text-xs font-semibold uppercase text-gold-300">{item.brand} · {item.usage}</p>
                     <h3 className="mt-2 font-display text-2xl text-ivory">{item.name}</h3>
                     <p className="mt-3 text-sm leading-6 text-ivory/68">{item.description}</p>
-                    <p className="mt-4 text-xs uppercase text-ivory/50">Utilisé selon les besoins de votre événement.</p>
                   </div>
                 </Card>
               );
