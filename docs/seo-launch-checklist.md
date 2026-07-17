@@ -17,9 +17,9 @@ Finaliser le site Fredmusic pour remplacer proprement le site Wix actuel avec :
 
 ### Version vitrine statique
 
-Statut estimé : 82%.
+Statut estimé : 84%.
 
-Il reste environ 18% pour obtenir une version vitrine propre, présentable au client et publiable sans backend réel.
+Il reste environ 16% pour obtenir une version vitrine propre, présentable au client et publiable sans backend réel.
 
 ### Version complète avec backend/admin réel
 
@@ -238,8 +238,8 @@ Statut : première optimisation images faite.
 - [x] Identifier les images lourdes.
 - [x] Compresser les images hero principales.
 - [x] Créer des versions WebP pour les plus grosses images utilisées.
-- [ ] Compresser galerie.
-- [ ] Convertir en WebP si utile.
+- [x] Première compression galerie.
+- [x] Convertir en WebP si utile.
 - [ ] Vérifier lazy loading.
 - [ ] Vérifier poids du build.
 - [ ] Vérifier Lighthouse.

@@ -1,7 +1,7 @@
 import type { SeoMetadata } from "../types";
 
 const siteUrl = "https://www.fredmusic.fr";
-const defaultOgImage = `${siteUrl}/images/conception/424.jpg`;
+const defaultOgImage = `${siteUrl}/images/conception/424.webp`;
 
 export { siteUrl };
 
@@ -35,7 +35,7 @@ export const seoMetadata: Record<string, SeoMetadata> = {
     description:
       "Sonorisation et animation pour entreprises, associations, collectivités, fêtes publiques, séminaires et soirées professionnelles.",
     canonical: `${siteUrl}/evenements-pro`,
-    ogImage: `${siteUrl}/images/conception/IMG_9653.jpeg`,
+    ogImage: `${siteUrl}/images/conception/IMG_9653.webp`,
     keywords: ["DJ entreprise", "sonorisation séminaire", "animation événement professionnel"],
   },
   services: {

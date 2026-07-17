@@ -20,7 +20,7 @@ const privateEventTypes = [
     title: "Anniversaires",
     text: "Une soirée festive et personnalisée pour rassembler toutes les générations.",
     icon: Cake,
-    image: "/images/conception/64img.jpg",
+    image: "/images/conception/64img.webp",
     alt: "Salle décorée pour un anniversaire avec tables hautes et installation DJ",
   },
   {
@@ -34,7 +34,7 @@ const privateEventTypes = [
     title: "Soirées privées",
     text: "Un format sur mesure pour vos invités, votre lieu et votre ambiance.",
     icon: UsersRound,
-    image: "/images/conception/IMG_9522.jpeg",
+    image: "/images/conception/IMG_9522.webp",
     alt: "Soirée privée avec ambiance lumineuse et espace de réception",
   },
   {
@@ -80,17 +80,17 @@ const gallery = [
   },
 
   {
-    src: "/images/conception/IMG_0437.jpeg",
+    src: "/images/conception/IMG_0437.webp",
     alt: "Régie DJ installée dans une salle en briques avec invités sur la piste de danse",
   },
   
   {
-    src: "/images/conception/IMG_8620.jpeg",
+    src: "/images/conception/IMG_8620.webp",
     alt: "Salle de réception décorée avec tables rondes et éclairage pour une fête privée",
   },
 
   {
-    src: "/images/conception/console1.jpeg",
+    src: "/images/conception/console1.webp",
     alt: "Régie DJ face à une soirée privée avec jeux de lumière et invités",
   },
 

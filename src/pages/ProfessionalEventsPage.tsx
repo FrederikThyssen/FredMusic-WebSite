@@ -37,7 +37,7 @@ export function ProfessionalEventsPage() {
     <div className="bg-night-950 text-ivory">
       <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
         <img
-          src="/images/conception/IMG_9653.jpeg"
+          src="/images/conception/IMG_9653.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center opacity-42"
           aria-hidden="true"
@@ -100,7 +100,7 @@ export function ProfessionalEventsPage() {
           </div>
           <div className="overflow-hidden rounded-sm border border-white/[0.07] bg-night-900">
             <img
-              src="/images/conception/IMG_9656.jpeg"
+              src="/images/conception/IMG_9656.webp"
               alt="Salle préparée pour un événement professionnel avec régie et mise en lumière"
               className="aspect-[16/10] w-full object-cover"
               loading="lazy"
@@ -155,15 +155,15 @@ export function ProfessionalEventsPage() {
           <div className="grid gap-4 md:grid-cols-3">
             {[
               {
-                src: "/images/conception/IMG_8428.jpeg",
+                src: "/images/conception/IMG_8428.webp",
                 alt: "Régie DJ professionnelle avec sonorisation dans une salle préparée",
               },
               {
-                src: "/images/conception/IMG_9656.jpeg",
+                src: "/images/conception/IMG_9656.webp",
                 alt: "Salle d'événement avec tables, régie et éclairage d'ambiance",
               },
               {
-                src: "/images/conception/IMG_9192.JPG",
+                src: "/images/conception/IMG_9192.webp",
                 alt: "Console Pioneer DJ avec micro et enceinte pour prestation professionnelle",
               },
             ].map((image) => (

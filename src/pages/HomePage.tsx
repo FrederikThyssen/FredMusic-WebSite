@@ -37,7 +37,7 @@ export function HomePage() {
         eyebrow="DJ mariage & événementiel premium"
         title="L'expérience DJ premium pour vos événements"
         description="Mariages, soirées privées, entreprises : une ambiance unique, une sonorisation d'exception et une mise en lumière sur mesure."
-        image="/images/conception/424.jpg"
+        image="/images/conception/424.webp"
         imageAlt="DJ Fredmusic face à une salle événementielle premium avec régie et effets lumineux"
         imageObjectPosition="center 68%"
         primaryLabel="Réserver ma date"
