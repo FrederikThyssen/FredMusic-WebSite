@@ -90,7 +90,7 @@ export function HomePage() {
           </div>
           <div className="min-h-[420px] overflow-hidden rounded-sm bg-white lg:-mr-8">
             <img
-              src="/images/conception/wedding-soft-room.png"
+              src="/images/conception/wedding-soft-room.webp"
               alt="Ambiance mariage premium lumineuse avec décor romantique"
               className="h-full w-full object-cover"
               loading="lazy"
@@ -103,7 +103,7 @@ export function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.44fr_0.56fr] lg:items-center">
           <div className="min-h-[360px] overflow-hidden rounded-sm border border-white/[0.07] bg-night-900">
             <img
-              src="/images/conception/qr-music-request.png"
+              src="/images/conception/qr-music-request.webp"
               alt="Carte QR code et téléphone Fredmusic pour demander une musique"
               className="h-full w-full object-cover"
               loading="lazy"
@@ -149,7 +149,7 @@ export function HomePage() {
           </div>
           <div className="min-h-[360px] overflow-hidden rounded-sm">
             <img
-              src="/images/conception/dj-console-gold.png"
+              src="/images/conception/dj-console-gold.webp"
               alt="Régie DJ professionnelle avec éclairage doré"
               className="h-full w-full object-cover"
               loading="lazy"

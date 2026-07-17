@@ -103,7 +103,7 @@ export function EventsPage() {
     <div className="bg-night-950 text-ivory">
       <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
         <img
-          src="/images/conception/image745.png"
+          src="/images/conception/image745.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center opacity-48"
           aria-hidden="true"

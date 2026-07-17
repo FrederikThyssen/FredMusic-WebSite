@@ -34,15 +34,15 @@ const reasons = [
 
 const gallery = [
   {
-    src: "/images/conception/photo36.png",
+    src: "/images/conception/photo36.webp",
     alt: "Cérémonie de mariage en forêt avec arche fleurie et invités assis",
   },
   {
-    src: "/images/conception/wedding-room-premium.png",
+    src: "/images/conception/wedding-room-premium.webp",
     alt: "Salle de mariage préparée avec tables dressées et mise en lumière chaude",
   },
   {
-    src: "/images/conception/photo45.png",
+    src: "/images/conception/photo45.webp",
     alt: "Réception de mariage dans une grange décorée de guirlandes lumineuses",
   },
 ];
@@ -56,7 +56,7 @@ export function WeddingPage() {
       <section className="relative overflow-hidden border-b border-warm-300/80">
         <div className="absolute inset-y-0 right-0 hidden w-[58%] lg:block">
           <img
-            src="/images/conception/wedding-soft-room.png"
+            src="/images/conception/wedding-soft-room.webp"
             alt="Mariés dans une salle de réception lumineuse avec fumée lourde"
             className="h-full w-full object-cover object-center"
           />
@@ -86,7 +86,7 @@ export function WeddingPage() {
 
           <div className="mt-10 overflow-hidden rounded-sm border border-white bg-white shadow-glow lg:hidden">
             <img
-              src="/images/conception/wedding-soft-room.png"
+              src="/images/conception/wedding-soft-room.webp"
               alt="Mariés dans une salle de réception lumineuse avec fumée lourde"
               className="aspect-[4/3] w-full object-cover object-center"
             />
@@ -138,7 +138,7 @@ export function WeddingPage() {
 
           <div className="overflow-hidden rounded-sm border border-warm-300/80 bg-white p-2 shadow-glow">
             <img
-              src="/images/conception/photo566.png"
+              src="/images/conception/photo566.webp"
               alt="Mariés accueillis par leurs invités en extérieur avec effets étincelles"
               className="aspect-[16/10] w-full object-cover object-center"
               loading="lazy"
@@ -178,7 +178,7 @@ export function WeddingPage() {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-center">
           <div className="overflow-hidden rounded-sm border border-warm-300/80 bg-white p-2">
             <img
-              src="/images/conception/photo84.png"
+              src="/images/conception/photo84.webp"
               alt="Ouverture de bal des mariés dans une salle élégante avec fumée lourde et éclairage chaleureux"
               className="aspect-[4/3] w-full object-cover object-center"
               loading="lazy"

@@ -19,7 +19,7 @@ export const seoMetadata: Record<string, SeoMetadata> = {
     description:
       "Une expérience musicale et lumineuse sur mesure pour votre mariage : cérémonie, vin d'honneur, repas, ouverture de bal et soirée.",
     canonical: `${siteUrl}/mariages`,
-    ogImage: `${siteUrl}/images/conception/wedding-sparkles.png`,
+    ogImage: `${siteUrl}/images/conception/wedding-sparkles.webp`,
     keywords: ["DJ mariage", "animation mariage", "sonorisation mariage", "DJ Arras"],
   },
   privateEvents: {
@@ -27,7 +27,7 @@ export const seoMetadata: Record<string, SeoMetadata> = {
     description:
       "Animation DJ pour anniversaires, baptêmes, communions, soirées privées, garden-party et fêtes familiales dans le Pas-de-Calais.",
     canonical: `${siteUrl}/evenements-prives`,
-    ogImage: `${siteUrl}/images/conception/image745.png`,
+    ogImage: `${siteUrl}/images/conception/image745.webp`,
     keywords: ["DJ anniversaire", "DJ soirée privée", "animation événement privé", "DJ Pas-de-Calais"],
   },
   professionalEvents: {
@@ -51,7 +51,7 @@ export const seoMetadata: Record<string, SeoMetadata> = {
     description:
       "Location de matériel DJ, sonorisation, micros, lumière et régie avec installation ou technicien pour vos événements.",
     canonical: `${siteUrl}/location`,
-    ogImage: `${siteUrl}/images/conception/image-loc.png`,
+    ogImage: `${siteUrl}/images/conception/image-loc.webp`,
     keywords: ["location matériel sonorisation", "location matériel DJ", "location matériel lumière"],
   },
   gallery: {
@@ -59,7 +59,7 @@ export const seoMetadata: Record<string, SeoMetadata> = {
     description:
       "Découvrez les mariages réalisés, événements privés, prestations DJ, ambiances lumineuses et installations Fredmusic.",
     canonical: `${siteUrl}/galerie`,
-    ogImage: `${siteUrl}/images/conception/wedding-sparkles.png`,
+    ogImage: `${siteUrl}/images/conception/wedding-sparkles.webp`,
     keywords: ["galerie DJ", "photos mariage DJ", "événements Fredmusic"],
   },
   contact: {
@@ -75,7 +75,7 @@ export const seoMetadata: Record<string, SeoMetadata> = {
     description:
       "Proposez un titre au DJ pendant votre événement grâce à la demande de musique Fredmusic par QR code.",
     canonical: `${siteUrl}/demande-musique`,
-    ogImage: `${siteUrl}/images/conception/qr-music-request.png`,
+    ogImage: `${siteUrl}/images/conception/qr-music-request.webp`,
     keywords: ["demande musique QR code", "playlist mariage", "DJ interaction invités"],
   },
   legalNotice: {

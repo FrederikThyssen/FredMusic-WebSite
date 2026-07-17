@@ -36,32 +36,32 @@ const weddingPhotos = [
     title: "Temps fort mariage",
   },
   {
-    src: "/images/conception/wedding-sparkles.png",
+    src: "/images/conception/wedding-sparkles.webp",
     alt: "Mariés sur la piste avec étincelles froides et invités autour",
     title: "Ouverture de soirée",
   },
   {
-    src: "/images/conception/photo36.png",
+    src: "/images/conception/photo36.webp",
     alt: "Salle de mariage élégante avec décoration florale et tables dressées",
     title: "Salle de réception",
   },
   {
-    src: "/images/conception/wedding-room-premium.png",
+    src: "/images/conception/wedding-room-premium.webp",
     alt: "Salle de mariage premium avec ambiance lumineuse douce",
     title: "Ambiance premium",
   },
   {
-    src: "/images/conception/photo566.png",
+    src: "/images/conception/photo566.webp",
     alt: "Moment de mariage avec effets lumineux et ambiance festive",
     title: "Moment festif",
   },
   {
-    src: "/images/conception/photo84.png",
+    src: "/images/conception/photo84.webp",
     alt: "Décoration de mariage et mise en lumière chaleureuse",
     title: "Mise en lumière",
   },
   {
-    src: "/images/conception/wedding-soft-room.png",
+    src: "/images/conception/wedding-soft-room.webp",
     alt: "Salle de mariage lumineuse avec décoration douce et tables préparées",
     title: "Décoration de salle",
   },
@@ -71,7 +71,7 @@ const weddingPhotos = [
     title: "Ambiance mariage",
   },
   {
-    src: "/images/conception/photo45.png",
+    src: "/images/conception/photo45.webp",
     alt: "Moment de mariage animé avec éclairages et invités",
     title: "Soirée de mariage",
   },
@@ -134,7 +134,7 @@ const weddingPhotos = [
 
 const eventPhotos = [
   {
-    src: "/images/conception/image745.png",
+    src: "/images/conception/image745.webp",
     alt: "Régie DJ face à une salle événementielle avec invités et éclairage",
     title: "Régie en événement",
   },
@@ -263,7 +263,7 @@ const eventPhotos = [
     title: "Soirée à thème",
   },
   {
-    src: "/images/conception/event-lighting-room.png",
+    src: "/images/conception/event-lighting-room.webp",
     alt: "Salle événementielle avec jeux de lumière et ambiance festive",
     title: "Jeux de lumière",
   },
@@ -381,7 +381,7 @@ export function GalleryPage() {
     <div className="bg-night-950 text-ivory">
       <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
         <img
-          src="/images/conception/wedding-sparkles.png"
+          src="/images/conception/wedding-sparkles.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center opacity-34"
           aria-hidden="true"

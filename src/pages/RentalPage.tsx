@@ -10,7 +10,7 @@ const equipmentItems = [
     brand: "Pioneer",
     usage: "Régie DJ",
     description: "Table de mixage professionnelle pour une régie fiable, précise et confortable.",
-    image: "/images/conception/Pioneer-DJM-A9.png",
+    image: "/images/conception/Pioneer-DJM-A9.webp",
     icon: SlidersHorizontal,
   },
   {
@@ -26,7 +26,7 @@ const equipmentItems = [
     brand: "Electro-Voice",
     usage: "Sonorisation",
     description: "Enceintes adaptées aux salles et événements nécessitant un son clair et puissant.",
-    image: "/images/conception/Electro-Voice-EKX-15.png",
+    image: "/images/conception/Electro-Voice-EKX-15.webp",
     icon: Speaker,
   },
   {
@@ -34,7 +34,7 @@ const equipmentItems = [
     brand: "Mackie",
     usage: "Renfort sonore",
     description: "Solution polyvalente pour cocktails, discours, petites salles et configurations mobiles.",
-    image: "/images/conception/Mackie-Thump-15-BST.png",
+    image: "/images/conception/Mackie-Thump-15-BST.webp",
     icon: Speaker,
   },
   {
@@ -42,7 +42,7 @@ const equipmentItems = [
     brand: "Shure",
     usage: "Micro discours",
     description: "Micro sans fil fiable pour cérémonies, discours, animations et prises de parole.",
-    image: "/images/conception/image.png",
+    image: "/images/conception/image.webp",
     icon: Mic2,
   },
   {
@@ -50,7 +50,7 @@ const equipmentItems = [
     brand: "Soundcraft",
     usage: "Gestion du son",
     description: "Console numérique pour gérer plusieurs micros, sources audio et interventions.",
-    image: "/images/conception/Soundcraft-UI-16.png",
+    image: "/images/conception/Soundcraft-UI-16.webp",
     icon: Wrench,
   },
 ];
@@ -68,13 +68,13 @@ export function RentalPage() {
       <section className="relative min-h-[760px] overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
         <div className="absolute inset-0 bg-night-950" aria-hidden="true" />
         <img
-          src="/images/conception/image-loc.png"
+          src="/images/conception/image-loc.webp"
           alt=""
           className="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-18 blur-sm"
           aria-hidden="true"
         />
         <img
-          src="/images/conception/image-loc.png"
+          src="/images/conception/image-loc.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-contain object-center opacity-42"
           aria-hidden="true"
