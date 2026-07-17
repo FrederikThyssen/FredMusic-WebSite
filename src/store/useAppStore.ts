@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { equipment, rentalPacks } from "../data/equipment.mock";
 import { events } from "../data/events.mock";
 import { galleryItems } from "../data/gallery.mock";
@@ -121,92 +122,104 @@ const initialRentalRequests: RentalRequest[] = [
   },
 ];
 
-export const useAppStore = create<AppState>((set, get) => ({
-  services,
-  equipment,
-  rentalPacks,
-  events,
-  galleryItems,
-  testimonials,
-  quoteRequests: initialQuoteRequests,
-  rentalRequests: initialRentalRequests,
-  musicRequests: initialMusicRequests,
-  getServiceBySlug: (slug) => get().services.find((service) => service.slug === slug),
-  getEquipmentBySlug: (slug) => get().equipment.find((item) => item.slug === slug),
-  getEquipmentByCategory: (category) => get().equipment.filter((item) => item.category === category),
-  getEventBySlug: (slug) => get().events.find((event) => event.slug === slug),
-  getMusicRequestsByEventId: (eventId) =>
-    get().musicRequests.filter((request) => request.eventId === eventId),
-  addQuoteRequest: (request) => {
-    const quoteRequest: QuoteRequest = {
-      ...request,
-      id: createId("quote"),
-      name: cleanText(request.name),
-      email: cleanText(request.email),
-      phone: cleanOptional(request.phone),
-      eventType: cleanText(request.eventType),
-      eventDate: cleanText(request.eventDate),
-      location: cleanText(request.location),
-      message: cleanOptional(request.message),
-      status: "pending",
-      createdAt: new Date().toISOString(),
-    };
+export const useAppStore = create<AppState>()(
+  persist(
+    (set, get) => ({
+      services,
+      equipment,
+      rentalPacks,
+      events,
+      galleryItems,
+      testimonials,
+      quoteRequests: initialQuoteRequests,
+      rentalRequests: initialRentalRequests,
+      musicRequests: initialMusicRequests,
+      getServiceBySlug: (slug) => get().services.find((service) => service.slug === slug),
+      getEquipmentBySlug: (slug) => get().equipment.find((item) => item.slug === slug),
+      getEquipmentByCategory: (category) => get().equipment.filter((item) => item.category === category),
+      getEventBySlug: (slug) => get().events.find((event) => event.slug === slug),
+      getMusicRequestsByEventId: (eventId) =>
+        get().musicRequests.filter((request) => request.eventId === eventId),
+      addQuoteRequest: (request) => {
+        const quoteRequest: QuoteRequest = {
+          ...request,
+          id: createId("quote"),
+          name: cleanText(request.name),
+          email: cleanText(request.email),
+          phone: cleanOptional(request.phone),
+          eventType: cleanText(request.eventType),
+          eventDate: cleanText(request.eventDate),
+          location: cleanText(request.location),
+          message: cleanOptional(request.message),
+          status: "pending",
+          createdAt: new Date().toISOString(),
+        };
 
-    set((state) => ({ quoteRequests: [quoteRequest, ...state.quoteRequests] }));
-    return quoteRequest;
-  },
-  addRentalRequest: (request) => {
-    const rentalRequest: RentalRequest = {
-      ...request,
-      id: createId("rental"),
-      name: cleanText(request.name),
-      email: cleanText(request.email),
-      phone: cleanOptional(request.phone),
-      eventDate: cleanText(request.eventDate),
-      rentalDuration: cleanText(request.rentalDuration),
-      location: cleanText(request.location),
-      message: cleanOptional(request.message),
-      status: "pending",
-      createdAt: new Date().toISOString(),
-    };
+        set((state) => ({ quoteRequests: [quoteRequest, ...state.quoteRequests] }));
+        return quoteRequest;
+      },
+      addRentalRequest: (request) => {
+        const rentalRequest: RentalRequest = {
+          ...request,
+          id: createId("rental"),
+          name: cleanText(request.name),
+          email: cleanText(request.email),
+          phone: cleanOptional(request.phone),
+          eventDate: cleanText(request.eventDate),
+          rentalDuration: cleanText(request.rentalDuration),
+          location: cleanText(request.location),
+          message: cleanOptional(request.message),
+          status: "pending",
+          createdAt: new Date().toISOString(),
+        };
 
-    set((state) => ({ rentalRequests: [rentalRequest, ...state.rentalRequests] }));
-    return rentalRequest;
-  },
-  addMusicRequest: (request) => {
-    const musicRequest: MusicRequest = {
-      ...request,
-      id: createId("music"),
-      guestName: cleanOptional(request.guestName),
-      artist: cleanText(request.artist),
-      songTitle: cleanText(request.songTitle),
-      message: cleanOptional(request.message),
-      status: "pending",
-      createdAt: new Date().toISOString(),
-    };
+        set((state) => ({ rentalRequests: [rentalRequest, ...state.rentalRequests] }));
+        return rentalRequest;
+      },
+      addMusicRequest: (request) => {
+        const musicRequest: MusicRequest = {
+          ...request,
+          id: createId("music"),
+          guestName: cleanOptional(request.guestName),
+          artist: cleanText(request.artist),
+          songTitle: cleanText(request.songTitle),
+          message: cleanOptional(request.message),
+          status: "pending",
+          createdAt: new Date().toISOString(),
+        };
 
-    set((state) => ({ musicRequests: [musicRequest, ...state.musicRequests] }));
-    return musicRequest;
-  },
-  updateQuoteRequestStatus: (id, status) => {
-    set((state) => ({
-      quoteRequests: state.quoteRequests.map((request) =>
-        request.id === id ? { ...request, status } : request,
-      ),
-    }));
-  },
-  updateRentalRequestStatus: (id, status) => {
-    set((state) => ({
-      rentalRequests: state.rentalRequests.map((request) =>
-        request.id === id ? { ...request, status } : request,
-      ),
-    }));
-  },
-  updateMusicRequestStatus: (id, status) => {
-    set((state) => ({
-      musicRequests: state.musicRequests.map((request) =>
-        request.id === id ? { ...request, status } : request,
-      ),
-    }));
-  },
-}));
+        set((state) => ({ musicRequests: [musicRequest, ...state.musicRequests] }));
+        return musicRequest;
+      },
+      updateQuoteRequestStatus: (id, status) => {
+        set((state) => ({
+          quoteRequests: state.quoteRequests.map((request) =>
+            request.id === id ? { ...request, status } : request,
+          ),
+        }));
+      },
+      updateRentalRequestStatus: (id, status) => {
+        set((state) => ({
+          rentalRequests: state.rentalRequests.map((request) =>
+            request.id === id ? { ...request, status } : request,
+          ),
+        }));
+      },
+      updateMusicRequestStatus: (id, status) => {
+        set((state) => ({
+          musicRequests: state.musicRequests.map((request) =>
+            request.id === id ? { ...request, status } : request,
+          ),
+        }));
+      },
+    }),
+    {
+      name: "fredmusic-admin-mock",
+      partialize: (state) => ({
+        quoteRequests: state.quoteRequests,
+        rentalRequests: state.rentalRequests,
+        musicRequests: state.musicRequests,
+      }),
+    },
+  ),
+);

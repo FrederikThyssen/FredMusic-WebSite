@@ -5,6 +5,7 @@ import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { Select } from "../components/ui/Select";
 import { Textarea } from "../components/ui/Textarea";
+import { useAppStore } from "../store/useAppStore";
 
 const eventTypeOptions = [
   { label: "Mariage", value: "mariage" },
@@ -35,11 +36,31 @@ const contactDetails = [
 ];
 
 export function ContactPage() {
+  const addQuoteRequest = useAppStore((state) => state.addQuoteRequest);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submittedName, setSubmittedName] = useState("");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const guestsValue = String(formData.get("guests") ?? "").trim();
+    const guestsCount = guestsValue ? Number(guestsValue) : undefined;
+
+    addQuoteRequest({
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      phone: String(formData.get("phone") ?? ""),
+      eventType: String(formData.get("eventType") ?? ""),
+      eventDate: String(formData.get("eventDate") ?? ""),
+      location: String(formData.get("location") ?? ""),
+      guestsCount: Number.isFinite(guestsCount) ? guestsCount : undefined,
+      message: String(formData.get("message") ?? ""),
+    });
+
+    setSubmittedName(String(formData.get("name") ?? ""));
     setIsSubmitted(true);
+    event.currentTarget.reset();
   }
 
   return (
@@ -70,7 +91,8 @@ export function ContactPage() {
                   <CheckCircle2 className="mx-auto h-12 w-12 text-gold-300" aria-hidden="true" />
                   <h2 className="mt-6 font-display text-4xl text-ivory">Demande enregistrée</h2>
                   <p className="mt-4 leading-7 text-ivory/70">
-                    Merci, votre demande de devis est prête côté démonstration.
+                    Merci{submittedName ? ` ${submittedName}` : ""}, votre demande de devis est enregistrée dans
+                    l'admin mocké.
                   </p>
                   <Button className="mt-8" variant="secondary" onClick={() => setIsSubmitted(false)}>
                     Modifier la demande
