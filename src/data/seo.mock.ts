@@ -3,6 +3,8 @@ import type { SeoMetadata } from "../types";
 const siteUrl = "https://www.fredmusic.fr";
 const defaultOgImage = `${siteUrl}/images/conception/424.jpg`;
 
+export { siteUrl };
+
 export const seoMetadata: Record<string, SeoMetadata> = {
   home: {
     title: "Fredmusic | DJ mariage & événementiel premium dans les Hauts-de-France",
@@ -75,5 +77,37 @@ export const seoMetadata: Record<string, SeoMetadata> = {
     canonical: `${siteUrl}/demande-musique`,
     ogImage: `${siteUrl}/images/conception/qr-music-request.png`,
     keywords: ["demande musique QR code", "playlist mariage", "DJ interaction invités"],
+  },
+  legalNotice: {
+    title: "Mentions légales | Fredmusic",
+    description:
+      "Consultez les mentions légales du site Fredmusic, DJ et prestataire événementiel dans le Pas-de-Calais.",
+    canonical: `${siteUrl}/mentions-legales`,
+    ogImage: defaultOgImage,
+  },
+  privacy: {
+    title: "Politique de confidentialité | Fredmusic",
+    description:
+      "Informations sur la gestion des données personnelles collectées via les formulaires du site Fredmusic.",
+    canonical: `${siteUrl}/confidentialite`,
+    ogImage: defaultOgImage,
+  },
+  terms: {
+    title: "Conditions d'utilisation | Fredmusic",
+    description: "Conditions d'utilisation du site Fredmusic et de ses formulaires de contact et demande de musique.",
+    canonical: `${siteUrl}/conditions-utilisation`,
+    ogImage: defaultOgImage,
+  },
+  admin: {
+    title: "Admin Fredmusic",
+    description: "Espace privé Fredmusic pour suivre les demandes de devis et les demandes de musique.",
+    canonical: `${siteUrl}/admin`,
+    ogImage: defaultOgImage,
+  },
+  notFound: {
+    title: "Page introuvable | Fredmusic",
+    description: "La page demandée est introuvable. Revenez à l'accueil Fredmusic.",
+    canonical: `${siteUrl}/404`,
+    ogImage: defaultOgImage,
   },
 };

@@ -1,5 +1,13 @@
 import type { SeoMetadata } from "../types";
 
+function createMeta(name: string, value: string) {
+  const element = document.createElement("meta");
+  element.setAttribute("name", name);
+  element.setAttribute("content", value);
+  document.head.appendChild(element);
+  return element;
+}
+
 function setMeta(selector: string, attribute: "content" | "href", value?: string) {
   if (!value) return;
 
@@ -21,4 +29,12 @@ export function applySeo(metadata: SeoMetadata) {
   setMeta("meta[name='twitter:title']", "content", metadata.ogTitle ?? metadata.title);
   setMeta("meta[name='twitter:description']", "content", metadata.ogDescription ?? metadata.description);
   setMeta("meta[name='twitter:image']", "content", metadata.ogImage);
+
+  const keywords = metadata.keywords?.join(", ");
+  const keywordsElement = document.querySelector<HTMLMetaElement>("meta[name='keywords']");
+  if (keywords && keywordsElement) {
+    keywordsElement.content = keywords;
+  } else if (keywords) {
+    createMeta("keywords", keywords);
+  }
 }

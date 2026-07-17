@@ -23,23 +23,23 @@ Statut : en cours.
 
 ## 2. SEO page par page
 
-Statut : à faire.
+Statut : fait.
 
 Objectif : chaque route doit avoir son propre title, sa description, son canonical et son image de partage.
 
 Pages à brancher :
 
-- [ ] Accueil : `/`
-- [ ] Mariages : `/mariages`
-- [ ] Événements privés : `/evenements-prives`
-- [ ] Événements pro : `/evenements-pro`
-- [ ] Prestations : `/prestations`
-- [ ] Location : `/location`
-- [ ] Galerie : `/galerie`
-- [ ] Contact : `/contact`
-- [ ] Demande musique : `/demande-musique`
-- [ ] Mentions légales : `/mentions-legales`
-- [ ] Confidentialité : `/confidentialite`
+- [x] Accueil : `/`
+- [x] Mariages : `/mariages`
+- [x] Événements privés : `/evenements-prives`
+- [x] Événements pro : `/evenements-pro`
+- [x] Prestations : `/prestations`
+- [x] Location : `/location`
+- [x] Galerie : `/galerie`
+- [x] Contact : `/contact`
+- [x] Demande musique : `/demande-musique`
+- [x] Mentions légales : `/mentions-legales`
+- [x] Confidentialité : `/confidentialite`
 
 À vérifier :
 
