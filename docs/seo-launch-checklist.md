@@ -17,9 +17,9 @@ Finaliser le site Fredmusic pour remplacer proprement le site Wix actuel avec :
 
 ### Version vitrine statique
 
-Statut estimé : 75%.
+Statut estimé : 78%.
 
-Il reste environ 25% pour obtenir une version vitrine propre, présentable au client et publiable sans backend réel.
+Il reste environ 22% pour obtenir une version vitrine propre, présentable au client et publiable sans backend réel.
 
 ### Version complète avec backend/admin réel
 
@@ -159,7 +159,7 @@ Statut : fondation faite.
 
 ## 6. Mentions légales et confidentialité
 
-Statut : à faire après finalisation des pages vitrines.
+Statut : première version intégrée.
 
 Informations connues :
 
@@ -170,13 +170,18 @@ Informations connues :
 - SIREN : 813 426 483.
 - CODE APE : 9329 Z.
 
+Fait :
+
+- [x] Compléter mentions légales.
+- [x] Compléter politique de confidentialité.
+- [x] Décrire formulaire contact.
+- [x] Décrire demande musique.
+- [x] Décrire durée de conservation des données.
+
 À faire :
 
-- [ ] Compléter mentions légales.
-- [ ] Compléter politique de confidentialité.
-- [ ] Décrire formulaire contact.
-- [ ] Décrire demande musique.
-- [ ] Décrire durée de conservation des données.
+- [ ] Ajouter le nom exact de l'hébergeur.
+- [ ] Ajouter les informations légales complètes de l'hébergeur.
 - [ ] Vérifier cookies / analytics.
 
 ---
@@ -315,6 +320,6 @@ dist/
 1. Faire la passe responsive mobile globale.
 2. Trier et optimiser la galerie.
 3. Compléter la page Événements pro quand les infos client arrivent.
-4. Préparer mentions légales / confidentialité.
+4. Clarifier hébergement et domaine.
 5. Clarifier hébergement et domaine.
 6. Décider backend réel après validation vitrine.

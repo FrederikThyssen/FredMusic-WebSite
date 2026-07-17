@@ -16,7 +16,7 @@ export function Footer() {
             <NavLink to="/prestations" className="hover:text-gold-300">Prestations</NavLink>
             <NavLink to="/location" className="hover:text-gold-300">Location</NavLink>
             <NavLink to="/galerie" className="hover:text-gold-300">Galerie</NavLink>
-            <NavLink to="/admin" className="hover:text-gold-300">Admin mocké</NavLink>
+            <NavLink to="/contact" className="hover:text-gold-300">Contact</NavLink>
           </div>
         </div>
         <div>
