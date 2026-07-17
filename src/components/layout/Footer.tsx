@@ -5,7 +5,9 @@ export function Footer() {
     <footer className="border-t border-white/[0.07] bg-night-900">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
-          <p className="text-xl font-light uppercase text-ivory">FREDMUSIC</p>
+          <NavLink to="/" className="inline-flex items-center" aria-label="Fredmusic - Accueil">
+            <img src="/images/conception/logo-du-site.webp" alt="Fredmusic" className="h-16 w-auto object-contain" />
+          </NavLink>
           <p className="mt-3 max-w-sm text-sm leading-6 text-ivory/70">
             DJ mariage et événementiel premium, sonorisation, mise en lumière et location de matériel.
           </p>
