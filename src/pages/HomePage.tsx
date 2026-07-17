@@ -84,7 +84,7 @@ export function HomePage() {
                 );
               })}
             </div>
-            <ButtonLink to="/mariages" variant="weddingPrimary" className="mt-8 w-fit" showArrow>
+            <ButtonLink to="/mariages" variant="weddingPrimary" className="mt-8 w-full sm:w-fit" showArrow>
               Découvrir l'offre mariage
             </ButtonLink>
           </div>
@@ -173,7 +173,7 @@ export function HomePage() {
                 />
               ))}
             </div>
-            <ButtonLink to="/galerie" variant="ghost" className="mt-4 px-0" showArrow>
+            <ButtonLink to="/galerie" variant="ghost" className="mt-4 w-full px-0 sm:w-auto" showArrow>
               Voir plus de photos
             </ButtonLink>
           </div>

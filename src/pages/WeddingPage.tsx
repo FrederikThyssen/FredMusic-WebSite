@@ -67,7 +67,7 @@ export function WeddingPage() {
         <div className="relative mx-auto grid min-h-[620px] max-w-7xl items-center px-4 py-16 sm:px-6 lg:grid-cols-[0.45fr_0.55fr] lg:px-8">
           <div className="max-w-xl">
             <p className="text-xs font-semibold uppercase text-gold-400">Mariage</p>
-            <h1 className="mt-5 font-wedding text-5xl leading-[1.02] text-night-950 sm:text-6xl">
+            <h1 className="mt-5 font-wedding text-4xl leading-tight text-night-950 sm:text-6xl sm:leading-[1.02]">
               Votre mariage,
               <span className="block">une histoire unique</span>
             </h1>
@@ -75,10 +75,10 @@ export function WeddingPage() {
               Chaque détail compte pour faire de votre journée un moment inoubliable, élégant et parfaitement orchestré.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink to="#experience" variant="weddingPrimary" showArrow>
+              <ButtonLink to="#experience" variant="weddingPrimary" className="w-full sm:w-auto" showArrow>
                 Découvrir l'expérience
               </ButtonLink>
-              <ButtonLink to="/contact" variant="weddingSecondary" showArrow>
+              <ButtonLink to="/contact" variant="weddingSecondary" className="w-full sm:w-auto" showArrow>
                 Demander un devis
               </ButtonLink>
             </div>
@@ -131,7 +131,7 @@ export function WeddingPage() {
                 </li>
               ))}
             </ul>
-            <ButtonLink to="/contact" variant="weddingSecondary" className="mt-8" showArrow>
+            <ButtonLink to="/contact" variant="weddingSecondary" className="mt-8 w-full sm:w-auto" showArrow>
               En savoir plus
             </ButtonLink>
           </div>

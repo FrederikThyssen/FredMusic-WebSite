@@ -44,11 +44,11 @@ export function CTASection({
           {children ? <div className="mt-6">{children}</div> : null}
         </div>
         <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-          <ButtonLink to={primaryTo} variant={isWedding ? "weddingPrimary" : "primary"} showArrow>
+          <ButtonLink to={primaryTo} variant={isWedding ? "weddingPrimary" : "primary"} className="w-full sm:w-auto lg:w-full" showArrow>
             {primaryLabel}
           </ButtonLink>
           {secondaryLabel && secondaryTo ? (
-            <ButtonLink to={secondaryTo} variant={isWedding ? "weddingSecondary" : "secondary"} showArrow>
+            <ButtonLink to={secondaryTo} variant={isWedding ? "weddingSecondary" : "secondary"} className="w-full sm:w-auto lg:w-full" showArrow>
               {secondaryLabel}
             </ButtonLink>
           ) : null}

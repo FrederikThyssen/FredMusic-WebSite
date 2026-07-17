@@ -17,9 +17,9 @@ Finaliser le site Fredmusic pour remplacer proprement le site Wix actuel avec :
 
 ### Version vitrine statique
 
-Statut estimé : 84%.
+Statut estimé : 86%.
 
-Il reste environ 16% pour obtenir une version vitrine propre, présentable au client et publiable sans backend réel.
+Il reste environ 14% pour obtenir une version vitrine propre, présentable au client et publiable sans backend réel.
 
 ### Version complète avec backend/admin réel
 
@@ -188,7 +188,7 @@ Fait :
 
 ## 7. Responsive et accessibilité
 
-Statut : deuxième passe technique en cours.
+Statut : passe technique globale avancée.
 
 Pages à vérifier :
 
@@ -209,6 +209,8 @@ Points à vérifier :
 - [x] Première correction mobile Contact / Demande musique / Admin / Galerie.
 - [x] Deuxième correction mobile Location / Événements privés / Événements pro.
 - [x] Protection des textes longs sur Contact et Demande musique.
+- [x] Ajustements CTA globaux et boutons pleine largeur sur mobile.
+- [x] Ajustement page Mariages pour petits écrans sans changer la maquette.
 - [ ] Mobile 360 px à valider visuellement.
 - [ ] Mobile 390 px à valider visuellement.
 - [ ] Tablette.
