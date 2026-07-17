@@ -59,8 +59,8 @@ export function MusicRequestPage() {
               <div className="grid min-h-[420px] place-items-center text-center">
                 <div className="max-w-xl">
                   <CheckCircle2 className="mx-auto h-12 w-12 text-gold-300" aria-hidden="true" />
-                  <h2 className="mt-6 font-display text-4xl text-ivory">Demande envoyée</h2>
-                  <p className="mt-4 leading-7 text-ivory/70">
+                  <h2 className="mt-6 font-display text-3xl text-ivory sm:text-4xl">Demande envoyée</h2>
+                  <p className="mt-4 break-words leading-7 text-ivory/70">
                     Merci, votre proposition est bien enregistrée : {submittedSong}.
                   </p>
                   <Button className="mt-8 w-full sm:w-auto" variant="secondary" onClick={() => setIsSubmitted(false)}>
@@ -126,7 +126,7 @@ export function MusicRequestPage() {
               <div className="mt-5 grid gap-3">
                 {latestRequests.map((request) => (
                   <div key={request.id} className="rounded-sm border border-white/[0.07] bg-night-950/50 p-3">
-                    <p className="text-sm font-semibold text-ivory">
+                    <p className="break-words text-sm font-semibold text-ivory">
                       {request.artist} - {request.songTitle}
                     </p>
                     <p className="mt-1 text-xs uppercase text-gold-300">{request.status}</p>

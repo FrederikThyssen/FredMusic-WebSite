@@ -89,7 +89,7 @@ export function ContactPage() {
               <div className="grid min-h-[420px] place-items-center text-center">
                 <div className="max-w-xl">
                   <CheckCircle2 className="mx-auto h-12 w-12 text-gold-300" aria-hidden="true" />
-                  <h2 className="mt-6 font-display text-4xl text-ivory">Demande enregistrée</h2>
+                  <h2 className="mt-6 font-display text-3xl text-ivory sm:text-4xl">Demande enregistrée</h2>
                   <p className="mt-4 leading-7 text-ivory/70">
                     Merci{submittedName ? ` ${submittedName}` : ""}, votre demande de devis est enregistrée dans
                     l'admin mocké.
@@ -189,9 +189,9 @@ export function ContactPage() {
                 const content = (
                   <>
                     <Icon className="mt-1 h-4 w-4 flex-none text-gold-300" aria-hidden="true" />
-                    <span>
+                    <span className="min-w-0">
                       <span className="block text-xs font-semibold uppercase text-ivory/48">{item.label}</span>
-                      <span className="mt-1 block text-ivory/78">{item.value}</span>
+                      <span className="mt-1 block break-words text-ivory/78">{item.value}</span>
                     </span>
                   </>
                 );

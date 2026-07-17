@@ -83,7 +83,7 @@ export function RentalPage() {
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-4xl">
             <Badge>Location & matériel professionnel</Badge>
-            <h1 className="mt-5 max-w-4xl font-display text-5xl leading-tight text-ivory sm:text-6xl">
+            <h1 className="mt-5 max-w-4xl font-display text-4xl leading-tight text-ivory sm:text-5xl xl:text-6xl">
               Du matériel professionnel pour un son propre et une prestation rassurante
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-ivory/72">
@@ -91,10 +91,10 @@ export function RentalPage() {
               votre public et les moments importants de votre événement.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink to="/contact" showArrow>
+              <ButtonLink to="/contact" className="w-full sm:w-auto" showArrow>
                 Demander un devis
               </ButtonLink>
-              <ButtonLink to="/prestations" variant="secondary" showArrow>
+              <ButtonLink to="/prestations" variant="secondary" className="w-full sm:w-auto" showArrow>
                 Voir les prestations
               </ButtonLink>
             </div>

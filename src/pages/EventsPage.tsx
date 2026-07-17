@@ -121,10 +121,10 @@ export function EventsPage() {
               l'animation à votre moment de vie.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink to="/contact" showArrow>
+              <ButtonLink to="/contact" className="w-full sm:w-auto" showArrow>
                 Demander un devis
               </ButtonLink>
-              <ButtonLink to="/prestations" variant="secondary" showArrow>
+              <ButtonLink to="/prestations" variant="secondary" className="w-full sm:w-auto" showArrow>
                 Voir les prestations
               </ButtonLink>
             </div>

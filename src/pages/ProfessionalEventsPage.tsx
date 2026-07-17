@@ -46,7 +46,7 @@ export function ProfessionalEventsPage() {
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-4xl">
             <Badge>Événements professionnels & publics</Badge>
-            <h1 className="mt-5 font-display text-5xl leading-tight text-ivory sm:text-6xl">
+            <h1 className="mt-5 font-display text-4xl leading-tight text-ivory sm:text-5xl xl:text-6xl">
               Sonorisation et animation pour vos événements professionnels et publics
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-ivory/72">
@@ -54,10 +54,10 @@ export function ProfessionalEventsPage() {
               organisée et adaptée à votre public.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink to="/contact" showArrow>
+              <ButtonLink to="/contact" className="w-full sm:w-auto" showArrow>
                 Demander un devis
               </ButtonLink>
-              <ButtonLink to="/prestations" variant="secondary" showArrow>
+              <ButtonLink to="/prestations" variant="secondary" className="w-full sm:w-auto" showArrow>
                 Voir les prestations
               </ButtonLink>
             </div>
@@ -190,10 +190,10 @@ export function ProfessionalEventsPage() {
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-            <ButtonLink to="/contact" showArrow>
+            <ButtonLink to="/contact" className="w-full sm:w-auto lg:w-full" showArrow>
               Demander un devis
             </ButtonLink>
-            <ButtonLink to="/prestations" variant="secondary" showArrow>
+            <ButtonLink to="/prestations" variant="secondary" className="w-full sm:w-auto lg:w-full" showArrow>
               Voir les prestations
             </ButtonLink>
           </div>
