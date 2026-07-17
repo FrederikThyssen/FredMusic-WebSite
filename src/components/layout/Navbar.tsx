@@ -23,7 +23,7 @@ export function Navbar() {
           FREDMUSIC
         </NavLink>
 
-        <div className="hidden items-center gap-4 xl:gap-5 lg:flex">
+        <div className="hidden items-center gap-4 xl:flex xl:gap-5">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -47,7 +47,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-white/[0.08] text-ivory lg:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-white/[0.08] text-ivory xl:hidden"
           aria-controls="mobile-menu"
           aria-expanded={isOpen}
           aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
@@ -58,7 +58,7 @@ export function Navbar() {
       </nav>
 
       {isOpen ? (
-        <div id="mobile-menu" className="border-t border-white/[0.07] bg-night-900 px-4 py-4 lg:hidden">
+        <div id="mobile-menu" className="border-t border-white/[0.07] bg-night-900 px-4 py-4 xl:hidden">
           <div className="flex flex-col gap-2">
             {navItems.map((item) => (
               <NavLink

@@ -94,7 +94,7 @@ export function ContactPage() {
                     Merci{submittedName ? ` ${submittedName}` : ""}, votre demande de devis est enregistrée dans
                     l'admin mocké.
                   </p>
-                  <Button className="mt-8" variant="secondary" onClick={() => setIsSubmitted(false)}>
+                  <Button className="mt-8 w-full sm:w-auto" variant="secondary" onClick={() => setIsSubmitted(false)}>
                     Modifier la demande
                   </Button>
                 </div>

@@ -63,7 +63,7 @@ export function MusicRequestPage() {
                   <p className="mt-4 leading-7 text-ivory/70">
                     Merci, votre proposition est bien enregistrée : {submittedSong}.
                   </p>
-                  <Button className="mt-8" variant="secondary" onClick={() => setIsSubmitted(false)}>
+                  <Button className="mt-8 w-full sm:w-auto" variant="secondary" onClick={() => setIsSubmitted(false)}>
                     Proposer un autre titre
                   </Button>
                 </div>

@@ -409,7 +409,7 @@ export function GalleryPage() {
               <p className="text-xs font-semibold uppercase text-gold-300">
                 {isVideoCategory ? "Vidéos" : "Photos"}
               </p>
-              <h2 className="mt-3 font-display text-4xl leading-tight text-ivory">{activeCategoryMeta.label}</h2>
+              <h2 className="mt-3 font-display text-3xl leading-tight text-ivory sm:text-4xl">{activeCategoryMeta.label}</h2>
               <p className="mt-4 leading-7 text-ivory/70">{activeCategoryMeta.description}</p>
             </div>
 
@@ -421,7 +421,7 @@ export function GalleryPage() {
                   <button
                     key={category.id}
                     type="button"
-                    className={`rounded-sm border px-4 py-3 text-xs font-semibold uppercase transition ${
+                    className={`w-full rounded-sm border px-4 py-3 text-xs font-semibold uppercase transition sm:w-auto ${
                       isActive
                         ? "border-gold-300 bg-gold-300 text-night-950"
                         : "border-white/[0.09] text-ivory/78 hover:border-gold-300 hover:text-gold-300"

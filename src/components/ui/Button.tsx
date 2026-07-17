@@ -33,7 +33,7 @@ const sizeClasses: Record<ButtonSize, string> = {
 
 function buttonClassName(variant: ButtonVariant, size: ButtonSize, className?: string) {
   return cn(
-    "inline-flex items-center justify-center gap-3 rounded-sm border font-semibold uppercase transition disabled:cursor-not-allowed disabled:opacity-55",
+    "inline-flex items-center justify-center gap-3 rounded-sm border text-center font-semibold uppercase leading-snug transition disabled:cursor-not-allowed disabled:opacity-55",
     sizeClasses[size],
     variantClasses[variant],
     className,

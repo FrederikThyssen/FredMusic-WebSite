@@ -183,7 +183,7 @@ Informations connues :
 
 ## 7. Responsive et accessibilité
 
-Statut : à faire en passe globale.
+Statut : première passe technique en cours.
 
 Pages à vérifier :
 
@@ -200,8 +200,10 @@ Pages à vérifier :
 
 Points à vérifier :
 
-- [ ] Mobile 360 px.
-- [ ] Mobile 390 px.
+- [x] Première correction globale navbar / hero / boutons.
+- [x] Première correction mobile Contact / Demande musique / Admin / Galerie.
+- [ ] Mobile 360 px à valider visuellement.
+- [ ] Mobile 390 px à valider visuellement.
 - [ ] Tablette.
 - [ ] Desktop.
 - [ ] Pas de débordement horizontal.

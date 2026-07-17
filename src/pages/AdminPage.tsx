@@ -97,9 +97,9 @@ export function AdminPage() {
               {quoteRequests.map((request) => (
                 <article key={request.id} className="rounded-md border border-white/[0.07] bg-night-950 p-4">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
+                    <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-3">
-                        <h3 className="font-display text-2xl text-ivory">{request.name}</h3>
+                        <h3 className="min-w-0 break-words font-display text-2xl text-ivory">{request.name}</h3>
                         <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses[request.status]}`}>
                           {quoteStatusLabels[request.status]}
                         </span>
@@ -110,7 +110,7 @@ export function AdminPage() {
                   </div>
 
                   <div className="mt-4 grid gap-3 text-sm text-ivory/68 sm:grid-cols-2">
-                    <p className="flex items-center gap-2">
+                    <p className="flex min-w-0 items-center gap-2 break-all">
                       <Mail className="h-4 w-4 text-gold-300" aria-hidden="true" />
                       {request.email}
                     </p>
@@ -124,7 +124,7 @@ export function AdminPage() {
                       <CalendarDays className="h-4 w-4 text-gold-300" aria-hidden="true" />
                       {formatDate(request.eventDate)}
                     </p>
-                    <p className="flex items-center gap-2">
+                    <p className="flex min-w-0 items-center gap-2 break-words">
                       <MapPin className="h-4 w-4 text-gold-300" aria-hidden="true" />
                       {request.location}
                     </p>
@@ -164,9 +164,9 @@ export function AdminPage() {
                     <div>
                       <div className="flex items-start gap-3">
                         <Music2 className="mt-1 h-5 w-5 flex-none text-gold-300" aria-hidden="true" />
-                        <div>
-                          <h3 className="font-display text-2xl text-ivory">{request.songTitle}</h3>
-                          <p className="mt-1 text-sm text-gold-300">{request.artist}</p>
+                        <div className="min-w-0">
+                          <h3 className="break-words font-display text-2xl text-ivory">{request.songTitle}</h3>
+                          <p className="mt-1 break-words text-sm text-gold-300">{request.artist}</p>
                         </div>
                       </div>
                     </div>
