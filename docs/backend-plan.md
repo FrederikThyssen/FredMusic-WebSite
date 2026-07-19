@@ -40,14 +40,18 @@ Le client ne doit pas forcément pouvoir modifier tout le contenu du site. Les c
 
 ## Architecture recommandée
 
-Le client possède déjà son hébergeur et son domaine. Le choix final dépendra donc des contraintes de cet hébergement.
+Le site actuel est hébergé sur Wix. Le nouveau site doit sortir de Wix tout en conservant le domaine `fredmusic.fr`.
+Le domaine est géré chez Gandi.
 
 Architecture privilégiée :
 
 - Frontend : React / Vite.
+- Hébergement frontend : Vercel, Netlify ou hébergeur compatible React statique.
+- Domaine : `fredmusic.fr`, à faire pointer depuis Gandi vers le nouvel hébergement.
 - Build statique : dossier `dist/`.
-- Base de données / auth / storage : Supabase si l'hébergement ne fournit pas une solution simple.
+- Base de données / auth / storage : Supabase.
 - Email transactionnel : Brevo ou Resend.
+- Email professionnel souhaité : `contact@fredmusic.fr`.
 - Admin : intégré au site via `/admin`.
 
 Le backend réel doit remplacer progressivement le store mock Zustand actuellement utilisé.
@@ -75,7 +79,7 @@ Comportement attendu :
 
 1. Le visiteur remplit le formulaire.
 2. La demande est enregistrée en base.
-3. Un email est envoyé à `djfredmusic@outlook.fr`.
+3. Un email est envoyé à `contact@fredmusic.fr`.
 4. Le visiteur voit une confirmation.
 5. La demande apparaît dans `/admin`.
 
@@ -113,6 +117,10 @@ Important :
 - la demande est une suggestion ;
 - Fredmusic garde la main sur la playlist ;
 - aucun titre n'est joué automatiquement.
+- le QR code doit être unique et permanent ;
+- le QR code pointe vers `/demande-musique` ;
+- Fredmusic peut l'imprimer une seule fois et le réutiliser pour plusieurs soirées ;
+- l'admin doit permettre de définir une soirée active, puis d'archiver ou vider les demandes avant une nouvelle soirée.
 
 Statuts possibles :
 
@@ -153,7 +161,7 @@ Contraintes :
 
 ```sql
 id uuid primary key default gen_random_uuid(),
-event_id text,
+event_id uuid,
 guest_name text,
 artist text not null,
 song_title text not null,
@@ -167,6 +175,24 @@ Contraintes :
 - `status` doit être limité à `pending`, `accepted`, `played`, `refused`.
 - `artist` doit être obligatoire.
 - `song_title` doit être obligatoire.
+
+---
+
+### active_events
+
+```sql
+id uuid primary key default gen_random_uuid(),
+name text not null,
+is_active boolean not null default false,
+created_at timestamptz not null default now(),
+archived_at timestamptz
+```
+
+Contraintes :
+
+- une seule soirée doit être active à la fois ;
+- les nouvelles demandes musique sont associées à la soirée active ;
+- si aucune soirée active n'est définie, les demandes peuvent être associées à une soirée générique.
 
 ---
 

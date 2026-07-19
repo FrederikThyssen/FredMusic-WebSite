@@ -23,9 +23,9 @@ Il reste environ 14% pour obtenir une version vitrine propre, présentable au cl
 
 ### Version complète avec backend/admin réel
 
-Statut estimé : 50%.
+Statut estimé : 55%.
 
-Il reste environ 50% pour obtenir une version complète avec backend réel, admin sécurisé, formulaires enregistrés en base et notifications email.
+Il reste environ 45% pour obtenir une version complète avec backend réel, admin sécurisé, formulaires enregistrés en base et notifications email.
 
 ---
 
@@ -111,25 +111,30 @@ Limites actuelles :
 
 ## 4. Backend réel
 
-Statut : planifié, pas encore développé.
+Statut : architecture cible clarifiée, pas encore développé.
 
 - [x] Plan backend documenté dans `docs/backend-plan.md`.
 - [x] Décision métier : pas de CMS lourd au départ.
 - [x] Admin centré sur devis + demandes musique.
-- [ ] Confirmer les contraintes de l'hébergeur client.
-- [ ] Choisir backend réel : Supabase, service hébergeur, ou autre.
+- [x] Décision : sortir de Wix pour le nouveau site.
+- [x] Décision : domaine conservé chez Gandi.
+- [x] Choix recommandé : Supabase pour base/auth/admin.
+- [ ] Créer le projet Supabase.
 - [ ] Créer tables `quote_requests`.
 - [ ] Créer tables `music_requests`.
+- [ ] Créer table ou réglage `active_event`.
 - [ ] Ajouter authentification admin.
 - [ ] Ajouter règles de sécurité.
-- [ ] Ajouter service email.
+- [ ] Ajouter service email vers `contact@fredmusic.fr`.
 - [ ] Migrer Contact vers backend réel.
 - [ ] Migrer Demande musique vers backend réel.
 - [ ] Migrer Admin vers backend réel.
 
-Priorité :
+Décision QR code :
 
-Le backend réel vient après validation du site vitrine et clarification de l'hébergeur.
+- URL permanente : `/demande-musique`.
+- QR code unique réutilisable pour plusieurs soirées.
+- L'admin devra permettre de définir une soirée active et d'archiver/vider les demandes.
 
 ---
 
@@ -147,8 +152,7 @@ Statut : fondation faite.
 
 À faire :
 
-- [ ] Confirmer le domaine final du client.
-- [ ] Remplacer `https://www.fredmusic.fr` si le domaine réel est différent.
+- [x] Domaine final confirmé : `fredmusic.fr`.
 - [ ] Vérifier un seul H1 par page.
 - [ ] Vérifier titres H2.
 - [ ] Vérifier descriptions uniques.
@@ -255,9 +259,11 @@ La performance images sera importante avant publication, surtout mobile.
 
 ## 9. Ancien site Wix
 
-Statut : à faire quand les informations sont disponibles.
+Statut : stratégie de sortie Wix confirmée.
 
-- [ ] Récupérer l'URL du Wix actuel.
+- [x] Site actuel hébergé sur Wix.
+- [x] Décision : sortir de Wix et conserver le domaine.
+- [ ] Récupérer l'URL exacte du Wix actuel.
 - [ ] Lister les pages existantes.
 - [ ] Identifier les pages importantes Google.
 - [ ] Préparer redirections.
@@ -268,23 +274,26 @@ Statut : à faire quand les informations sont disponibles.
 
 ## 10. Hébergement et domaine
 
-Statut : à clarifier.
+Statut : domaine clarifié, hébergement cible à choisir.
 
-Le client possède déjà :
+Informations confirmées :
 
-- un hébergeur ;
-- un domaine.
+- site actuel hébergé sur Wix ;
+- domaine chez Gandi ;
+- domaine à conserver : `fredmusic.fr` ;
+- email souhaité : `contact@fredmusic.fr`.
 
 À récupérer :
 
-- [ ] nom de l'hébergeur ;
-- [ ] accès FTP / SFTP / panel ;
-- [ ] domaine exact ;
-- [ ] accès DNS ;
+- [x] domaine exact ;
+- [x] registrar du domaine : Gandi.
+- [ ] accès Gandi ;
+- [ ] choisir nouvel hébergement frontend ;
 - [ ] SSL ;
 - [ ] support redirection SPA ;
-- [ ] support backend ou non ;
-- [ ] email lié au domaine ou non.
+- [ ] configurer email `contact@fredmusic.fr`.
+- [ ] configurer MX / SPF / DKIM / DMARC.
+- [ ] connecter le domaine au nouvel hébergement.
 
 Build :
 
@@ -325,6 +334,6 @@ dist/
 1. Faire la passe responsive mobile globale.
 2. Trier et optimiser la galerie.
 3. Compléter la page Événements pro quand les infos client arrivent.
-4. Clarifier hébergement et domaine.
-5. Clarifier hébergement et domaine.
-6. Décider backend réel après validation vitrine.
+4. Créer le projet Supabase et préparer le backend réel.
+5. Choisir le nouvel hébergement frontend.
+6. Préparer la bascule Gandi / Wix.
