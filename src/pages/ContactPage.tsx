@@ -178,7 +178,7 @@ export function ContactPage() {
           </div>
 
           <aside className="border-t border-white/[0.08] bg-night-950/72 p-5 sm:p-7 lg:border-l lg:border-t-0 lg:p-9">
-            <div className="rounded-md border border-gold-300/18 bg-gold-300/[0.06] p-5">
+            <div className="rounded-md bg-white/[0.04] p-5">
               <h2 className="font-display text-3xl text-ivory">Contact</h2>
               <p className="mt-2 text-sm uppercase text-gold-300">Fréderic WILKOSZ</p>
             </div>

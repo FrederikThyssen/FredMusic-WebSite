@@ -15,9 +15,9 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "border-gold-400 bg-gold-200 text-night-950 shadow-glow hover:border-gold-300 hover:bg-gold-300",
+    "border-gold-300 bg-gold-300 text-night-950 shadow-glow hover:-translate-y-0.5 hover:border-gold-500 hover:bg-gold-500 hover:text-white hover:shadow-[0_18px_50px_rgba(255,185,0,0.28)]",
   secondary:
-    "border-gold-400 bg-transparent text-ivory hover:bg-gold-300 hover:text-night-950",
+    "border-gold-400 bg-transparent text-ivory hover:-translate-y-0.5 hover:bg-gold-300 hover:text-night-950",
   ghost: "border-transparent bg-transparent text-gold-200 hover:text-gold-300",
   weddingPrimary:
     "border-gold-400 bg-gold-500 text-white hover:border-gold-500 hover:bg-gold-400",
