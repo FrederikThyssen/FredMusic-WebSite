@@ -14,7 +14,7 @@ export function EquipmentCard({ item }: EquipmentCardProps) {
       <div className="aspect-[4/3] overflow-hidden bg-night-800">
         <img
           src={item.marketingImage}
-          alt=""
+          alt={`${item.name} ${item.brand}`}
           loading="lazy"
           className="h-full w-full object-cover opacity-82 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
         />

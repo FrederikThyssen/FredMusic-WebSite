@@ -2,7 +2,7 @@
 
 ## Objectif
 
-Préparer le passage du site Fredmusic d'un mock local vers un système réel capable de :
+Décrire le backend Fredmusic en production, avec un système réel capable de :
 
 - recevoir les demandes de devis ;
 - recevoir les demandes de musique via QR code ;
@@ -54,7 +54,7 @@ Architecture privilégiée :
 - Email professionnel souhaité : `contact@fredmusic.fr`.
 - Admin : intégré au site via `/admin`.
 
-Le backend réel doit remplacer progressivement le store mock Zustand actuellement utilisé.
+Les contenus vitrine restent dans des fichiers de données statiques versionnés. Les données transactionnelles passent par Supabase.
 
 ---
 
@@ -265,26 +265,20 @@ Pour éviter de spammer le DJ pendant une soirée, il vaut mieux afficher les de
 
 ---
 
-## Migration depuis le mock actuel
+## État backend actuel
 
-État actuel :
-
-- Zustand stocke les demandes localement.
-- `localStorage` persiste les demandes mockées.
-- `/contact` alimente `quoteRequests`.
-- `/demande-musique` alimente `musicRequests`.
-- `/admin` lit ces demandes et modifie les statuts.
-
-Migration prévue :
-
-1. Créer les tables réelles.
-2. Ajouter les variables d'environnement.
-3. Créer un client backend.
-4. Remplacer `addQuoteRequest` par un insert réel.
-5. Remplacer `addMusicRequest` par un insert réel.
-6. Remplacer les lectures admin par des requêtes réelles.
-7. Ajouter l'auth admin.
-8. Ajouter l'envoi email pour les devis.
+- Tables Supabase créées pour les demandes de devis, demandes de musique, soirées actives et réglages.
+- RLS activée.
+- `/contact` enregistre les demandes dans `quote_requests`.
+- `/demande-musique` enregistre les suggestions dans `music_requests`.
+- `/admin` lit les demandes réelles et modifie leurs statuts.
+- L'authentification admin passe par Supabase Auth.
+- Une migration de durcissement ajoute contraintes SQL, index de soirée active unique et RPC d'activation atomique.
+- Les formulaires publics passent par une Supabase Edge Function `submit-form` avec validation serveur et rate limit par IP.
+- `submit-form` est configurée avec `verify_jwt = false`, car elle reçoit des formulaires publics et applique sa propre validation/rate limit.
+- `submit-form` est déployée et validée par tests curl sur devis, demande musique et rate limit.
+- L'envoi email des devis passe par Resend depuis l'Edge Function `submit-form`.
+- L'envoi email Resend est validé avec l'adresse autorisée du compte. L'envoi vers `djfredmusic@outlook.fr` dépend de la validation du domaine `fredmusic.fr` dans Resend.
 
 ---
 
@@ -292,12 +286,24 @@ Migration prévue :
 
 ```txt
 VITE_SUPABASE_URL=
-VITE_SUPABASE_ANON_KEY=
+VITE_SUPABASE_PUBLISHABLE_KEY=
 EMAIL_PROVIDER_API_KEY=
 ADMIN_NOTIFICATION_EMAIL=djfredmusic@outlook.fr
 ```
 
 Les clés sensibles ne doivent jamais être commit dans Git.
+
+Supabase fournit automatiquement `SUPABASE_SECRET_KEYS` aux Edge Functions. Ne pas créer manuellement de secret commençant par `SUPABASE_` et ne jamais exposer de clé secrète dans le front.
+
+Secrets Supabase Functions à configurer :
+
+```txt
+RESEND_API_KEY=
+QUOTE_NOTIFICATION_EMAIL=djfredmusic@outlook.fr
+QUOTE_EMAIL_FROM=FredMusic <onboarding@resend.dev>
+```
+
+`QUOTE_EMAIL_FROM` doit passer à `FredMusic <contact@fredmusic.fr>` quand le domaine `fredmusic.fr` sera validé dans Resend.
 
 ---
 
@@ -326,12 +332,8 @@ Si l'hébergement est uniquement statique, le backend devra être externe.
 
 ## Prochaines étapes recommandées
 
-1. Garder l'admin mocké simple et validé.
-2. Finaliser les textes visibles des formulaires.
+1. Valider le domaine `fredmusic.fr` dans Resend/Gandi.
+2. Remplacer l'expéditeur temporaire par `FredMusic <contact@fredmusic.fr>`.
 3. Vérifier responsive mobile de `/demande-musique`.
-4. Choisir la solution backend selon l'hébergeur réel.
-5. Créer les tables.
-6. Brancher Contact en réel.
-7. Brancher Demande musique en réel.
-8. Ajouter authentification admin.
-9. Tester avec le client avant mise en ligne.
+4. Ajouter tests, CI et monitoring.
+5. Tester avec le client avant mise en ligne.

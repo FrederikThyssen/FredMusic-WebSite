@@ -67,7 +67,7 @@ const privacySections: LegalSection[] = [
     title: "Conservation",
     content: [
       "Les données sont conservées uniquement le temps nécessaire au traitement de la demande et au suivi commercial raisonnable.",
-      "La version actuelle du site utilise encore un fonctionnement mocké/local pour préparer le futur backend.",
+      "Les demandes transmises via les formulaires sont enregistrées dans l'outil d'administration sécurisé de Fredmusic.",
     ],
   },
   {

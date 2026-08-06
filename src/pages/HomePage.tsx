@@ -7,7 +7,9 @@ import { SectionHeader } from "../components/sections/SectionHeader";
 import { Badge } from "../components/ui/Badge";
 import { ButtonLink } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
-import { useAppStore } from "../store/useAppStore";
+import { galleryItems } from "../data/gallery";
+import { services } from "../data/services";
+import { testimonials } from "../data/testimonials";
 
 const weddingHighlights = [
   { title: "Ouverture de bal", text: "Un moment magique qui vous ressemble.", icon: Music2 },
@@ -23,10 +25,6 @@ const qrFeatures = [
 ];
 
 export function HomePage() {
-  const services = useAppStore((state) => state.services);
-  const galleryItems = useAppStore((state) => state.galleryItems);
-  const testimonials = useAppStore((state) => state.testimonials);
-
   const featuredServices = services.slice(0, 4);
   const featuredGallery = galleryItems.slice(0, 3);
   const featuredTestimonial = testimonials[0];
@@ -64,7 +62,7 @@ export function HomePage() {
       <section className="bg-warm-100 text-night-950">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.48fr_0.52fr] lg:px-8">
           <div className="flex flex-col justify-center">
-            <p className="text-xs font-semibold uppercase text-gold-400">Mariages</p>
+            <p className="text-xs font-semibold uppercase text-gold-700">Mariages</p>
             <h2 className="mt-4 max-w-lg font-wedding text-4xl leading-tight sm:text-5xl">
               Votre plus beau jour, notre plus belle mission
             </h2>
@@ -90,7 +88,7 @@ export function HomePage() {
           </div>
           <div className="min-h-[420px] overflow-hidden rounded-sm bg-white lg:-mr-8">
             <img
-              src="/images/conception/wedding-soft-room.webp"
+              src="/images/conception/galerie-evenement-007.webp"
               alt="Ambiance mariage premium lumineuse avec décor romantique"
               className="h-full w-full object-cover"
               loading="lazy"

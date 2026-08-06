@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { ButtonLink } from "../components/ui/Button";
 
 export function NotFoundPage() {
   return (
@@ -6,14 +6,11 @@ export function NotFoundPage() {
       <p className="text-sm font-semibold uppercase tracking-[0.24em] text-gold-300">404</p>
       <h1 className="mt-4 font-display text-4xl text-ivory sm:text-5xl">Page introuvable</h1>
       <p className="mt-6 max-w-xl text-lg leading-8 text-ivory/72">
-        Cette page n'existe pas encore dans le POC Fredmusic.
+        Cette page n'existe pas ou a été déplacée.
       </p>
-      <NavLink
-        to="/"
-        className="mt-8 inline-flex w-fit rounded-full bg-gold-400 px-5 py-3 font-semibold text-night-950 hover:bg-gold-300"
-      >
+      <ButtonLink to="/" variant="primary" size="md" showArrow className="mt-8 w-fit">
         Retour à l'accueil
-      </NavLink>
+      </ButtonLink>
     </section>
   );
 }

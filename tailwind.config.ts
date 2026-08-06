@@ -15,6 +15,8 @@ export default {
           300: "#FFB900",
           400: "#E6A600",
           500: "#C98F00",
+          // Darker than 500: keeps AA text contrast (>=4.5:1) on warm-50/100/white backgrounds
+          700: "#8A5A00",
         },
         ivory: "#EDEDED",
         warm: {

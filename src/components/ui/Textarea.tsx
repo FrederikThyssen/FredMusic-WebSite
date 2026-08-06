@@ -27,7 +27,7 @@ export function Textarea({ id, label, error, className, required, ...props }: Te
         )}
         {...props}
       />
-      {error ? <span id={errorId} className="text-sm text-red-300">{error}</span> : null}
+      {error ? <span id={errorId} role="alert" className="text-sm text-red-300">{error}</span> : null}
     </label>
   );
 }

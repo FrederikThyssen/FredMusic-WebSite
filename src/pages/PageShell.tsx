@@ -10,7 +10,7 @@ export function PageShell({ eyebrow = "Fredmusic", title, description, theme = "
     return (
       <section className="min-h-[58vh] bg-warm-100 text-night-950">
         <div className="mx-auto flex max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 lg:px-8">
-          <p className="text-sm font-semibold uppercase text-gold-400">{eyebrow}</p>
+          <p className="text-sm font-semibold uppercase text-gold-700">{eyebrow}</p>
           <h1 className="mt-4 max-w-4xl font-wedding text-4xl leading-tight text-night-950 sm:text-5xl lg:text-6xl">
             {title}
           </h1>

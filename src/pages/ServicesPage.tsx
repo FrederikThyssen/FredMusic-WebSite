@@ -56,7 +56,7 @@ export function ServicesPage() {
     <div className="bg-night-950 text-ivory">
       <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
         <img
-          src="/images/conception/IMG_9192.webp"
+          src="/images/conception/galerie-evenement-036.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center opacity-38"
           aria-hidden="true"

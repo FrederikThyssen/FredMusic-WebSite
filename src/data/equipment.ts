@@ -47,7 +47,7 @@ export const equipment: EquipmentItem[] = [
     longDescription:
       "L'Electro-Voice EKX 15 offre une diffusion claire et robuste pour les événements nécessitant un système professionnel adapté aux jauges importantes.",
     image: "/images/conception/logo-du-site.png",
-    marketingImage: "/images/conception/event-lighting-room.webp",
+    marketingImage: "/images/conception/galerie-evenement-046.webp",
     keyFeatures: ["Puissance adaptée aux grandes salles", "Diffusion claire", "Système fiable", "Installation événementielle"],
     recommendedFor: ["Mariages", "Associations", "Entreprises", "Soirées jusqu'à 350 personnes"],
     availableForRental: true,
@@ -66,7 +66,7 @@ export const equipment: EquipmentItem[] = [
     longDescription:
       "La Mackie Thump 15 BST convient aux configurations mobiles, aux petites salles et aux besoins de renfort sonore propres et rapides à installer.",
     image: "/images/conception/logo-du-site.png",
-    marketingImage: "/images/conception/event-lighting-room.webp",
+    marketingImage: "/images/conception/galerie-evenement-046.webp",
     keyFeatures: ["Enceinte amplifiée", "Contrôle Bluetooth", "Installation rapide", "Usage polyvalent"],
     recommendedFor: ["Petites soirées", "Discours", "Cocktails", "Renfort sonore"],
     availableForRental: true,

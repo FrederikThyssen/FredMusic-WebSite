@@ -7,8 +7,8 @@ Finaliser le site Fredmusic pour remplacer proprement le site Wix actuel avec :
 - un site vitrine premium ;
 - des pages cohérentes et responsive ;
 - un SEO propre ;
-- des formulaires mockés puis connectables au backend ;
-- une base admin simple ;
+- des formulaires connectés à Supabase ;
+- une base admin simple connectée au backend ;
 - une mise en ligne fiable sur l'hébergement du client.
 
 ---
@@ -23,9 +23,9 @@ Il reste environ 14% pour obtenir une version vitrine propre, présentable au cl
 
 ### Version complète avec backend/admin réel
 
-Statut estimé : 55%.
+Statut estimé : 75%.
 
-Il reste environ 45% pour obtenir une version complète avec backend réel, admin sécurisé, formulaires enregistrés en base et notifications email.
+Le backend Supabase, l'auth admin et l'enregistrement des formulaires sont en place. Il reste principalement le durcissement anti-spam/rate limit, les notifications email, la CI, le monitoring et la validation de déploiement.
 
 ---
 
@@ -42,7 +42,7 @@ Statut : avancé.
 - [x] Galerie.
 - [x] Contact.
 - [x] Demande musique.
-- [x] Admin mocké.
+- [x] Admin connecté à Supabase.
 
 À faire :
 
@@ -64,10 +64,11 @@ Priorité immédiate :
 
 Statut : base avancée, tri à refaire.
 
-- [x] Catégorie Mariages réalisés.
-- [x] Catégorie Nos différents événements.
-- [x] Catégorie Vidéos prévue.
-- [ ] Ajouter les vidéos quand elles seront disponibles.
+- [x] Section unique Nos différents événements réalisés.
+- [x] Photos mariage fusionnées dans cette section.
+- [x] Mention Mariage ajoutée à la liste des types d'événements.
+- [x] Catégorie vidéo vide retirée pour éviter une promesse non tenue.
+- [ ] Ajouter une catégorie vidéo uniquement quand les fichiers seront disponibles et validés.
 - [ ] Trier les photos avec le client.
 - [ ] Supprimer les photos moyennes de l'affichage.
 - [ ] Vérifier les titres et alt des photos retenues.
@@ -81,37 +82,41 @@ Statut : base avancée, tri à refaire.
 
 ---
 
-## 3. Formulaires et admin mockés
+## 3. Formulaires et admin
 
-Statut : mock fonctionnel.
+Statut : backend Supabase fonctionnel, durcissement serveur déployé.
 
 - [x] Formulaire Contact.
 - [x] Formulaire demande musique.
-- [x] Admin mocké.
+- [x] Admin protégé par Supabase Auth.
 - [x] Demandes de devis visibles dans admin.
 - [x] Demandes de musique visibles dans admin.
-- [x] Statuts mockés : traité / refusé / accepté / joué.
-- [x] Persistance locale via `localStorage`.
+- [x] Statuts réels : traité / refusé / accepté / joué.
+- [x] Persistance Supabase.
 
 Limites actuelles :
 
-- [ ] Pas de vraie base de données.
-- [ ] Pas d'envoi email réel.
-- [ ] Pas d'authentification admin.
-- [ ] Les données restent locales au navigateur.
+- [x] Base Supabase réelle.
+- [x] Envoi email réel ajouté via Resend pour les devis.
+- [x] Envoi email Resend validé sur l'adresse autorisée du compte.
+- [x] Authentification admin Supabase.
+- [x] Edge Function de validation/rate limit ajoutée.
+- [x] Edge Function déployée sur Supabase.
+- [x] Tests curl Contact/Demande musique validés.
+- [x] Rate limit validé.
 
-À faire plus tard :
+Prochaines étapes :
 
-- [ ] Brancher une vraie base.
-- [ ] Ajouter une connexion admin.
-- [ ] Envoyer les demandes de devis par email.
-- [ ] Remplacer `localStorage` par backend réel.
+- [x] Brancher une vraie base.
+- [x] Ajouter une connexion admin.
+- [x] Envoyer les demandes de devis par email.
+- [x] Utiliser Supabase pour les données transactionnelles.
 
 ---
 
 ## 4. Backend réel
 
-Statut : architecture cible clarifiée, pas encore développé.
+Statut : Supabase implémenté, durcissement et notifications à terminer.
 
 - [x] Plan backend documenté dans `docs/backend-plan.md`.
 - [x] Décision métier : pas de CMS lourd au départ.
@@ -119,16 +124,20 @@ Statut : architecture cible clarifiée, pas encore développé.
 - [x] Décision : sortir de Wix pour le nouveau site.
 - [x] Décision : domaine conservé chez Gandi.
 - [x] Choix recommandé : Supabase pour base/auth/admin.
-- [ ] Créer le projet Supabase.
-- [ ] Créer tables `quote_requests`.
-- [ ] Créer tables `music_requests`.
-- [ ] Créer table ou réglage `active_event`.
-- [ ] Ajouter authentification admin.
-- [ ] Ajouter règles de sécurité.
-- [ ] Ajouter service email vers `contact@fredmusic.fr`.
-- [ ] Migrer Contact vers backend réel.
-- [ ] Migrer Demande musique vers backend réel.
-- [ ] Migrer Admin vers backend réel.
+- [x] Créer le projet Supabase.
+- [x] Créer tables `quote_requests`.
+- [x] Créer tables `music_requests`.
+- [x] Créer table ou réglage `active_event`.
+- [x] Ajouter authentification admin.
+- [x] Ajouter règles de sécurité RLS de base.
+- [x] Exécuter la migration de durcissement `002_hardening.sql`.
+- [x] Exécuter la migration formulaire `003_form_security.sql`.
+- [x] Déployer l'Edge Function `submit-form`.
+- [x] Ajouter service email Resend pour les devis.
+- [ ] Remplacer l'expéditeur temporaire par `contact@fredmusic.fr` après validation DNS du domaine.
+- [x] Migrer Contact vers backend réel.
+- [x] Migrer Demande musique vers backend réel.
+- [x] Migrer Admin vers backend réel.
 
 Décision QR code :
 
@@ -334,6 +343,6 @@ dist/
 1. Faire la passe responsive mobile globale.
 2. Trier et optimiser la galerie.
 3. Compléter la page Événements pro quand les infos client arrivent.
-4. Créer le projet Supabase et préparer le backend réel.
+4. Valider l'envoi email Resend en production.
 5. Choisir le nouvel hébergement frontend.
 6. Préparer la bascule Gandi / Wix.

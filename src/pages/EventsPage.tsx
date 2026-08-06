@@ -20,7 +20,7 @@ const privateEventTypes = [
     title: "Anniversaires",
     text: "Une soirée festive et personnalisée pour rassembler toutes les générations.",
     icon: Cake,
-    image: "/images/conception/64img.webp",
+    image: "/images/conception/galerie-evenement-024.webp",
     alt: "Salle décorée pour un anniversaire avec tables hautes et installation DJ",
   },
   {
@@ -34,14 +34,14 @@ const privateEventTypes = [
     title: "Soirées privées",
     text: "Un format sur mesure pour vos invités, votre lieu et votre ambiance.",
     icon: UsersRound,
-    image: "/images/conception/IMG_9522.webp",
+    image: "/images/conception/galerie-evenement-038.webp",
     alt: "Soirée privée avec ambiance lumineuse et espace de réception",
   },
   {
     title: "Soirées à thème",
     text: "Une programmation musicale cohérente avec votre univers.",
     icon: Music2,
-    image: "/images/conception/4555.jpg",
+    image: "/images/conception/galerie-evenement-045.jpg",
     alt: "Décoration et éclairage pour une soirée à thème",
   },
   {
@@ -55,7 +55,7 @@ const privateEventTypes = [
     title: "Garden-party",
     text: "Son, lumière et ambiance pour profiter d'un cadre extérieur.",
     icon: PartyPopper,
-    image: "/images/conception/gardenparty1.png",
+    image: "/images/conception/galerie-evenement-025.png",
     alt: "Garden-party avec guirlandes lumineuses et ambiance extérieure",
   },
 ];
@@ -75,17 +75,17 @@ const options = [
 
 const gallery = [
  {
-    src: "/images/conception/22442.jpg",
+    src: "/images/conception/galerie-evenement-022.jpg",
     alt: "Soirée privée avec piste de danse, tables dressées et jeux de lumière colorés",
   },
 
   {
-    src: "/images/conception/IMG_0437.webp",
+    src: "/images/conception/galerie-evenement-023.webp",
     alt: "Régie DJ installée dans une salle en briques avec invités sur la piste de danse",
   },
   
   {
-    src: "/images/conception/IMG_8620.webp",
+    src: "/images/conception/galerie-evenement-026.webp",
     alt: "Salle de réception décorée avec tables rondes et éclairage pour une fête privée",
   },
 
@@ -103,7 +103,7 @@ export function EventsPage() {
     <div className="bg-night-950 text-ivory">
       <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
         <img
-          src="/images/conception/image745.webp"
+          src="/images/conception/galerie-evenement-021.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center opacity-48"
           aria-hidden="true"

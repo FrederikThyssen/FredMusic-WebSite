@@ -17,12 +17,92 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.fredmusic.fr/evenements/mariage-claire-thomas</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/evenements/soiree-privee-anniversaire</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/evenements/mariage-julie-romain</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/evenements/evenement-entreprise</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.fredmusic.fr/prestations</loc>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.fredmusic.fr/prestations/dj-animation</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/prestations/mise-en-lumiere</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/prestations/sonorisation</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/prestations/effets-speciaux</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/prestations/location-materiel</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/prestations/creation-ambiance</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/prestations/evenements-prives</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/prestations/mariages</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/prestations/entreprises</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/prestations/anniversaires</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.fredmusic.fr/location</loc>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/location/pioneer-djm-a9</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/location/pioneer-cdj-3000</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/location/electro-voice-ekx-15</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/location/mackie-thump-15-bst</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/location/shure-slx-d</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/location/soundcraft-ui-16</loc>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.fredmusic.fr/galerie</loc>
@@ -33,15 +113,15 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.fredmusic.fr/demande-musique</loc>
-    <priority>0.3</priority>
-  </url>
-  <url>
     <loc>https://www.fredmusic.fr/mentions-legales</loc>
     <priority>0.2</priority>
   </url>
   <url>
     <loc>https://www.fredmusic.fr/confidentialite</loc>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://www.fredmusic.fr/conditions-utilisation</loc>
     <priority>0.2</priority>
   </url>
 </urlset>

@@ -41,7 +41,7 @@ export function Select({ id, label, options, error, placeholder, className, requ
           </option>
         ))}
       </select>
-      {error ? <span id={errorId} className="text-sm text-red-300">{error}</span> : null}
+      {error ? <span id={errorId} role="alert" className="text-sm text-red-300">{error}</span> : null}
     </label>
   );
 }

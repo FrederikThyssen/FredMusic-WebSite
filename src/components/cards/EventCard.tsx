@@ -14,7 +14,7 @@ export function EventCard({ event }: EventCardProps) {
     <Card className="grid gap-5 p-5 md:grid-cols-[160px_1fr_auto] md:items-center">
       <img
         src={event.image}
-        alt=""
+        alt={event.title}
         loading="lazy"
         className="aspect-[4/3] h-full w-full object-cover md:h-32"
       />

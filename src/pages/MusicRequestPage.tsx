@@ -1,38 +1,78 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { CheckCircle2, Disc3, ListMusic, Send } from "lucide-react";
+import { fetchActiveEvent, insertMusicRequest } from "../lib/api";
 import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { Textarea } from "../components/ui/Textarea";
-import { useAppStore } from "../store/useAppStore";
-
-const publicQrEventId = "event-public-qr";
 
 export function MusicRequestPage() {
-  const addMusicRequest = useAppStore((state) => state.addMusicRequest);
-  const musicRequests = useAppStore((state) => state.musicRequests);
-  const latestRequests = musicRequests.slice(0, 3);
+  const [activeEventId, setActiveEventId] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedSong, setSubmittedSong] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitError, setSubmitError] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    fetchActiveEvent().then(({ data }) => {
+      if (data) setActiveEventId(data.id);
+    });
+  }, []);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    if (isSubmitting) return;
 
-    const formData = new FormData(event.currentTarget);
-    const artist = String(formData.get("artist") ?? "");
-    const songTitle = String(formData.get("songTitle") ?? "");
+    const formData = new FormData(form);
+    if (String(formData.get("website") ?? "").trim()) {
+      setSubmittedSong("Votre proposition");
+      setIsSubmitted(true);
+      form.reset();
+      return;
+    }
 
-    addMusicRequest({
-      eventId: publicQrEventId,
-      guestName: String(formData.get("guestName") ?? ""),
+    const guestName = String(formData.get("guestName") ?? "").trim();
+    const artist = String(formData.get("artist") ?? "").trim();
+    const songTitle = String(formData.get("songTitle") ?? "").trim();
+    const message = String(formData.get("message") ?? "").trim();
+    const nextErrors: Record<string, string> = {};
+
+    if (guestName.length > 80) nextErrors.guestName = "Le nom ne peut pas dépasser 80 caractères.";
+    if (artist.length < 1) nextErrors.artist = "Indiquez un artiste.";
+    if (artist.length > 120) nextErrors.artist = "L'artiste ne peut pas dépasser 120 caractères.";
+    if (songTitle.length < 1) nextErrors.songTitle = "Indiquez un titre.";
+    if (songTitle.length > 160) nextErrors.songTitle = "Le titre ne peut pas dépasser 160 caractères.";
+    if (message.length > 500) nextErrors.message = `Message trop long (${message.length}/500 caractères).`;
+
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+
+    setErrors({});
+    setSubmitError("");
+    setIsSubmitting(true);
+
+    const { error } = await insertMusicRequest({
+      eventId: activeEventId,
+      guestName,
       artist,
       songTitle,
-      message: String(formData.get("message") ?? ""),
+      message,
     });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      setSubmitError("Une erreur est survenue. Réessayez dans un instant.");
+      return;
+    }
 
     setSubmittedSong(`${artist} - ${songTitle}`);
     setIsSubmitted(true);
-    event.currentTarget.reset();
+    form.reset();
   }
 
   return (
@@ -70,12 +110,22 @@ export function MusicRequestPage() {
               </div>
             ) : (
               <form className="grid gap-5" onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
                 <Input
                   label="Votre prénom ou nom"
                   name="guestName"
                   placeholder="Optionnel"
                   autoComplete="name"
                   className="rounded-md border-white/[0.1] bg-night-900/72"
+                  maxLength={80}
+                  error={errors.guestName}
                 />
 
                 <div className="grid gap-5 sm:grid-cols-2">
@@ -84,6 +134,8 @@ export function MusicRequestPage() {
                     name="artist"
                     placeholder="Ex. Earth, Wind & Fire"
                     className="rounded-md border-white/[0.1] bg-night-900/72"
+                    maxLength={120}
+                    error={errors.artist}
                     required
                   />
                   <Input
@@ -91,6 +143,8 @@ export function MusicRequestPage() {
                     name="songTitle"
                     placeholder="Ex. September"
                     className="rounded-md border-white/[0.1] bg-night-900/72"
+                    maxLength={160}
+                    error={errors.songTitle}
                     required
                   />
                 </div>
@@ -100,11 +154,14 @@ export function MusicRequestPage() {
                   name="message"
                   placeholder="Optionnel : dédicace, moment souhaité, souvenir..."
                   className="rounded-md border-white/[0.1] bg-night-900/72"
+                  maxLength={500}
+                  error={errors.message}
                 />
 
-                <Button type="submit" size="lg" icon={<Send className="h-4 w-4" />} className="mt-2 w-full sm:w-fit" showArrow>
-                  Envoyer ma demande
+                <Button type="submit" size="lg" icon={<Send className="h-4 w-4" />} className="mt-2 w-full sm:w-fit" showArrow disabled={isSubmitting}>
+                  {isSubmitting ? "Envoi en cours…" : "Envoyer ma demande"}
                 </Button>
+                {submitError ? <p role="alert" className="text-sm text-red-300">{submitError}</p> : null}
               </form>
             )}
           </div>
@@ -121,18 +178,16 @@ export function MusicRequestPage() {
             <div className="mt-6 rounded-md border border-white/[0.08] bg-white/[0.04] p-5">
               <div className="flex items-center gap-3">
                 <ListMusic className="h-5 w-5 text-gold-300" aria-hidden="true" />
-                <h3 className="font-display text-2xl text-ivory">Dernières demandes</h3>
+                <h3 className="font-display text-2xl text-ivory">Comment ça marche ?</h3>
               </div>
-              <div className="mt-5 grid gap-3">
-                {latestRequests.map((request) => (
-                  <div key={request.id} className="rounded-sm border border-white/[0.07] bg-night-950/50 p-3">
-                    <p className="break-words text-sm font-semibold text-ivory">
-                      {request.artist} - {request.songTitle}
-                    </p>
-                    <p className="mt-1 text-xs uppercase text-gold-300">{request.status}</p>
-                  </div>
+              <ol className="mt-5 grid gap-3">
+                {["Scannez le QR code de la soirée.", "Proposez un artiste et un titre.", "Fredmusic valide et joue le bon moment venu."].map((step, i) => (
+                  <li key={step} className="flex items-start gap-3 text-sm text-ivory/72">
+                    <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full bg-gold-300/10 text-xs font-semibold text-gold-300">{i + 1}</span>
+                    {step}
+                  </li>
                 ))}
-              </div>
+              </ol>
             </div>
           </aside>
         </div>
