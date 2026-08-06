@@ -7,7 +7,9 @@ import { SectionHeader } from "../components/sections/SectionHeader";
 import { Badge } from "../components/ui/Badge";
 import { ButtonLink } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
-import { useAppStore } from "../store/useAppStore";
+import { galleryItems } from "../data/gallery";
+import { services } from "../data/services";
+import { testimonials } from "../data/testimonials";
 
 const weddingHighlights = [
   { title: "Ouverture de bal", text: "Un moment magique qui vous ressemble.", icon: Music2 },
@@ -23,10 +25,6 @@ const qrFeatures = [
 ];
 
 export function HomePage() {
-  const services = useAppStore((state) => state.services);
-  const galleryItems = useAppStore((state) => state.galleryItems);
-  const testimonials = useAppStore((state) => state.testimonials);
-
   const featuredServices = services.slice(0, 4);
   const featuredGallery = galleryItems.slice(0, 3);
   const featuredTestimonial = testimonials[0];
@@ -37,7 +35,7 @@ export function HomePage() {
         eyebrow="DJ mariage & événementiel premium"
         title="L'expérience DJ premium pour vos événements"
         description="Mariages, soirées privées, entreprises : une ambiance unique, une sonorisation d'exception et une mise en lumière sur mesure."
-        image="/images/conception/image3.png"
+        image="/images/conception/424.webp"
         imageAlt="DJ Fredmusic face à une salle événementielle premium avec régie et effets lumineux"
         imageObjectPosition="center 68%"
         primaryLabel="Réserver ma date"
@@ -64,7 +62,7 @@ export function HomePage() {
       <section className="bg-warm-100 text-night-950">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.48fr_0.52fr] lg:px-8">
           <div className="flex flex-col justify-center">
-            <p className="text-xs font-semibold uppercase text-gold-400">Mariages</p>
+            <p className="text-xs font-semibold uppercase text-gold-700">Mariages</p>
             <h2 className="mt-4 max-w-lg font-wedding text-4xl leading-tight sm:text-5xl">
               Votre plus beau jour, notre plus belle mission
             </h2>
@@ -84,13 +82,13 @@ export function HomePage() {
                 );
               })}
             </div>
-            <ButtonLink to="/mariages" variant="weddingPrimary" className="mt-8 w-fit" showArrow>
+            <ButtonLink to="/mariages" variant="weddingPrimary" className="mt-8 w-full sm:w-fit" showArrow>
               Découvrir l'offre mariage
             </ButtonLink>
           </div>
-          <div className="min-h-[420px] overflow-hidden bg-white lg:-mr-8">
+          <div className="min-h-[420px] overflow-hidden rounded-sm bg-white lg:-mr-8">
             <img
-              src="/images/conception/wedding-soft-room.png"
+              src="/images/conception/galerie-evenement-007.webp"
               alt="Ambiance mariage premium lumineuse avec décor romantique"
               className="h-full w-full object-cover"
               loading="lazy"
@@ -101,9 +99,9 @@ export function HomePage() {
 
       <section className="bg-night-950 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.44fr_0.56fr] lg:items-center">
-          <div className="min-h-[360px] overflow-hidden border border-white/10 bg-night-900">
+          <div className="min-h-[360px] overflow-hidden rounded-sm border border-white/[0.07] bg-night-900">
             <img
-              src="/images/conception/qr-music-request.png"
+              src="/images/conception/qr-music-request.webp"
               alt="Carte QR code et téléphone Fredmusic pour demander une musique"
               className="h-full w-full object-cover"
               loading="lazy"
@@ -147,9 +145,9 @@ export function HomePage() {
               ))}
             </ul>
           </div>
-          <div className="min-h-[360px] overflow-hidden">
+          <div className="min-h-[360px] overflow-hidden rounded-sm">
             <img
-              src="/images/conception/dj-console-gold.png"
+              src="/images/conception/dj-console-gold.webp"
               alt="Régie DJ professionnelle avec éclairage doré"
               className="h-full w-full object-cover"
               loading="lazy"
@@ -158,7 +156,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-white/10 bg-night-900 px-4 py-10 sm:px-6 lg:px-8">
+      <section className="border-t border-white/[0.07] bg-night-900 px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.36fr_0.28fr_0.36fr] lg:items-start">
           <div>
             <p className="text-xs font-semibold uppercase text-gold-300">Galerie</p>
@@ -168,12 +166,12 @@ export function HomePage() {
                   key={item.id}
                   src={item.image}
                   alt={item.alt}
-                  className="aspect-[4/3] w-full border border-white/10 object-cover"
+                  className="aspect-[4/3] w-full rounded-sm border border-white/[0.07] object-cover"
                   loading="lazy"
                 />
               ))}
             </div>
-            <ButtonLink to="/galerie" variant="ghost" className="mt-4 px-0" showArrow>
+            <ButtonLink to="/galerie" variant="ghost" className="mt-4 w-full px-0 sm:w-auto" showArrow>
               Voir plus de photos
             </ButtonLink>
           </div>

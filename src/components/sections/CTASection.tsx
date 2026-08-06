@@ -34,7 +34,11 @@ export function CTASection({
         className="mx-auto grid max-w-7xl gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center"
       >
         <div>
-          {eyebrow ? <p className="text-xs font-semibold uppercase text-gold-300">{eyebrow}</p> : null}
+          {eyebrow ? (
+            <p className={isWedding ? "text-xs font-semibold uppercase text-gold-700" : "text-xs font-semibold uppercase text-gold-300"}>
+              {eyebrow}
+            </p>
+          ) : null}
           <h2 className={isWedding ? "mt-3 font-wedding text-3xl text-night-950 sm:text-4xl" : "mt-3 font-display text-3xl text-ivory sm:text-4xl"}>
             {title}
           </h2>
@@ -44,11 +48,11 @@ export function CTASection({
           {children ? <div className="mt-6">{children}</div> : null}
         </div>
         <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-          <ButtonLink to={primaryTo} variant={isWedding ? "weddingPrimary" : "primary"} showArrow>
+          <ButtonLink to={primaryTo} variant={isWedding ? "weddingPrimary" : "primary"} className="w-full sm:w-auto lg:w-full" showArrow>
             {primaryLabel}
           </ButtonLink>
           {secondaryLabel && secondaryTo ? (
-            <ButtonLink to={secondaryTo} variant={isWedding ? "weddingSecondary" : "secondary"} showArrow>
+            <ButtonLink to={secondaryTo} variant={isWedding ? "weddingSecondary" : "secondary"} className="w-full sm:w-auto lg:w-full" showArrow>
               {secondaryLabel}
             </ButtonLink>
           ) : null}

@@ -12,7 +12,7 @@ import {
 import { TestimonialCard } from "../components/cards/TestimonialCard";
 import { CTASection } from "../components/sections/CTASection";
 import { ButtonLink } from "../components/ui/Button";
-import { useAppStore } from "../store/useAppStore";
+import { testimonials } from "../data/testimonials";
 
 const weddingMoments = [
   { title: "Cérémonie", detail: "Sonorisation élégante et discrète.", icon: HeartHandshake },
@@ -34,29 +34,28 @@ const reasons = [
 
 const gallery = [
   {
-    src: "/images/conception/photo36.png",
+    src: "/images/conception/galerie-evenement-003.webp",
     alt: "Cérémonie de mariage en forêt avec arche fleurie et invités assis",
   },
   {
-    src: "/images/conception/wedding-room-premium.png",
+    src: "/images/conception/galerie-evenement-004.webp",
     alt: "Salle de mariage préparée avec tables dressées et mise en lumière chaude",
   },
   {
-    src: "/images/conception/photo45.png",
+    src: "/images/conception/galerie-evenement-009.webp",
     alt: "Réception de mariage dans une grange décorée de guirlandes lumineuses",
   },
 ];
 
 export function WeddingPage() {
-  const testimonials = useAppStore((state) => state.testimonials);
   const weddingTestimonials = testimonials.filter((testimonial) => testimonial.eventType === "Mariage");
 
   return (
     <div className="bg-warm-100 text-night-950">
-      <section className="relative overflow-hidden border-b border-warm-300">
+      <section className="relative overflow-hidden border-b border-warm-300/80">
         <div className="absolute inset-y-0 right-0 hidden w-[58%] lg:block">
           <img
-            src="/images/conception/wedding-soft-room.png"
+            src="/images/conception/galerie-evenement-007.webp"
             alt="Mariés dans une salle de réception lumineuse avec fumée lourde"
             className="h-full w-full object-cover object-center"
           />
@@ -66,8 +65,8 @@ export function WeddingPage() {
 
         <div className="relative mx-auto grid min-h-[620px] max-w-7xl items-center px-4 py-16 sm:px-6 lg:grid-cols-[0.45fr_0.55fr] lg:px-8">
           <div className="max-w-xl">
-            <p className="text-xs font-semibold uppercase text-gold-400">Mariage</p>
-            <h1 className="mt-5 font-wedding text-5xl leading-[1.02] text-night-950 sm:text-6xl">
+            <p className="text-xs font-semibold uppercase text-gold-700">Mariage</p>
+            <h1 className="mt-5 font-wedding text-4xl leading-tight text-night-950 sm:text-6xl sm:leading-[1.02]">
               Votre mariage,
               <span className="block">une histoire unique</span>
             </h1>
@@ -75,18 +74,18 @@ export function WeddingPage() {
               Chaque détail compte pour faire de votre journée un moment inoubliable, élégant et parfaitement orchestré.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink to="#experience" variant="weddingPrimary" showArrow>
+              <ButtonLink to="#experience" variant="weddingPrimary" className="w-full sm:w-auto" showArrow>
                 Découvrir l'expérience
               </ButtonLink>
-              <ButtonLink to="/contact" variant="weddingSecondary" showArrow>
+              <ButtonLink to="/contact" variant="weddingSecondary" className="w-full sm:w-auto" showArrow>
                 Demander un devis
               </ButtonLink>
             </div>
           </div>
 
-          <div className="mt-10 overflow-hidden border border-white bg-white shadow-glow lg:hidden">
+          <div className="mt-10 overflow-hidden rounded-sm border border-white bg-white shadow-glow lg:hidden">
             <img
-              src="/images/conception/wedding-soft-room.png"
+              src="/images/conception/galerie-evenement-007.webp"
               alt="Mariés dans une salle de réception lumineuse avec fumée lourde"
               className="aspect-[4/3] w-full object-cover object-center"
             />
@@ -94,14 +93,14 @@ export function WeddingPage() {
         </div>
       </section>
 
-      <section id="experience" className="border-b border-warm-300 bg-warm-50 px-4 py-10 sm:px-6 lg:px-8">
+      <section id="experience" className="border-b border-warm-300/80 bg-warm-50 px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <p className="font-wedding text-2xl text-night-950">Une expérience sur-mesure</p>
             <div className="mx-auto mt-3 h-px w-16 bg-gold-400" />
           </div>
 
-          <div className="mt-8 grid divide-y divide-warm-300 border-y border-warm-300 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-6">
+          <div className="mt-8 grid divide-y divide-warm-300/80 border-y border-warm-300/80 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-6">
             {weddingMoments.map((moment) => {
               const Icon = moment.icon;
               return (
@@ -119,7 +118,7 @@ export function WeddingPage() {
       <section className="bg-warm-100 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.44fr_0.56fr] lg:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase text-gold-400">Pourquoi choisir Fredmusic ?</p>
+            <p className="text-xs font-semibold uppercase text-gold-700">Pourquoi choisir Fredmusic ?</p>
             <h2 className="mt-4 font-wedding text-4xl leading-tight text-night-950">
               Une présence rassurante pour un jour qui ne se rejoue pas
             </h2>
@@ -131,14 +130,14 @@ export function WeddingPage() {
                 </li>
               ))}
             </ul>
-            <ButtonLink to="/contact" variant="weddingSecondary" className="mt-8" showArrow>
+            <ButtonLink to="/contact" variant="weddingSecondary" className="mt-8 w-full sm:w-auto" showArrow>
               En savoir plus
             </ButtonLink>
           </div>
 
-          <div className="overflow-hidden border border-warm-300 bg-white p-2 shadow-glow">
+          <div className="overflow-hidden rounded-sm border border-warm-300/80 bg-white p-2 shadow-glow">
             <img
-              src="/images/conception/photo566.png"
+              src="/images/conception/galerie-evenement-005.webp"
               alt="Mariés accueillis par leurs invités en extérieur avec effets étincelles"
               className="aspect-[16/10] w-full object-cover object-center"
               loading="lazy"
@@ -151,7 +150,7 @@ export function WeddingPage() {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-end">
             <div>
-              <p className="text-xs font-semibold uppercase text-gold-400">Galerie mariage</p>
+              <p className="text-xs font-semibold uppercase text-gold-700">Galerie mariage</p>
               <h2 className="mt-4 font-wedding text-4xl leading-tight text-night-950">
                 Des instants élégants, préparés avec précision
               </h2>
@@ -165,7 +164,7 @@ export function WeddingPage() {
                   key={image.src}
                   src={image.src}
                   alt={image.alt}
-                  className={index === 0 ? "aspect-[4/5] w-full object-cover sm:aspect-[3/4]" : "aspect-[4/5] w-full object-cover sm:aspect-[3/4]"}
+                  className={index === 0 ? "aspect-[4/5] w-full rounded-sm object-cover sm:aspect-[3/4]" : "aspect-[4/5] w-full rounded-sm object-cover sm:aspect-[3/4]"}
                   loading="lazy"
                 />
               ))}
@@ -176,9 +175,9 @@ export function WeddingPage() {
 
       <section className="bg-warm-100 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-center">
-          <div className="overflow-hidden border border-warm-300 bg-white p-2">
+          <div className="overflow-hidden rounded-sm border border-warm-300/80 bg-white p-2">
             <img
-              src="/images/conception/photo84.png"
+              src="/images/conception/galerie-evenement-006.webp"
               alt="Ouverture de bal des mariés dans une salle élégante avec fumée lourde et éclairage chaleureux"
               className="aspect-[4/3] w-full object-cover object-center"
               loading="lazy"
@@ -204,7 +203,7 @@ export function WeddingPage() {
       {weddingTestimonials.length > 0 ? (
         <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="text-xs font-semibold uppercase text-gold-400">Témoignages</p>
+            <p className="text-xs font-semibold uppercase text-gold-700">Témoignages</p>
             <h2 className="mt-4 font-wedding text-4xl text-night-950">Ils nous ont confié leur mariage</h2>
             <div className="mt-8">
               <TestimonialCard testimonial={weddingTestimonials[0]} theme="wedding" />

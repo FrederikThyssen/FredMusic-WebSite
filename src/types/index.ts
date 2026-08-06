@@ -33,7 +33,6 @@ export type EquipmentItem = {
 };
 
 export type GalleryCategory =
-  | "weddings"
   | "private-events"
   | "corporate"
   | "lighting"
@@ -72,54 +71,6 @@ export type Testimonial = {
   rating: 1 | 2 | 3 | 4 | 5;
 };
 
-export type MusicRequestStatus = "pending" | "accepted" | "played" | "refused";
-
-export type MusicRequest = {
-  id: string;
-  eventId: string;
-  guestName?: string;
-  artist: string;
-  songTitle: string;
-  message?: string;
-  status: MusicRequestStatus;
-  createdAt: string;
-};
-
-export type QuoteRequestStatus = "pending" | "accepted" | "refused";
-
-export type QuoteRequest = {
-  id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  eventType: string;
-  eventDate: string;
-  location: string;
-  guestsCount?: number;
-  message?: string;
-  status: QuoteRequestStatus;
-  createdAt: string;
-};
-
-export type RentalRequestStatus = "pending" | "accepted" | "refused";
-
-export type RentalRequest = {
-  id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  equipmentIds: string[];
-  eventDate: string;
-  rentalDuration: string;
-  location: string;
-  guestsCount?: number;
-  needsInstallation: boolean;
-  needsTechnician: boolean;
-  message?: string;
-  status: RentalRequestStatus;
-  createdAt: string;
-};
-
 export type RentalPack = {
   id: string;
   title: string;
@@ -129,15 +80,7 @@ export type RentalPack = {
   recommendedFor: string;
 };
 
-export type ContactInfo = {
-  phone: string;
-  email: string;
-  serviceArea: string;
-  socialLinks: Array<{
-    label: string;
-    url: string;
-  }>;
-};
+export type StructuredData = Record<string, unknown>;
 
 export type SeoMetadata = {
   title: string;
@@ -146,5 +89,8 @@ export type SeoMetadata = {
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
+  ogType?: string;
+  robots?: string;
+  structuredData?: StructuredData | StructuredData[];
   keywords?: string[];
 };

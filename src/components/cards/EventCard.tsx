@@ -14,7 +14,7 @@ export function EventCard({ event }: EventCardProps) {
     <Card className="grid gap-5 p-5 md:grid-cols-[160px_1fr_auto] md:items-center">
       <img
         src={event.image}
-        alt=""
+        alt={event.title}
         loading="lazy"
         className="aspect-[4/3] h-full w-full object-cover md:h-32"
       />
@@ -35,7 +35,7 @@ export function EventCard({ event }: EventCardProps) {
       </div>
       <Link
         to={`/evenements/${event.slug}`}
-        className="border border-gold-400 px-4 py-3 text-center text-xs font-semibold uppercase text-gold-200 hover:bg-gold-300 hover:text-night-950"
+        className="rounded-sm border border-gold-400 px-4 py-3 text-center text-xs font-semibold uppercase text-gold-200 hover:bg-gold-300 hover:text-night-950"
       >
         Voir l'événement
       </Link>

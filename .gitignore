@@ -1,10 +1,12 @@
 node_modules/
 dist/
+supabase/.temp/
 .DS_Store
 
 *.local
 .env
 .env.*
+!.env.example
 
 npm-debug.log*
 yarn-debug.log*

@@ -11,10 +11,12 @@ export default {
           800: "#1D1F23",
         },
         gold: {
-          200: "#EAD9B0",
-          300: "#D4AF37",
-          400: "#B8893C",
-          500: "#C89F5A",
+          200: "#FFE7A3",
+          300: "#FFB900",
+          400: "#E6A600",
+          500: "#C98F00",
+          // Darker than 500: keeps AA text contrast (>=4.5:1) on warm-50/100/white backgrounds
+          700: "#8A5A00",
         },
         ivory: "#EDEDED",
         warm: {
@@ -33,7 +35,7 @@ export default {
         body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        glow: "0 20px 80px rgba(212, 175, 55, 0.16)",
+        glow: "0 20px 80px rgba(255, 185, 0, 0.16)",
       },
     },
   },

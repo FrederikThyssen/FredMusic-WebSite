@@ -25,7 +25,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
       <div className="mt-auto h-28 overflow-hidden bg-night-800">
         <img
           src={service.image}
-          alt=""
+          alt={service.title}
           loading="lazy"
           className="h-full w-full object-cover opacity-78 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
         />

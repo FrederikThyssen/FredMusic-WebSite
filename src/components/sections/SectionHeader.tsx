@@ -20,7 +20,7 @@ export function SectionHeader({
   return (
     <div className={cn("max-w-3xl", isCenter && "mx-auto text-center")}>
       {eyebrow ? (
-        <p className={cn("text-xs font-semibold uppercase", theme === "wedding" ? "text-gold-400" : "text-gold-300")}>
+        <p className={cn("text-xs font-semibold uppercase", theme === "wedding" ? "text-gold-700" : "text-gold-300")}>
           {eyebrow}
         </p>
       ) : null}

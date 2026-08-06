@@ -1,0 +1,339 @@
+# Plan backend Fredmusic
+
+## Objectif
+
+Décrire le backend Fredmusic en production, avec un système réel capable de :
+
+- recevoir les demandes de devis ;
+- recevoir les demandes de musique via QR code ;
+- afficher ces demandes dans un admin simple ;
+- envoyer des notifications email au client ;
+- garder une base technique évolutive sans transformer le site en CMS lourd.
+
+Le client ne doit pas forcément pouvoir modifier tout le contenu du site. Les changements de textes, pages, design ou galerie peuvent rester une prestation de maintenance ou d'évolution.
+
+---
+
+## Périmètre retenu pour l'admin
+
+### À faire
+
+- Connexion admin sécurisée.
+- Liste des demandes de devis.
+- Liste des demandes de musique.
+- Changement de statut des demandes.
+- Consultation des messages.
+- Filtrage simple par statut.
+
+### À éviter pour l'instant
+
+- CMS complet.
+- Modification de toutes les pages.
+- Gestion avancée de galerie.
+- Planning complexe.
+- Paiement.
+- Panier.
+- CRM lourd.
+- Gestion complète d'événements.
+
+---
+
+## Architecture recommandée
+
+Le site actuel est hébergé sur Wix. Le nouveau site doit sortir de Wix tout en conservant le domaine `fredmusic.fr`.
+Le domaine est géré chez Gandi.
+
+Architecture privilégiée :
+
+- Frontend : React / Vite.
+- Hébergement frontend : Vercel, Netlify ou hébergeur compatible React statique.
+- Domaine : `fredmusic.fr`, à faire pointer depuis Gandi vers le nouvel hébergement.
+- Build statique : dossier `dist/`.
+- Base de données / auth / storage : Supabase.
+- Email transactionnel : Brevo ou Resend.
+- Email professionnel souhaité : `contact@fredmusic.fr`.
+- Admin : intégré au site via `/admin`.
+
+Les contenus vitrine restent dans des fichiers de données statiques versionnés. Les données transactionnelles passent par Supabase.
+
+---
+
+## Flux demande de devis
+
+Page concernée :
+
+- `/contact`
+
+Champs envoyés :
+
+- nom / prénom ;
+- email ;
+- téléphone ;
+- type d'événement ;
+- date souhaitée ;
+- lieu / ville ;
+- nombre d'invités ;
+- message.
+
+Comportement attendu :
+
+1. Le visiteur remplit le formulaire.
+2. La demande est enregistrée en base.
+3. Un email est envoyé à `contact@fredmusic.fr`.
+4. Le visiteur voit une confirmation.
+5. La demande apparaît dans `/admin`.
+
+Statuts possibles :
+
+- `pending` : nouvelle demande ;
+- `accepted` : traitée ;
+- `refused` : refusée.
+
+---
+
+## Flux demande de musique QR code
+
+Page concernée :
+
+- `/demande-musique`
+
+Champs envoyés :
+
+- prénom ou nom, optionnel ;
+- artiste ;
+- titre de la musique ;
+- message optionnel.
+
+Comportement attendu :
+
+1. L'invité scanne le QR code.
+2. Il propose une musique.
+3. La demande est enregistrée en base.
+4. Elle apparaît dans l'admin.
+5. Le DJ décide de l'accepter, la refuser ou la marquer comme jouée.
+
+Important :
+
+- la demande est une suggestion ;
+- Fredmusic garde la main sur la playlist ;
+- aucun titre n'est joué automatiquement.
+- le QR code doit être unique et permanent ;
+- le QR code pointe vers `/demande-musique` ;
+- Fredmusic peut l'imprimer une seule fois et le réutiliser pour plusieurs soirées ;
+- l'admin doit permettre de définir une soirée active, puis d'archiver ou vider les demandes avant une nouvelle soirée.
+
+Statuts possibles :
+
+- `pending` : en attente ;
+- `accepted` : acceptée ;
+- `played` : jouée ;
+- `refused` : refusée.
+
+---
+
+## Tables envisagées
+
+### quote_requests
+
+```sql
+id uuid primary key default gen_random_uuid(),
+name text not null,
+email text not null,
+phone text,
+event_type text not null,
+event_date date,
+location text,
+guests_count integer,
+message text,
+status text not null default 'pending',
+created_at timestamptz not null default now()
+```
+
+Contraintes :
+
+- `status` doit être limité à `pending`, `accepted`, `refused`.
+- `email` doit être obligatoire.
+- `name` doit être obligatoire.
+
+---
+
+### music_requests
+
+```sql
+id uuid primary key default gen_random_uuid(),
+event_id uuid,
+guest_name text,
+artist text not null,
+song_title text not null,
+message text,
+status text not null default 'pending',
+created_at timestamptz not null default now()
+```
+
+Contraintes :
+
+- `status` doit être limité à `pending`, `accepted`, `played`, `refused`.
+- `artist` doit être obligatoire.
+- `song_title` doit être obligatoire.
+
+---
+
+### active_events
+
+```sql
+id uuid primary key default gen_random_uuid(),
+name text not null,
+is_active boolean not null default false,
+created_at timestamptz not null default now(),
+archived_at timestamptz
+```
+
+Contraintes :
+
+- une seule soirée doit être active à la fois ;
+- les nouvelles demandes musique sont associées à la soirée active ;
+- si aucune soirée active n'est définie, les demandes peuvent être associées à une soirée générique.
+
+---
+
+### admin_users
+
+Si Supabase Auth est utilisé, cette table peut être évitée au départ.
+
+Sinon, prévoir au minimum :
+
+```sql
+id uuid primary key default gen_random_uuid(),
+email text not null unique,
+role text not null default 'admin',
+created_at timestamptz not null default now()
+```
+
+---
+
+## Sécurité
+
+### Formulaires publics
+
+Les visiteurs doivent pouvoir :
+
+- créer une demande de devis ;
+- créer une demande de musique.
+
+Ils ne doivent pas pouvoir :
+
+- lire les demandes existantes ;
+- modifier les demandes ;
+- supprimer les demandes.
+
+### Admin
+
+L'admin doit pouvoir :
+
+- lire les demandes ;
+- modifier les statuts ;
+- éventuellement supprimer ou archiver une demande plus tard.
+
+Accès protégé par authentification.
+
+---
+
+## Emails
+
+### Email demande de devis
+
+À envoyer à :
+
+- `djfredmusic@outlook.fr`
+
+Contenu :
+
+- nom ;
+- email ;
+- téléphone ;
+- type d'événement ;
+- date ;
+- lieu ;
+- nombre d'invités ;
+- message.
+
+### Email demande de musique
+
+Optionnel au départ.
+
+Pour éviter de spammer le DJ pendant une soirée, il vaut mieux afficher les demandes dans l'admin plutôt que d'envoyer un email pour chaque musique.
+
+---
+
+## État backend actuel
+
+- Tables Supabase créées pour les demandes de devis, demandes de musique, soirées actives et réglages.
+- RLS activée.
+- `/contact` enregistre les demandes dans `quote_requests`.
+- `/demande-musique` enregistre les suggestions dans `music_requests`.
+- `/admin` lit les demandes réelles et modifie leurs statuts.
+- L'authentification admin passe par Supabase Auth.
+- Une migration de durcissement ajoute contraintes SQL, index de soirée active unique et RPC d'activation atomique.
+- Les formulaires publics passent par une Supabase Edge Function `submit-form` avec validation serveur et rate limit par IP.
+- `submit-form` est configurée avec `verify_jwt = false`, car elle reçoit des formulaires publics et applique sa propre validation/rate limit.
+- `submit-form` est déployée et validée par tests curl sur devis, demande musique et rate limit.
+- L'envoi email des devis passe par Resend depuis l'Edge Function `submit-form`.
+- L'envoi email Resend est validé avec l'adresse autorisée du compte. L'envoi vers `djfredmusic@outlook.fr` dépend de la validation du domaine `fredmusic.fr` dans Resend.
+
+---
+
+## Variables d'environnement possibles
+
+```txt
+VITE_SUPABASE_URL=
+VITE_SUPABASE_PUBLISHABLE_KEY=
+EMAIL_PROVIDER_API_KEY=
+ADMIN_NOTIFICATION_EMAIL=djfredmusic@outlook.fr
+```
+
+Les clés sensibles ne doivent jamais être commit dans Git.
+
+Supabase fournit automatiquement `SUPABASE_SECRET_KEYS` aux Edge Functions. Ne pas créer manuellement de secret commençant par `SUPABASE_` et ne jamais exposer de clé secrète dans le front.
+
+Secrets Supabase Functions à configurer :
+
+```txt
+RESEND_API_KEY=
+QUOTE_NOTIFICATION_EMAIL=djfredmusic@outlook.fr
+QUOTE_EMAIL_FROM=FredMusic <onboarding@resend.dev>
+```
+
+`QUOTE_EMAIL_FROM` doit passer à `FredMusic <contact@fredmusic.fr>` quand le domaine `fredmusic.fr` sera validé dans Resend.
+
+---
+
+## Déploiement
+
+Le client dispose déjà :
+
+- d'un hébergeur ;
+- d'un nom de domaine.
+
+À vérifier avant intégration backend :
+
+- hébergeur exact ;
+- accès FTP / SFTP / panel ;
+- possibilité de configurer les redirections SPA vers `index.html` ;
+- support Node.js ou non ;
+- support PHP ou non ;
+- disponibilité d'une base de données ;
+- possibilité d'envoyer des emails ;
+- certificat SSL ;
+- gestion DNS.
+
+Si l'hébergement est uniquement statique, le backend devra être externe.
+
+---
+
+## Prochaines étapes recommandées
+
+1. Valider le domaine `fredmusic.fr` dans Resend/Gandi.
+2. Remplacer l'expéditeur temporaire par `FredMusic <contact@fredmusic.fr>`.
+3. Vérifier responsive mobile de `/demande-musique`.
+4. Ajouter tests, CI et monitoring.
+5. Tester avec le client avant mise en ligne.
