@@ -12,7 +12,7 @@ Le site a une base fonctionnelle solide : React/Vite, pages vitrines avancées, 
 
 - `npm run build` : ✅ passe après corrections.
 - `npm run lint` : ✅ passe après corrections.
-- `npm test` : ✅ 7 fichiers, 16 tests passants.
+- `npm test` : ✅ 7 fichiers, 18 tests passants.
 - `npm audit --audit-level=moderate` : ✅ 0 vulnérabilité après correction `nanoid`.
 - CI/CD : ✅ workflow GitHub Actions ajouté (`lint`, tests, build, responsive smoke, audit bloquant).
 - Formulaires publics : ✅ validation serveur, honeypot et rate limit via Edge Function.
@@ -88,8 +88,9 @@ Décisions produit à respecter :
   - formulaires Contact et Demande musique;
   - accès admin `ProtectedRoute`;
   - actions admin critiques;
+  - filtres de statut admin;
   - helpers `slugify`, `formatDate`, SEO.
-- `npm test` validé : 7 fichiers, 16 tests passants.
+- `npm test` validé : 7 fichiers, 18 tests passants.
 - Nettoyage galerie :
   - retrait de la catégorie vidéo vide;
   - fusion de la catégorie mariage dans la section unique "Nos différents événements réalisés";
@@ -152,7 +153,7 @@ Décisions produit à respecter :
    - ✅ Afficher les erreurs Supabase lors de création/activation/archivage/statut.
    - ✅ Ajouter états loading par action pour éviter doubles clics.
    - ✅ Ajouter confirmation avant archivage soirée.
-   - Ajouter filtre statut si conforme au plan backend.
+   - ✅ Ajouter filtre statut si conforme au plan backend.
    - ✅ Ne pas afficher une action comme réussie si Supabase a échoué.
 
 8. **Ajouter notifications email devis**
@@ -177,6 +178,7 @@ Décisions produit à respecter :
     - ✅ Tests validation Demande musique.
     - ✅ Tests `ProtectedRoute` non connecté/connecté, erreur de login et login réussi.
     - ✅ Tests admin confirmation archivage et anti double-clic création soirée.
+    - ✅ Tests filtres de statut admin devis/musiques.
     - ✅ Tests helpers SEO/date/slug.
     - ✅ Smoke tests routes publiques principales via Playwright.
 

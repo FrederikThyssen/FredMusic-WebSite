@@ -14,6 +14,7 @@ import { supabase } from "../lib/supabase";
 import type { MusicRequestStatus, QuoteRequestStatus } from "../lib/database.types";
 import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
+import { Select } from "../components/ui/Select";
 import { formatDateShort, formatDateTime } from "../utils/formatDate";
 
 const quoteStatusLabels: Record<QuoteRequestStatus, string> = {
@@ -28,6 +29,21 @@ const musicStatusLabels: Record<MusicRequestStatus, string> = {
   played: "Jouée",
   refused: "Refusée",
 };
+
+const quoteFilterOptions = [
+  { label: "Tous les devis", value: "all" },
+  { label: quoteStatusLabels.pending, value: "pending" },
+  { label: quoteStatusLabels.accepted, value: "accepted" },
+  { label: quoteStatusLabels.refused, value: "refused" },
+];
+
+const musicFilterOptions = [
+  { label: "Toutes les musiques", value: "all" },
+  { label: musicStatusLabels.pending, value: "pending" },
+  { label: musicStatusLabels.accepted, value: "accepted" },
+  { label: musicStatusLabels.played, value: "played" },
+  { label: musicStatusLabels.refused, value: "refused" },
+];
 
 const statusClasses = {
   pending: "border-gold-300/30 bg-gold-300/[0.08] text-gold-200",
@@ -62,10 +78,15 @@ type AdminAction =
   | "event:create"
   | "signout";
 
+type QuoteFilter = "all" | QuoteRequestStatus;
+type MusicFilter = "all" | MusicRequestStatus;
+
 export function AdminPage() {
   const [quotes, setQuotes] = useState<QuoteRow[]>([]);
   const [music, setMusic] = useState<MusicRow[]>([]);
   const [events, setEvents] = useState<EventRow[]>([]);
+  const [quoteFilter, setQuoteFilter] = useState<QuoteFilter>("all");
+  const [musicFilter, setMusicFilter] = useState<MusicFilter>("all");
   const [newEventName, setNewEventName] = useState("");
   const [loading, setLoading] = useState(true);
   const [qrGenerating, setQrGenerating] = useState(false);
@@ -219,6 +240,8 @@ export function AdminPage() {
   const pendingMusic = music.filter((m) => m.status === "pending").length;
   const activeEvent = events.find((e) => e.is_active);
   const hasActionInFlight = actionInFlight !== null;
+  const filteredQuotes = quoteFilter === "all" ? quotes : quotes.filter((q) => q.status === quoteFilter);
+  const filteredMusic = musicFilter === "all" ? music : music.filter((m) => m.status === musicFilter);
 
   if (loading) {
     return (
@@ -378,13 +401,24 @@ export function AdminPage() {
                 <p className="text-xs font-semibold uppercase text-gold-300">Demandes de devis</p>
                 <h2 className="mt-2 font-display text-3xl text-ivory">Contacts entrants</h2>
               </div>
-              <Inbox className="h-7 w-7 text-gold-300" aria-hidden="true" />
+              <div className="flex flex-col gap-3 sm:min-w-52 sm:items-end">
+                <Inbox className="hidden h-7 w-7 text-gold-300 sm:block" aria-hidden="true" />
+                <Select
+                  label="Filtrer les devis"
+                  value={quoteFilter}
+                  options={quoteFilterOptions}
+                  onChange={(event) => setQuoteFilter(event.target.value as QuoteFilter)}
+                  className="text-sm"
+                />
+              </div>
             </div>
 
             <div className="mt-6 grid gap-4">
               {quotes.length === 0 ? (
                 <p className="text-sm text-ivory/42">Aucune demande pour l'instant.</p>
-              ) : quotes.map((request) => (
+              ) : filteredQuotes.length === 0 ? (
+                <p className="text-sm text-ivory/42">Aucune demande ne correspond à ce filtre.</p>
+              ) : filteredQuotes.map((request) => (
                 <article key={request.id} className="rounded-md border border-white/[0.07] bg-night-950 p-4">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
@@ -454,13 +488,24 @@ export function AdminPage() {
                 <p className="text-xs font-semibold uppercase text-gold-300">Demandes de musique</p>
                 <h2 className="mt-2 font-display text-3xl text-ivory">Playlist proposée</h2>
               </div>
-              <Disc3 className="h-7 w-7 text-gold-300" aria-hidden="true" />
+              <div className="flex flex-col gap-3 sm:min-w-52 sm:items-end">
+                <Disc3 className="hidden h-7 w-7 text-gold-300 sm:block" aria-hidden="true" />
+                <Select
+                  label="Filtrer les musiques"
+                  value={musicFilter}
+                  options={musicFilterOptions}
+                  onChange={(event) => setMusicFilter(event.target.value as MusicFilter)}
+                  className="text-sm"
+                />
+              </div>
             </div>
 
             <div className="mt-6 grid gap-4">
               {music.length === 0 ? (
                 <p className="text-sm text-ivory/42">Aucune demande pour l'instant.</p>
-              ) : music.map((request) => (
+              ) : filteredMusic.length === 0 ? (
+                <p className="text-sm text-ivory/42">Aucune demande ne correspond à ce filtre.</p>
+              ) : filteredMusic.map((request) => (
                 <article key={request.id} className="rounded-md border border-white/[0.07] bg-night-950 p-4">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
