@@ -1,26 +1,26 @@
 # AUDIT.md — FredMusic Production Delivery
 
-Dernière mise à jour : 2026-08-06, audit pré-livraison complet après relecture docs/projet/conception et vérifications locales.
+Dernière mise à jour : 2026-08-18, audit pré-livraison complet après relecture docs/projet/conception et vérifications locales.
 
 ---
 
 ## Verdict pré-livraison
 
-**Statut actuel : presque prêt techniquement, non livrable client tant que domaine/email/QA visuelle/CI ne sont pas finalisés.**
+**Statut actuel : presque prêt techniquement, non livrable client tant que domaine/email, monitoring et QA visuelle ne sont pas finalisés.**
 
 Le site a une base fonctionnelle solide : React/Vite, pages vitrines avancées, Supabase branché, admin protégé par Auth, SEO/accessibilité déjà travaillés, build production validé. En revanche, les vérifications pré-livraison ont trouvé des bloquants qualité/sécurité qui doivent être corrigés avant bascule client :
 
 - `npm run build` : ✅ passe après corrections.
 - `npm run lint` : ✅ passe après corrections.
 - `npm test` : ✅ 5 fichiers, 10 tests passants.
-- `npm audit --audit-level=moderate` : ⚠️ à relancer avec accès réseau ; dernier état connu : 1 advisory React Router high touchant `react-router`/`react-router-dom`.
-- CI/CD : ❌ absent (`.github/workflows` inexistant).
+- `npm audit --audit-level=moderate` : ✅ 0 vulnérabilité après correction `nanoid`.
+- CI/CD : ✅ workflow GitHub Actions ajouté (`lint`, tests, build, audit bloquant).
 - Formulaires publics : ✅ validation serveur, honeypot et rate limit via Edge Function.
 - Supabase RLS : ✅ lecture admin protégée, formulaires publics derrière Edge Function.
 - Textes visibles/légaux : ✅ références obsolètes retirées.
 - Galerie : ✅ catégorie vide retirée, chemins d'images référencés vérifiés.
 - Responsive mobile : ⚠️ à valider visuellement avec navigateur/outillage screenshots avant livraison.
-- Déploiement/DNS/email domaine : ❌ non finalisés, transfert Gandi vers OVH en attente du code d'autorisation sous environ 72h.
+- Déploiement/DNS/email domaine : ❌ non finalisés, transfert Gandi vers OVH à confirmer avant validation Resend/DNS.
 
 ---
 
@@ -48,6 +48,8 @@ Décisions produit à respecter :
 ## Corrections appliquées — session en cours
 
 - `npm audit fix` exécuté : vulnérabilités `brace-expansion`, `js-yaml`, `postcss`, `vite` corrigées via mises à jour du lock.
+- `npm audit fix` réexécuté le 2026-08-18 : vulnérabilité `nanoid <3.3.18` corrigée.
+- `npm audit --audit-level=moderate` validé : 0 vulnérabilité.
 - React Router remis sur la dernière version npm disponible (`7.18.2`) après test d'un downgrade `7.11.0` qui aggravait le rapport d'audit.
 - `npm run lint` corrigé et validé.
 - `npm run build` validé après corrections.
@@ -96,12 +98,10 @@ Décisions produit à respecter :
 - L'admin affiche désormais une erreur si une action Supabase échoue.
 - Recherche qualité effectuée : aucune occurrence restante de termes de démonstration ou d'ancien stockage navigateur dans le code applicatif et la documentation. Les seules occurrences `vi.mock` restantes sont dans les tests automatisés.
 
-Résiduel sécurité dépendances :
+État sécurité dépendances :
 
-- Dernier audit npm connu : `React Router: RSC Mode CSRF Bypass Allows Action Execution Before 400 Response` sur `react-router >=7.12.0`.
-- Le projet est une SPA Vite statique et n'utilise pas le mode RSC/SSR/actions de React Router, ce qui réduit fortement l'exposition réelle.
-- À surveiller : appliquer immédiatement la prochaine version `react-router-dom` corrigée dès publication npm.
-- Relance `npm audit --audit-level=moderate` du 2026-08-06 bloquée par l'accès réseau sandboxé (`registry.npmjs.org` inaccessible sans approbation réseau).
+- `npm audit --audit-level=moderate` : ✅ 0 vulnérabilité au 2026-08-18.
+- CI lance désormais `npm audit --audit-level=moderate` en contrôle bloquant.
 
 ---
 
@@ -111,8 +111,9 @@ Résiduel sécurité dépendances :
 
 1. **Corriger les vulnérabilités dépendances**
    - ✅ `npm audit fix` exécuté.
+   - ✅ Vulnérabilité `nanoid <3.3.18` corrigée le 2026-08-18.
+   - ✅ `npm audit --audit-level=moderate` : 0 vulnérabilité.
    - ✅ `npm run build` revalidé.
-   - ⚠️ Résiduel React Router sans version npm corrigée disponible au moment de l'audit.
 
 2. **Corriger le lint**
    - ✅ `npm run lint` vert.
@@ -177,13 +178,15 @@ Résiduel sécurité dépendances :
     - À faire : smoke tests routes principales.
 
 11. **Ajouter CI GitHub Actions**
-    - Workflow sur PR/push :
+    - ✅ Workflow `.github/workflows/quality.yml` ajouté sur PR vers `main` et push `main`.
+    - ✅ Contrôles bloquants :
       - `npm ci`;
       - `npm run lint`;
       - `npm test`;
       - `npm run build`;
+    - ✅ Audit dépendances bloquant :
       - `npm audit --audit-level=moderate`.
-    - Bloquer livraison si CI rouge.
+    - Bloquer livraison si lint, tests, build ou audit dépendances sont rouges.
 
 12. **Ajouter monitoring**
     - Sentry ou équivalent.
@@ -248,7 +251,7 @@ Résiduel sécurité dépendances :
 | **Phase 7** | ✅ Terminé | SEO (JSON-LD Organization/LocalBusiness/Event/Service/Product, sitemap complet, Open Graph dynamique, règles noindex) |
 | **Phase 8** | ✅ Terminé | Accessibilité (contraste texte/bouton corrigé, alt textes descriptifs, état actif exposé, fermeture clavier menu mobile) |
 | **Phase 9** | ⚠️ Partiel | Tests ajoutés et passants ; monitoring Sentry/GA4 à faire |
-| **Phase 10** | ❌ À faire | CI/CD (GitHub Actions build + lint + test) |
+| **Phase 10** | ✅ Terminé | CI/CD GitHub Actions build + lint + test |
 | **Phase 11** | ❌ À faire | Déploiement & DNS (Vercel + Gandi, migration depuis Wix) |
 
 ---
@@ -348,6 +351,6 @@ Résiduel sécurité dépendances :
 
 - **Supabase URL** : `https://awcdoolsmoipylvfpcuq.supabase.co`
 - **Google Place ID** : `ChIJiwj_iiFL3UcR67d2OOiMcAk`
-- **Domain cible** : `fredmusic.fr` (transfert Gandi vers OVH en attente du code d'autorisation)
+- **Domain cible** : `fredmusic.fr` (transfert Gandi vers OVH à confirmer)
 - **Contact** : `contact@fredmusic.fr` (à créer après transfert/validation DNS)
 - **Hébergement cible** : Vercel
