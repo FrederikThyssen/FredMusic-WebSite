@@ -8,7 +8,7 @@ type CardProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 const variants: Record<CardVariant, string> = {
-  dark: "border-white/[0.07] bg-night-900/78 text-ivory shadow-glow",
+  dark: "border-white/[0.07] bg-night-900/82 text-ivory shadow-glow",
   wedding: "border-warm-300/80 bg-white text-night-950",
 };
 

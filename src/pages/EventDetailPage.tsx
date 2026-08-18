@@ -86,7 +86,7 @@ export function EventDetailPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-night-950 text-ivory">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(214,177,73,0.12),transparent_40%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(199,161,91,0.11),transparent_40%)]" />
 
       <section className="relative px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-lg text-center">

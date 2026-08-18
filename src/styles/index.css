@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  color: #ededed;
-  background: #0a0a0d;
+  color: #f1eee7;
+  background: #08090b;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,6 +29,6 @@ img {
 }
 
 :focus-visible {
-  outline: 3px solid #ffb900;
+  outline: 3px solid #d8b46e;
   outline-offset: 3px;
 }

@@ -121,7 +121,7 @@ export function ContactPage() {
 
   return (
     <div className="relative overflow-hidden bg-night-950 text-ivory">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(214,177,73,0.12),transparent_34%),linear-gradient(180deg,#090a0d_0%,#101216_54%,#090a0d_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(199,161,91,0.11),transparent_34%),linear-gradient(180deg,#08090b_0%,#111214_54%,#08090b_100%)]" />
 
       <section className="relative px-4 py-14 sm:px-6 sm:py-18 lg:px-8">
         <div className="mx-auto max-w-7xl">

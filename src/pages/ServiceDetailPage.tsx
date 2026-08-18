@@ -15,7 +15,7 @@ export function ServiceDetailPage() {
   return (
     <div className="bg-night-950 text-ivory">
       <section className="relative overflow-hidden px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(214,177,73,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(199,161,91,0.1),transparent_50%)]" />
         <div className="relative mx-auto max-w-7xl">
           <Link
             to="/prestations"
