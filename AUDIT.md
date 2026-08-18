@@ -20,7 +20,7 @@ Le site a une base fonctionnelle solide : React/Vite, pages vitrines avancées, 
 - Textes visibles/légaux : ✅ références obsolètes retirées.
 - Galerie : ✅ catégorie vide retirée, chemins d'images référencés vérifiés.
 - Monitoring : ✅ Sentry optionnel branché côté code, DSN production à configurer.
-- Responsive mobile : ⚠️ à valider visuellement avec navigateur/outillage screenshots avant livraison.
+- Responsive mobile : ✅ smoke Playwright étendu, QA visuelle finale client/admin authentifié encore à faire.
 - Déploiement/DNS/email domaine : ❌ non finalisés, transfert Gandi vers OVH à confirmer avant validation Resend/DNS.
 
 ---
@@ -99,6 +99,7 @@ Décisions produit à respecter :
   - release via `VITE_APP_VERSION`;
   - `ErrorBoundary` branché à `reportError`;
   - source maps publiques toujours désactivées en build production.
+- Smoke responsive Playwright étendu à `/admin` non connecté.
 - Nettoyage galerie :
   - retrait de la catégorie vidéo vide;
   - fusion de la catégorie mariage dans la section unique "Nos différents événements réalisés";
@@ -188,7 +189,7 @@ Décisions produit à respecter :
     - ✅ Tests admin confirmation archivage et anti double-clic création soirée.
     - ✅ Tests filtres de statut admin devis/musiques.
     - ✅ Tests helpers SEO/date/slug.
-    - ✅ Smoke tests routes publiques principales via Playwright.
+    - ✅ Smoke tests routes publiques principales et écran `/admin` non connecté via Playwright.
 
 11. **Ajouter CI GitHub Actions**
     - ✅ Workflow `.github/workflows/quality.yml` ajouté sur PR vers `main` et push `main`.
@@ -217,9 +218,9 @@ Décisions produit à respecter :
       - mobile 390 px;
       - tablette 768 px;
       - desktop 1440 px.
-    - ✅ Routes publiques critiques couvertes : `/`, `/contact`, `/demande-musique`, `/galerie`, `/evenements-prives`, `/evenements-professionnels`, `/location-materiel`.
+    - ✅ Routes critiques couvertes : `/`, `/contact`, `/demande-musique`, `/galerie`, `/evenements-prives`, `/evenements-professionnels`, `/location-materiel`, `/admin` non connecté.
     - ✅ Vérifications automatisées : pas de débordement horizontal, pas d'erreur console, screenshots attachés au rapport Playwright.
-    - ✅ Validation locale 2026-08-18 : `npm run test:e2e`, 28 tests passants.
+    - ✅ Validation locale 2026-08-18 : `npm run test:e2e`, 32 tests passants.
     - À faire manuellement : validation visuelle authentifiée de `/admin`, clavier, focus et parcours admin réels.
 
 14. **Optimiser médias et galerie**

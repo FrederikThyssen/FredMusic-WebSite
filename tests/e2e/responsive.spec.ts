@@ -8,6 +8,7 @@ const criticalRoutes = [
   { path: "/evenements-prives", name: "private-events" },
   { path: "/evenements-professionnels", name: "professional-events" },
   { path: "/location-materiel", name: "rental" },
+  { path: "/admin", name: "admin-login" },
 ] as const;
 
 test.describe("responsive delivery smoke", () => {
