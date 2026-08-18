@@ -1,26 +1,27 @@
 # AUDIT.md — FredMusic Production Delivery
 
-Dernière mise à jour : 2026-08-06, audit pré-livraison complet après relecture docs/projet/conception et vérifications locales.
+Dernière mise à jour : 2026-08-18, audit pré-livraison complet après relecture docs/projet/conception et vérifications locales.
 
 ---
 
 ## Verdict pré-livraison
 
-**Statut actuel : presque prêt techniquement, non livrable client tant que domaine/email/QA visuelle/CI ne sont pas finalisés.**
+**Statut actuel : presque prêt techniquement, non livrable client tant que domaine/email, DSN Sentry production et QA visuelle ne sont pas finalisés.**
 
 Le site a une base fonctionnelle solide : React/Vite, pages vitrines avancées, Supabase branché, admin protégé par Auth, SEO/accessibilité déjà travaillés, build production validé. En revanche, les vérifications pré-livraison ont trouvé des bloquants qualité/sécurité qui doivent être corrigés avant bascule client :
 
 - `npm run build` : ✅ passe après corrections.
 - `npm run lint` : ✅ passe après corrections.
-- `npm test` : ✅ 5 fichiers, 10 tests passants.
-- `npm audit --audit-level=moderate` : ⚠️ à relancer avec accès réseau ; dernier état connu : 1 advisory React Router high touchant `react-router`/`react-router-dom`.
-- CI/CD : ❌ absent (`.github/workflows` inexistant).
+- `npm test` : ✅ 9 fichiers, 20 tests passants.
+- `npm audit --audit-level=moderate` : ✅ 0 vulnérabilité après correction `nanoid`.
+- CI/CD : ✅ workflow GitHub Actions ajouté (`lint`, tests, build, responsive smoke, audit bloquant).
 - Formulaires publics : ✅ validation serveur, honeypot et rate limit via Edge Function.
 - Supabase RLS : ✅ lecture admin protégée, formulaires publics derrière Edge Function.
 - Textes visibles/légaux : ✅ références obsolètes retirées.
 - Galerie : ✅ catégorie vide retirée, chemins d'images référencés vérifiés.
-- Responsive mobile : ⚠️ à valider visuellement avec navigateur/outillage screenshots avant livraison.
-- Déploiement/DNS/email domaine : ❌ non finalisés, transfert Gandi vers OVH en attente du code d'autorisation sous environ 72h.
+- Monitoring : ✅ Sentry optionnel branché côté code, DSN production à configurer.
+- Responsive mobile : ✅ smoke Playwright étendu, QA visuelle finale client/admin authentifié encore à faire.
+- Déploiement/DNS/email domaine : ❌ non finalisés, transfert Gandi vers OVH à confirmer avant validation Resend/DNS.
 
 ---
 
@@ -48,6 +49,8 @@ Décisions produit à respecter :
 ## Corrections appliquées — session en cours
 
 - `npm audit fix` exécuté : vulnérabilités `brace-expansion`, `js-yaml`, `postcss`, `vite` corrigées via mises à jour du lock.
+- `npm audit fix` réexécuté le 2026-08-18 : vulnérabilité `nanoid <3.3.18` corrigée.
+- `npm audit --audit-level=moderate` validé : 0 vulnérabilité.
 - React Router remis sur la dernière version npm disponible (`7.18.2`) après test d'un downgrade `7.11.0` qui aggravait le rapport d'audit.
 - `npm run lint` corrigé et validé.
 - `npm run build` validé après corrections.
@@ -84,8 +87,20 @@ Décisions produit à respecter :
 - Limite actuelle Resend : en mode test, l'envoi vers `djfredmusic@outlook.fr` est refusé tant que le domaine `fredmusic.fr` n'est pas validé.
 - Tests Vitest + React Testing Library ajoutés :
   - formulaires Contact et Demande musique;
+  - `ErrorBoundary` et remontée monitoring;
+  - accès admin `ProtectedRoute`;
+  - actions admin critiques;
+  - filtres de statut admin;
   - helpers `slugify`, `formatDate`, SEO.
-- `npm test` validé : 5 fichiers, 10 tests passants.
+- Test automatisé ajouté pour vérifier que chaque référence `/images/...` dans `src` pointe vers un asset existant dans `public`.
+- `npm test` validé : 9 fichiers, 20 tests passants.
+- Monitoring Sentry optionnel ajouté :
+  - initialisation via `VITE_SENTRY_DSN`;
+  - environnement via `VITE_APP_ENV`;
+  - release via `VITE_APP_VERSION`;
+  - `ErrorBoundary` branché à `reportError`;
+  - source maps publiques toujours désactivées en build production.
+- Smoke responsive Playwright étendu à `/admin` non connecté.
 - Nettoyage galerie :
   - retrait de la catégorie vidéo vide;
   - fusion de la catégorie mariage dans la section unique "Nos différents événements réalisés";
@@ -96,12 +111,10 @@ Décisions produit à respecter :
 - L'admin affiche désormais une erreur si une action Supabase échoue.
 - Recherche qualité effectuée : aucune occurrence restante de termes de démonstration ou d'ancien stockage navigateur dans le code applicatif et la documentation. Les seules occurrences `vi.mock` restantes sont dans les tests automatisés.
 
-Résiduel sécurité dépendances :
+État sécurité dépendances :
 
-- Dernier audit npm connu : `React Router: RSC Mode CSRF Bypass Allows Action Execution Before 400 Response` sur `react-router >=7.12.0`.
-- Le projet est une SPA Vite statique et n'utilise pas le mode RSC/SSR/actions de React Router, ce qui réduit fortement l'exposition réelle.
-- À surveiller : appliquer immédiatement la prochaine version `react-router-dom` corrigée dès publication npm.
-- Relance `npm audit --audit-level=moderate` du 2026-08-06 bloquée par l'accès réseau sandboxé (`registry.npmjs.org` inaccessible sans approbation réseau).
+- `npm audit --audit-level=moderate` : ✅ 0 vulnérabilité au 2026-08-18.
+- CI lance désormais `npm audit --audit-level=moderate` en contrôle bloquant.
 
 ---
 
@@ -111,8 +124,9 @@ Résiduel sécurité dépendances :
 
 1. **Corriger les vulnérabilités dépendances**
    - ✅ `npm audit fix` exécuté.
+   - ✅ Vulnérabilité `nanoid <3.3.18` corrigée le 2026-08-18.
+   - ✅ `npm audit --audit-level=moderate` : 0 vulnérabilité.
    - ✅ `npm run build` revalidé.
-   - ⚠️ Résiduel React Router sans version npm corrigée disponible au moment de l'audit.
 
 2. **Corriger le lint**
    - ✅ `npm run lint` vert.
@@ -147,10 +161,10 @@ Résiduel sécurité dépendances :
 
 7. **Améliorer l'admin**
    - ✅ Afficher les erreurs Supabase lors de création/activation/archivage/statut.
-   - Ajouter états loading par action pour éviter doubles clics.
-   - Ajouter confirmation avant archivage soirée.
-   - Ajouter filtre statut si conforme au plan backend.
-   - Ne pas afficher une action comme réussie si Supabase a échoué.
+   - ✅ Ajouter états loading par action pour éviter doubles clics.
+   - ✅ Ajouter confirmation avant archivage soirée.
+   - ✅ Ajouter filtre statut si conforme au plan backend.
+   - ✅ Ne pas afficher une action comme réussie si Supabase a échoué.
 
 8. **Ajouter notifications email devis**
    - ✅ Provider Resend branché dans `submit-form`.
@@ -172,40 +186,51 @@ Résiduel sécurité dépendances :
     - ✅ Script `npm test` ajouté.
     - ✅ Tests validation formulaire Contact.
     - ✅ Tests validation Demande musique.
+    - ✅ Tests `ProtectedRoute` non connecté/connecté, erreur de login et login réussi.
+    - ✅ Tests admin confirmation archivage et anti double-clic création soirée.
+    - ✅ Tests filtres de statut admin devis/musiques.
     - ✅ Tests helpers SEO/date/slug.
-    - À faire : tests `ProtectedRoute` non connecté/connecté.
-    - À faire : smoke tests routes principales.
+    - ✅ Test de cohérence des références images publiques.
+    - ✅ Smoke tests routes publiques principales et écran `/admin` non connecté via Playwright.
 
 11. **Ajouter CI GitHub Actions**
-    - Workflow sur PR/push :
+    - ✅ Workflow `.github/workflows/quality.yml` ajouté sur PR vers `main` et push `main`.
+    - ✅ Contrôles bloquants :
       - `npm ci`;
       - `npm run lint`;
       - `npm test`;
       - `npm run build`;
+      - `npm run test:e2e`;
+    - ✅ Audit dépendances bloquant :
       - `npm audit --audit-level=moderate`.
-    - Bloquer livraison si CI rouge.
+    - Bloquer livraison si lint, tests, build ou audit dépendances sont rouges.
 
 12. **Ajouter monitoring**
-    - Sentry ou équivalent.
-    - Brancher `ErrorBoundary` à `captureException`.
-    - Source maps désactivées en prod pour le public, mais stratégie de debug interne à décider.
+    - ✅ Sentry ajouté via `@sentry/react`.
+    - ✅ Initialisation optionnelle via `VITE_SENTRY_DSN`.
+    - ✅ `ErrorBoundary` branché à `captureException` via `reportError`.
+    - ✅ Source maps désactivées en prod pour le public (`build.sourcemap: false`).
+    - À faire déploiement : créer le projet Sentry et configurer `VITE_SENTRY_DSN`, `VITE_APP_ENV`, `VITE_APP_VERSION` dans l'hébergeur.
 
 ### P3 — Livraison, SEO, déploiement
 
 13. **Valider responsive/accessibilité visuellement**
-    - Mobile 360 px, 390 px.
-    - Tablette.
-    - Desktop.
-    - Priorité : `/demande-musique`, `/contact`, `/admin`, `/galerie`.
-    - Vérifier clavier, focus, contrastes, pas de débordement horizontal.
-    - État 2026-08-06 : non validé visuellement dans cette session car l'outil navigateur/screenshot n'était pas disponible.
+    - ✅ Smoke responsive automatisé ajouté avec Playwright :
+      - mobile 360 px;
+      - mobile 390 px;
+      - tablette 768 px;
+      - desktop 1440 px.
+    - ✅ Routes critiques couvertes : `/`, `/contact`, `/demande-musique`, `/galerie`, `/evenements-prives`, `/evenements-professionnels`, `/location-materiel`, `/admin` non connecté.
+    - ✅ Vérifications automatisées : pas de débordement horizontal, pas d'erreur console, screenshots attachés au rapport Playwright.
+    - ✅ Validation locale 2026-08-18 : `npm run test:e2e`, 32 tests passants.
+    - À faire manuellement : validation visuelle authentifiée de `/admin`, clavier, focus et parcours admin réels.
 
 14. **Optimiser médias et galerie**
     - ✅ Catégorie vidéo vide retirée de `GalleryPage`.
     - ✅ Catégorie mariage fusionnée dans "Nos différents événements réalisés".
     - ✅ Photos de galerie renommées proprement en ordre croissant.
     - ✅ Chemins d'images galerie corrigés.
-    - ✅ Vérification locale : aucune image référencée manquante.
+    - ✅ Vérification automatisée en CI : aucune image référencée manquante.
     - `public/images` pèse environ 104M et nécessite un tri final avec le client avant suppression.
     - Trier les photos avec le client.
     - Supprimer du build les assets non utilisés.
@@ -247,8 +272,8 @@ Résiduel sécurité dépendances :
 | **Phase 6** | ✅ Terminé | Backend Supabase (client, types, migrations SQL, API, ContactPage, MusicRequestPage, EventDetailPage, AdminPage, ProtectedRoute → Auth, déconnexion admin) |
 | **Phase 7** | ✅ Terminé | SEO (JSON-LD Organization/LocalBusiness/Event/Service/Product, sitemap complet, Open Graph dynamique, règles noindex) |
 | **Phase 8** | ✅ Terminé | Accessibilité (contraste texte/bouton corrigé, alt textes descriptifs, état actif exposé, fermeture clavier menu mobile) |
-| **Phase 9** | ⚠️ Partiel | Tests ajoutés et passants ; monitoring Sentry/GA4 à faire |
-| **Phase 10** | ❌ À faire | CI/CD (GitHub Actions build + lint + test) |
+| **Phase 9** | ⚠️ Partiel | Tests ajoutés et passants ; Sentry branché côté code, DSN production/GA4 à configurer |
+| **Phase 10** | ✅ Terminé | CI/CD GitHub Actions build + lint + test + responsive smoke |
 | **Phase 11** | ❌ À faire | Déploiement & DNS (Vercel + Gandi, migration depuis Wix) |
 
 ---
@@ -348,6 +373,6 @@ Résiduel sécurité dépendances :
 
 - **Supabase URL** : `https://awcdoolsmoipylvfpcuq.supabase.co`
 - **Google Place ID** : `ChIJiwj_iiFL3UcR67d2OOiMcAk`
-- **Domain cible** : `fredmusic.fr` (transfert Gandi vers OVH en attente du code d'autorisation)
+- **Domain cible** : `fredmusic.fr` (transfert Gandi vers OVH à confirmer)
 - **Contact** : `contact@fredmusic.fr` (à créer après transfert/validation DNS)
 - **Hébergement cible** : Vercel

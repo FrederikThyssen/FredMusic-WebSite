@@ -14,6 +14,7 @@ import { supabase } from "../lib/supabase";
 import type { MusicRequestStatus, QuoteRequestStatus } from "../lib/database.types";
 import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
+import { Select } from "../components/ui/Select";
 import { formatDateShort, formatDateTime } from "../utils/formatDate";
 
 const quoteStatusLabels: Record<QuoteRequestStatus, string> = {
@@ -28,6 +29,21 @@ const musicStatusLabels: Record<MusicRequestStatus, string> = {
   played: "Jouée",
   refused: "Refusée",
 };
+
+const quoteFilterOptions = [
+  { label: "Tous les devis", value: "all" },
+  { label: quoteStatusLabels.pending, value: "pending" },
+  { label: quoteStatusLabels.accepted, value: "accepted" },
+  { label: quoteStatusLabels.refused, value: "refused" },
+];
+
+const musicFilterOptions = [
+  { label: "Toutes les musiques", value: "all" },
+  { label: musicStatusLabels.pending, value: "pending" },
+  { label: musicStatusLabels.accepted, value: "accepted" },
+  { label: musicStatusLabels.played, value: "played" },
+  { label: musicStatusLabels.refused, value: "refused" },
+];
 
 const statusClasses = {
   pending: "border-gold-300/30 bg-gold-300/[0.08] text-gold-200",
@@ -54,15 +70,29 @@ type EventRow = {
   created_at: string; archived_at: string | null;
 };
 
+type AdminAction =
+  | `quote:${string}:${QuoteRequestStatus}`
+  | `music:${string}:${MusicRequestStatus}`
+  | `event:activate:${string}`
+  | `event:archive:${string}`
+  | "event:create"
+  | "signout";
+
+type QuoteFilter = "all" | QuoteRequestStatus;
+type MusicFilter = "all" | MusicRequestStatus;
+
 export function AdminPage() {
   const [quotes, setQuotes] = useState<QuoteRow[]>([]);
   const [music, setMusic] = useState<MusicRow[]>([]);
   const [events, setEvents] = useState<EventRow[]>([]);
+  const [quoteFilter, setQuoteFilter] = useState<QuoteFilter>("all");
+  const [musicFilter, setMusicFilter] = useState<MusicFilter>("all");
   const [newEventName, setNewEventName] = useState("");
   const [loading, setLoading] = useState(true);
   const [qrGenerating, setQrGenerating] = useState(false);
   const [qrError, setQrError] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [actionInFlight, setActionInFlight] = useState<AdminAction | null>(null);
 
   const loadData = useCallback(async () => {
     const [q, m, e] = await Promise.all([
@@ -79,63 +109,105 @@ export function AdminPage() {
   useEffect(() => { loadData(); }, [loadData]);
 
   async function handleQuoteStatus(id: string, status: QuoteRequestStatus) {
+    const action: AdminAction = `quote:${id}:${status}`;
+    if (actionInFlight) return;
+    setActionInFlight(action);
     setActionError(null);
-    const { error } = await updateQuoteStatus(id, status);
-    if (error) {
-      setActionError("Impossible de modifier le statut du devis.");
-      return;
+    try {
+      const { error } = await updateQuoteStatus(id, status);
+      if (error) {
+        setActionError("Impossible de modifier le statut du devis.");
+        return;
+      }
+      setQuotes((prev) => prev.map((q) => q.id === id ? { ...q, status } : q));
+    } finally {
+      setActionInFlight(null);
     }
-    setQuotes((prev) => prev.map((q) => q.id === id ? { ...q, status } : q));
   }
 
   async function handleMusicStatus(id: string, status: MusicRequestStatus) {
+    const action: AdminAction = `music:${id}:${status}`;
+    if (actionInFlight) return;
+    setActionInFlight(action);
     setActionError(null);
-    const { error } = await updateMusicStatus(id, status);
-    if (error) {
-      setActionError("Impossible de modifier le statut de la demande musique.");
-      return;
+    try {
+      const { error } = await updateMusicStatus(id, status);
+      if (error) {
+        setActionError("Impossible de modifier le statut de la demande musique.");
+        return;
+      }
+      setMusic((prev) => prev.map((m) => m.id === id ? { ...m, status } : m));
+    } finally {
+      setActionInFlight(null);
     }
-    setMusic((prev) => prev.map((m) => m.id === id ? { ...m, status } : m));
   }
 
   async function handleActivateEvent(id: string) {
+    const action: AdminAction = `event:activate:${id}`;
+    if (actionInFlight) return;
+    setActionInFlight(action);
     setActionError(null);
-    const { error } = await activateEvent(id);
-    if (error) {
-      setActionError("Impossible d'activer cette soirée.");
-      return;
+    try {
+      const { error } = await activateEvent(id);
+      if (error) {
+        setActionError("Impossible d'activer cette soirée.");
+        return;
+      }
+      setEvents((prev) => prev.map((e) => ({ ...e, is_active: e.id === id })));
+    } finally {
+      setActionInFlight(null);
     }
-    setEvents((prev) => prev.map((e) => ({ ...e, is_active: e.id === id })));
   }
 
   async function handleArchiveEvent(id: string) {
-    setActionError(null);
-    const { error } = await archiveEvent(id);
-    if (error) {
-      setActionError("Impossible d'archiver cette soirée.");
+    if (actionInFlight) return;
+    const event = events.find((item) => item.id === id);
+    const eventName = event?.name ?? "cette soirée";
+    if (!window.confirm(`Archiver "${eventName}" ? Les nouvelles demandes musique ne seront plus liées à cette soirée.`)) {
       return;
     }
-    setEvents((prev) => prev.map((e) => e.id === id ? { ...e, is_active: false, archived_at: new Date().toISOString() } : e));
+
+    const action: AdminAction = `event:archive:${id}`;
+    setActionInFlight(action);
+    setActionError(null);
+    try {
+      const { error } = await archiveEvent(id);
+      if (error) {
+        setActionError("Impossible d'archiver cette soirée.");
+        return;
+      }
+      setEvents((prev) => prev.map((e) => e.id === id ? { ...e, is_active: false, archived_at: new Date().toISOString() } : e));
+    } finally {
+      setActionInFlight(null);
+    }
   }
 
   async function handleCreateEvent() {
+    if (actionInFlight) return;
     const name = newEventName.trim();
     if (!name) return;
     if (name.length > 160) {
       setActionError("Le nom de la soirée ne peut pas dépasser 160 caractères.");
       return;
     }
+    setActionInFlight("event:create");
     setActionError(null);
-    const { error } = await createEvent(name);
-    if (error) {
-      setActionError("Impossible de créer cette soirée.");
-      return;
+    try {
+      const { error } = await createEvent(name);
+      if (error) {
+        setActionError("Impossible de créer cette soirée.");
+        return;
+      }
+      setNewEventName("");
+      await loadData();
+    } finally {
+      setActionInFlight(null);
     }
-    setNewEventName("");
-    loadData();
   }
 
   async function handleSignOut() {
+    if (actionInFlight) return;
+    setActionInFlight("signout");
     await supabase.auth.signOut();
     window.location.reload();
   }
@@ -167,6 +239,9 @@ export function AdminPage() {
   const pendingQuotes = quotes.filter((q) => q.status === "pending").length;
   const pendingMusic = music.filter((m) => m.status === "pending").length;
   const activeEvent = events.find((e) => e.is_active);
+  const hasActionInFlight = actionInFlight !== null;
+  const filteredQuotes = quoteFilter === "all" ? quotes : quotes.filter((q) => q.status === quoteFilter);
+  const filteredMusic = musicFilter === "all" ? music : music.filter((m) => m.status === musicFilter);
 
   if (loading) {
     return (
@@ -197,8 +272,14 @@ export function AdminPage() {
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-              <Button size="sm" variant="ghost" className="sm:col-span-2 lg:col-span-1 xl:col-span-2" onClick={handleSignOut}>
-                Déconnexion
+              <Button
+                size="sm"
+                variant="ghost"
+                className="sm:col-span-2 lg:col-span-1 xl:col-span-2"
+                onClick={handleSignOut}
+                disabled={hasActionInFlight}
+              >
+                {actionInFlight === "signout" ? "Déconnexion…" : "Déconnexion"}
               </Button>
               <div className="rounded-md border border-white/[0.07] bg-night-900 p-5">
                 <p className="text-xs font-semibold uppercase text-ivory/48">Nouveaux devis</p>
@@ -227,8 +308,15 @@ export function AdminPage() {
             <div className="mt-4 flex items-center gap-3 rounded-md border border-emerald-300/25 bg-emerald-300/[0.08] px-4 py-3">
               <span className="h-2 w-2 rounded-full bg-emerald-400" />
               <span className="font-semibold text-emerald-200">{activeEvent.name}</span>
-              <Button size="sm" variant="ghost" icon={<PowerOff className="h-4 w-4" />} className="ml-auto" onClick={() => handleArchiveEvent(activeEvent.id)}>
-                Archiver
+              <Button
+                size="sm"
+                variant="ghost"
+                icon={<PowerOff className="h-4 w-4" />}
+                className="ml-auto"
+                onClick={() => handleArchiveEvent(activeEvent.id)}
+                disabled={hasActionInFlight}
+              >
+                {actionInFlight === `event:archive:${activeEvent.id}` ? "Archivage…" : "Archiver"}
               </Button>
             </div>
           ) : (
@@ -266,11 +354,18 @@ export function AdminPage() {
               value={newEventName}
               onChange={(e) => setNewEventName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleCreateEvent()}
+              disabled={hasActionInFlight}
               maxLength={160}
               className="min-h-10 flex-1 rounded-sm border border-white/[0.08] bg-white/5 px-3 text-sm text-ivory placeholder:text-ivory/30 focus:border-gold-300 focus:outline-none"
             />
-            <Button size="sm" variant="secondary" icon={<Plus className="h-4 w-4" />} onClick={handleCreateEvent}>
-              Créer
+            <Button
+              size="sm"
+              variant="secondary"
+              icon={<Plus className="h-4 w-4" />}
+              onClick={handleCreateEvent}
+              disabled={hasActionInFlight || !newEventName.trim()}
+            >
+              {actionInFlight === "event:create" ? "Création…" : "Créer"}
             </Button>
           </div>
 
@@ -282,7 +377,14 @@ export function AdminPage() {
                   {e.archived_at ? (
                     <span className="text-xs text-ivory/32">Archivée</span>
                   ) : (
-                    <Button size="sm" variant="ghost" onClick={() => handleActivateEvent(e.id)}>Activer</Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleActivateEvent(e.id)}
+                      disabled={hasActionInFlight}
+                    >
+                      {actionInFlight === `event:activate:${e.id}` ? "Activation…" : "Activer"}
+                    </Button>
                   )}
                 </div>
               ))}
@@ -299,13 +401,24 @@ export function AdminPage() {
                 <p className="text-xs font-semibold uppercase text-gold-300">Demandes de devis</p>
                 <h2 className="mt-2 font-display text-3xl text-ivory">Contacts entrants</h2>
               </div>
-              <Inbox className="h-7 w-7 text-gold-300" aria-hidden="true" />
+              <div className="flex flex-col gap-3 sm:min-w-52 sm:items-end">
+                <Inbox className="hidden h-7 w-7 text-gold-300 sm:block" aria-hidden="true" />
+                <Select
+                  label="Filtrer les devis"
+                  value={quoteFilter}
+                  options={quoteFilterOptions}
+                  onChange={(event) => setQuoteFilter(event.target.value as QuoteFilter)}
+                  className="text-sm"
+                />
+              </div>
             </div>
 
             <div className="mt-6 grid gap-4">
               {quotes.length === 0 ? (
                 <p className="text-sm text-ivory/42">Aucune demande pour l'instant.</p>
-              ) : quotes.map((request) => (
+              ) : filteredQuotes.length === 0 ? (
+                <p className="text-sm text-ivory/42">Aucune demande ne correspond à ce filtre.</p>
+              ) : filteredQuotes.map((request) => (
                 <article key={request.id} className="rounded-md border border-white/[0.07] bg-night-950 p-4">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
@@ -347,11 +460,21 @@ export function AdminPage() {
                   {request.message ? <p className="mt-4 leading-7 text-ivory/72">{request.message}</p> : null}
 
                   <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                    <Button size="sm" variant="secondary" onClick={() => handleQuoteStatus(request.id, "accepted")}>
-                      Marquer traité
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => handleQuoteStatus(request.id, "accepted")}
+                      disabled={hasActionInFlight || request.status === "accepted"}
+                    >
+                      {actionInFlight === `quote:${request.id}:accepted` ? "Mise à jour…" : "Marquer traité"}
                     </Button>
-                    <Button size="sm" variant="ghost" onClick={() => handleQuoteStatus(request.id, "refused")}>
-                      Refuser
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleQuoteStatus(request.id, "refused")}
+                      disabled={hasActionInFlight || request.status === "refused"}
+                    >
+                      {actionInFlight === `quote:${request.id}:refused` ? "Mise à jour…" : "Refuser"}
                     </Button>
                   </div>
                 </article>
@@ -365,13 +488,24 @@ export function AdminPage() {
                 <p className="text-xs font-semibold uppercase text-gold-300">Demandes de musique</p>
                 <h2 className="mt-2 font-display text-3xl text-ivory">Playlist proposée</h2>
               </div>
-              <Disc3 className="h-7 w-7 text-gold-300" aria-hidden="true" />
+              <div className="flex flex-col gap-3 sm:min-w-52 sm:items-end">
+                <Disc3 className="hidden h-7 w-7 text-gold-300 sm:block" aria-hidden="true" />
+                <Select
+                  label="Filtrer les musiques"
+                  value={musicFilter}
+                  options={musicFilterOptions}
+                  onChange={(event) => setMusicFilter(event.target.value as MusicFilter)}
+                  className="text-sm"
+                />
+              </div>
             </div>
 
             <div className="mt-6 grid gap-4">
               {music.length === 0 ? (
                 <p className="text-sm text-ivory/42">Aucune demande pour l'instant.</p>
-              ) : music.map((request) => (
+              ) : filteredMusic.length === 0 ? (
+                <p className="text-sm text-ivory/42">Aucune demande ne correspond à ce filtre.</p>
+              ) : filteredMusic.map((request) => (
                 <article key={request.id} className="rounded-md border border-white/[0.07] bg-night-950 p-4">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
@@ -399,14 +533,31 @@ export function AdminPage() {
                   {request.message ? <p className="mt-4 leading-7 text-ivory/72">{request.message}</p> : null}
 
                   <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                    <Button size="sm" variant="secondary" icon={<Check className="h-4 w-4" />} onClick={() => handleMusicStatus(request.id, "accepted")}>
-                      Accepter
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      icon={<Check className="h-4 w-4" />}
+                      onClick={() => handleMusicStatus(request.id, "accepted")}
+                      disabled={hasActionInFlight || request.status === "accepted"}
+                    >
+                      {actionInFlight === `music:${request.id}:accepted` ? "Mise à jour…" : "Accepter"}
                     </Button>
-                    <Button size="sm" variant="primary" onClick={() => handleMusicStatus(request.id, "played")}>
-                      Joué
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      onClick={() => handleMusicStatus(request.id, "played")}
+                      disabled={hasActionInFlight || request.status === "played"}
+                    >
+                      {actionInFlight === `music:${request.id}:played` ? "Mise à jour…" : "Joué"}
                     </Button>
-                    <Button size="sm" variant="ghost" icon={<X className="h-4 w-4" />} onClick={() => handleMusicStatus(request.id, "refused")}>
-                      Refuser
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      icon={<X className="h-4 w-4" />}
+                      onClick={() => handleMusicStatus(request.id, "refused")}
+                      disabled={hasActionInFlight || request.status === "refused"}
+                    >
+                      {actionInFlight === `music:${request.id}:refused` ? "Mise à jour…" : "Refuser"}
                     </Button>
                   </div>
                 </article>

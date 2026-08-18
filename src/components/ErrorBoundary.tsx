@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
+import { reportError } from "../lib/monitoring";
 
 type Props = { children: ReactNode };
 type State = { hasError: boolean };
@@ -11,8 +12,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    // Replace with Sentry.captureException(error) when monitoring is set up
-    console.error("Uncaught error:", error, info.componentStack);
+    reportError(error, { componentStack: info.componentStack });
   }
 
   render() {
