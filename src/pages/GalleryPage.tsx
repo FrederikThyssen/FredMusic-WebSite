@@ -351,10 +351,16 @@ const eventPhotos = [
 ];
 
 const hiddenGalleryReferenceNumbers = new Set([2, 7, 8, 11, 13, 15, 17, 18, 28, 41, 44, 46, 47, 48]);
+const featuredGalleryReferenceNumber = 27;
 
 const galleryItems: NumberedPhotoGalleryItem[] = [...weddingPhotos, ...eventPhotos]
   .map((item, index) => ({ ...item, referenceNumber: index + 1 }))
-  .filter((item) => !hiddenGalleryReferenceNumbers.has(item.referenceNumber));
+  .filter((item) => !hiddenGalleryReferenceNumbers.has(item.referenceNumber))
+  .sort((a, b) => {
+    if (a.referenceNumber === featuredGalleryReferenceNumber) return -1;
+    if (b.referenceNumber === featuredGalleryReferenceNumber) return 1;
+    return a.referenceNumber - b.referenceNumber;
+  });
 
 export function GalleryPage() {
   return (
@@ -416,7 +422,7 @@ export function GalleryPage() {
               <figure
                 key={item.src}
                 className={`group overflow-hidden rounded-md border border-white/[0.07] bg-night-950 ${
-                  index === 0 ? "sm:col-span-2" : ""
+                  item.referenceNumber === featuredGalleryReferenceNumber ? "sm:col-span-2" : ""
                 }`}
               >
                 <div className="relative overflow-hidden">
