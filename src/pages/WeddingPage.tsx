@@ -87,7 +87,7 @@ export function WeddingPage() {
             <img
               src="/images/conception/galerie-evenement-007.webp"
               alt="Mariés dans une salle de réception lumineuse avec fumée lourde"
-              className="aspect-[4/3] w-full object-cover object-center"
+              className="aspect-[4/5] w-full object-cover object-center sm:aspect-[4/3]"
             />
           </div>
         </div>

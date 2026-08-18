@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   UsersRound,
 } from "lucide-react";
+import { HeroMedia } from "../components/sections/HeroMedia";
 import { Badge } from "../components/ui/Badge";
 import { ButtonLink } from "../components/ui/Button";
 
@@ -44,6 +45,10 @@ export function ProfessionalEventsPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/90 to-night-950/42" />
         <div className="relative mx-auto max-w-7xl">
+          <HeroMedia
+            src="/images/conception/galerie-evenement-039.webp"
+            alt="Événement professionnel avec matériel son et lumière"
+          />
           <div className="max-w-4xl">
             <Badge>Événements professionnels & publics</Badge>
             <h1 className="mt-5 font-display text-4xl leading-tight text-ivory sm:text-5xl xl:text-6xl">

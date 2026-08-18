@@ -11,6 +11,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import { CTASection } from "../components/sections/CTASection";
+import { HeroMedia } from "../components/sections/HeroMedia";
 import { Badge } from "../components/ui/Badge";
 import { ButtonLink } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
@@ -111,6 +112,11 @@ export function EventsPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/42" />
         <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-transparent to-transparent" />
         <div className="relative mx-auto w-full max-w-7xl">
+          <HeroMedia
+            src="/images/conception/galerie-evenement-021.webp"
+            alt="Régie DJ face à une salle événementielle avec invités et éclairage"
+            imageClassName="aspect-[3/2]"
+          />
           <div className="max-w-4xl">
             <Badge>Événements privés</Badge>
             <h1 className="mt-5 max-w-4xl font-display text-4xl leading-tight text-ivory sm:text-5xl xl:text-6xl">

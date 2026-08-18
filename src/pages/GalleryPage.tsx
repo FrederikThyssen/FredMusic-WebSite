@@ -1,5 +1,6 @@
 import { Images } from "lucide-react";
 import { CTASection } from "../components/sections/CTASection";
+import { HeroMedia } from "../components/sections/HeroMedia";
 import { Badge } from "../components/ui/Badge";
 
 type PhotoGalleryItem = {
@@ -360,6 +361,10 @@ export function GalleryPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/36" />
         <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-transparent to-night-950" />
         <div className="relative mx-auto max-w-7xl">
+          <HeroMedia
+            src="/images/conception/galerie-evenement-002.webp"
+            alt="Mariés sur la piste avec étincelles froides et invités autour"
+          />
           <div className="max-w-4xl">
             <Badge>Galerie</Badge>
             <h1 className="mt-5 max-w-4xl font-display text-4xl leading-tight text-ivory sm:text-5xl xl:text-6xl">
