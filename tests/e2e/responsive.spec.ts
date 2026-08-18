@@ -11,6 +11,16 @@ const criticalRoutes = [
 ] as const;
 
 test.describe("responsive delivery smoke", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route("https://example.supabase.co/**", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: "null",
+      });
+    });
+  });
+
   for (const route of criticalRoutes) {
     test(`${route.name} has no horizontal overflow or console errors`, async ({ page }, testInfo) => {
       const consoleErrors: string[] = [];

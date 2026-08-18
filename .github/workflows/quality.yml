@@ -11,6 +11,10 @@ on:
 permissions:
   contents: read
 
+env:
+  VITE_SUPABASE_URL: https://example.supabase.co
+  VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_placeholder
+
 jobs:
   checks:
     name: Lint, test, and build
