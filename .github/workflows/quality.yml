@@ -11,6 +11,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   VITE_SUPABASE_URL: https://example.supabase.co
   VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_placeholder
@@ -19,6 +23,7 @@ jobs:
   checks:
     name: Lint, test, and build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -34,7 +39,8 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        timeout-minutes: 5
+        run: npx playwright install chromium
 
       - name: Lint
         run: npm run lint
