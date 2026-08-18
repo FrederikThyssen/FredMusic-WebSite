@@ -12,7 +12,7 @@ Le site a une base fonctionnelle solide : React/Vite, pages vitrines avancées, 
 
 - `npm run build` : ✅ passe après corrections.
 - `npm run lint` : ✅ passe après corrections.
-- `npm test` : ✅ 5 fichiers, 10 tests passants.
+- `npm test` : ✅ 6 fichiers, 14 tests passants.
 - `npm audit --audit-level=moderate` : ✅ 0 vulnérabilité après correction `nanoid`.
 - CI/CD : ✅ workflow GitHub Actions ajouté (`lint`, tests, build, responsive smoke, audit bloquant).
 - Formulaires publics : ✅ validation serveur, honeypot et rate limit via Edge Function.
@@ -86,8 +86,9 @@ Décisions produit à respecter :
 - Limite actuelle Resend : en mode test, l'envoi vers `djfredmusic@outlook.fr` est refusé tant que le domaine `fredmusic.fr` n'est pas validé.
 - Tests Vitest + React Testing Library ajoutés :
   - formulaires Contact et Demande musique;
+  - accès admin `ProtectedRoute`;
   - helpers `slugify`, `formatDate`, SEO.
-- `npm test` validé : 5 fichiers, 10 tests passants.
+- `npm test` validé : 6 fichiers, 14 tests passants.
 - Nettoyage galerie :
   - retrait de la catégorie vidéo vide;
   - fusion de la catégorie mariage dans la section unique "Nos différents événements réalisés";
@@ -173,9 +174,9 @@ Décisions produit à respecter :
     - ✅ Script `npm test` ajouté.
     - ✅ Tests validation formulaire Contact.
     - ✅ Tests validation Demande musique.
+    - ✅ Tests `ProtectedRoute` non connecté/connecté, erreur de login et login réussi.
     - ✅ Tests helpers SEO/date/slug.
-    - À faire : tests `ProtectedRoute` non connecté/connecté.
-    - À faire : smoke tests routes principales.
+    - ✅ Smoke tests routes publiques principales via Playwright.
 
 11. **Ajouter CI GitHub Actions**
     - ✅ Workflow `.github/workflows/quality.yml` ajouté sur PR vers `main` et push `main`.
