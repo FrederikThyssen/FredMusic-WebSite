@@ -12,7 +12,7 @@ Le site a une base fonctionnelle solide : React/Vite, pages vitrines avancées, 
 
 - `npm run build` : ✅ passe après corrections.
 - `npm run lint` : ✅ passe après corrections.
-- `npm test` : ✅ 8 fichiers, 19 tests passants.
+- `npm test` : ✅ 9 fichiers, 20 tests passants.
 - `npm audit --audit-level=moderate` : ✅ 0 vulnérabilité après correction `nanoid`.
 - CI/CD : ✅ workflow GitHub Actions ajouté (`lint`, tests, build, responsive smoke, audit bloquant).
 - Formulaires publics : ✅ validation serveur, honeypot et rate limit via Edge Function.
@@ -92,7 +92,8 @@ Décisions produit à respecter :
   - actions admin critiques;
   - filtres de statut admin;
   - helpers `slugify`, `formatDate`, SEO.
-- `npm test` validé : 8 fichiers, 19 tests passants.
+- Test automatisé ajouté pour vérifier que chaque référence `/images/...` dans `src` pointe vers un asset existant dans `public`.
+- `npm test` validé : 9 fichiers, 20 tests passants.
 - Monitoring Sentry optionnel ajouté :
   - initialisation via `VITE_SENTRY_DSN`;
   - environnement via `VITE_APP_ENV`;
@@ -189,6 +190,7 @@ Décisions produit à respecter :
     - ✅ Tests admin confirmation archivage et anti double-clic création soirée.
     - ✅ Tests filtres de statut admin devis/musiques.
     - ✅ Tests helpers SEO/date/slug.
+    - ✅ Test de cohérence des références images publiques.
     - ✅ Smoke tests routes publiques principales et écran `/admin` non connecté via Playwright.
 
 11. **Ajouter CI GitHub Actions**
@@ -228,7 +230,7 @@ Décisions produit à respecter :
     - ✅ Catégorie mariage fusionnée dans "Nos différents événements réalisés".
     - ✅ Photos de galerie renommées proprement en ordre croissant.
     - ✅ Chemins d'images galerie corrigés.
-    - ✅ Vérification locale : aucune image référencée manquante.
+    - ✅ Vérification automatisée en CI : aucune image référencée manquante.
     - `public/images` pèse environ 104M et nécessite un tri final avec le client avant suppression.
     - Trier les photos avec le client.
     - Supprimer du build les assets non utilisés.
