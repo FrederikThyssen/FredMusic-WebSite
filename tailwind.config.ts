@@ -30,9 +30,10 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Playfair Display", "Georgia", "Cambria", "serif"],
-        wedding: ["Crimson Pro", "Georgia", "Cambria", "serif"],
-        body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["Cormorant Garamond", "Georgia", "Cambria", "serif"],
+        wedding: ["Cormorant Garamond", "Georgia", "Cambria", "serif"],
+        script: ["Parisienne", "Brush Script MT", "cursive"],
+        body: ["Manrope", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
         glow: "0 20px 70px rgba(199, 161, 91, 0.12)",

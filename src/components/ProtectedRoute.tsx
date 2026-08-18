@@ -37,11 +37,10 @@ export function ProtectedRoute({ children }: Props) {
     }
   }
 
-  // Chargement de la session en cours
   if (authed === null) {
     return (
       <div className="grid min-h-[60vh] place-items-center bg-night-950">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold-300/30 border-t-gold-300" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold-300/20 border-t-gold-200" />
       </div>
     );
   }
@@ -52,7 +51,7 @@ export function ProtectedRoute({ children }: Props) {
     <div className="grid min-h-[70vh] place-items-center px-4">
       <div className="w-full max-w-sm rounded-md border border-white/[0.08] bg-night-900/78 p-8 shadow-glow">
         <div className="flex flex-col items-center gap-3">
-          <Lock className="h-8 w-8 text-gold-300" aria-hidden="true" />
+          <Lock className="h-8 w-8 text-gold-200/75" aria-hidden="true" />
           <h1 className="font-display text-2xl text-ivory">Accès admin</h1>
         </div>
         <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
@@ -64,7 +63,7 @@ export function ProtectedRoute({ children }: Props) {
               type="email"
               autoComplete="email"
               required
-              className="min-h-11 rounded-sm border border-white/[0.08] bg-white/5 px-3 text-base text-ivory transition focus:border-gold-300 focus:outline-none"
+              className="min-h-11 rounded-sm border border-white/[0.08] bg-white/5 px-3 text-base text-ivory transition focus:border-gold-200 focus:outline-none"
             />
           </label>
           <label className="grid gap-2 text-sm text-ivory/82" htmlFor="admin-password">
@@ -76,7 +75,7 @@ export function ProtectedRoute({ children }: Props) {
               autoComplete="current-password"
               required
               aria-describedby={error ? "admin-pwd-error" : undefined}
-              className="min-h-11 rounded-sm border border-white/[0.08] bg-white/5 px-3 text-base text-ivory transition focus:border-gold-300 focus:outline-none"
+              className="min-h-11 rounded-sm border border-white/[0.08] bg-white/5 px-3 text-base text-ivory transition focus:border-gold-200 focus:outline-none"
             />
             {error ? (
               <span id="admin-pwd-error" role="alert" className="text-sm text-red-300">
@@ -87,7 +86,7 @@ export function ProtectedRoute({ children }: Props) {
           <button
             type="submit"
             disabled={submitting}
-            className="min-h-11 rounded-sm border border-gold-300 bg-gold-300 px-5 py-3 text-xs font-semibold uppercase text-night-950 transition hover:bg-gold-500 disabled:opacity-55"
+            className="min-h-11 rounded-sm border border-gold-500 bg-gold-500 px-5 py-3 text-xs font-semibold uppercase text-night-950 transition hover:border-gold-400 hover:bg-gold-400 disabled:opacity-55"
           >
             {submitting ? "Connexion…" : "Accéder"}
           </button>

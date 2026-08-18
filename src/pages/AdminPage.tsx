@@ -46,7 +46,7 @@ const musicFilterOptions = [
 ];
 
 const statusClasses = {
-  pending: "border-gold-300/30 bg-gold-300/[0.08] text-gold-200",
+  pending: "border-gold-300/20 bg-gold-300/[0.045] text-gold-200",
   accepted: "border-emerald-300/25 bg-emerald-300/[0.08] text-emerald-200",
   played: "border-sky-300/25 bg-sky-300/[0.08] text-sky-200",
   refused: "border-red-300/25 bg-red-300/[0.08] text-red-200",
@@ -255,7 +255,7 @@ export function AdminPage() {
     <div className="bg-night-950 text-ivory">
       <section className="px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <Badge>Admin</Badge>
+          <Badge variant="dark">Admin</Badge>
           {actionError ? (
             <p role="alert" className="mt-4 rounded-md border border-red-300/25 bg-red-300/[0.08] px-4 py-3 text-sm text-red-200">
               {actionError}
@@ -283,11 +283,11 @@ export function AdminPage() {
               </Button>
               <div className="rounded-md border border-white/[0.07] bg-night-900 p-5">
                 <p className="text-xs font-semibold uppercase text-ivory/48">Nouveaux devis</p>
-                <p className="mt-2 font-display text-4xl text-gold-300">{pendingQuotes}</p>
+                <p className="mt-2 font-display text-4xl text-ivory">{pendingQuotes}</p>
               </div>
               <div className="rounded-md border border-white/[0.07] bg-night-900 p-5">
                 <p className="text-xs font-semibold uppercase text-ivory/48">Musiques à valider</p>
-                <p className="mt-2 font-display text-4xl text-gold-300">{pendingMusic}</p>
+                <p className="mt-2 font-display text-4xl text-ivory">{pendingMusic}</p>
               </div>
             </div>
           </div>
@@ -298,10 +298,10 @@ export function AdminPage() {
         <div className="mx-auto max-w-7xl rounded-lg border border-white/[0.08] bg-night-900 p-4 sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase text-gold-300">Gestion soirée QR code</p>
+              <p className="text-xs font-semibold uppercase text-ivory/56">Gestion soirée QR code</p>
               <h2 className="mt-2 font-display text-3xl text-ivory">Soirée active</h2>
             </div>
-            <Power className="h-7 w-7 text-gold-300" aria-hidden="true" />
+            <Power className="h-7 w-7 text-gold-200/75" aria-hidden="true" />
           </div>
 
           {activeEvent ? (
@@ -356,7 +356,7 @@ export function AdminPage() {
               onKeyDown={(e) => e.key === "Enter" && handleCreateEvent()}
               disabled={hasActionInFlight}
               maxLength={160}
-              className="min-h-10 flex-1 rounded-sm border border-white/[0.08] bg-white/5 px-3 text-sm text-ivory placeholder:text-ivory/30 focus:border-gold-300 focus:outline-none"
+              className="min-h-10 flex-1 rounded-sm border border-white/[0.08] bg-white/5 px-3 text-sm text-ivory placeholder:text-ivory/30 focus:border-gold-200 focus:outline-none"
             />
             <Button
               size="sm"
@@ -398,11 +398,11 @@ export function AdminPage() {
           <section className="rounded-lg border border-white/[0.08] bg-night-900 p-4 sm:p-6">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase text-gold-300">Demandes de devis</p>
+                <p className="text-xs font-semibold uppercase text-ivory/56">Demandes de devis</p>
                 <h2 className="mt-2 font-display text-3xl text-ivory">Contacts entrants</h2>
               </div>
               <div className="flex flex-col gap-3 sm:min-w-52 sm:items-end">
-                <Inbox className="hidden h-7 w-7 text-gold-300 sm:block" aria-hidden="true" />
+                <Inbox className="hidden h-7 w-7 text-gold-200/75 sm:block" aria-hidden="true" />
                 <Select
                   label="Filtrer les devis"
                   value={quoteFilter}
@@ -428,28 +428,28 @@ export function AdminPage() {
                           {quoteStatusLabels[request.status]}
                         </span>
                       </div>
-                      <p className="mt-2 text-sm text-gold-300">{request.event_type}</p>
+                      <p className="mt-2 text-sm text-gold-200/80">{request.event_type}</p>
                     </div>
                     <p className="text-sm text-ivory/48">{formatDateTime(request.created_at)}</p>
                   </div>
 
                   <div className="mt-4 grid gap-3 text-sm text-ivory/68 sm:grid-cols-2">
                     <p className="flex min-w-0 items-center gap-2 break-all">
-                      <Mail className="h-4 w-4 text-gold-300" aria-hidden="true" />
+                      <Mail className="h-4 w-4 text-gold-200/75" aria-hidden="true" />
                       {request.email}
                     </p>
                     {request.phone ? (
                       <p className="flex items-center gap-2">
-                        <Phone className="h-4 w-4 text-gold-300" aria-hidden="true" />
+                        <Phone className="h-4 w-4 text-gold-200/75" aria-hidden="true" />
                         {request.phone}
                       </p>
                     ) : null}
                     <p className="flex items-center gap-2">
-                      <CalendarDays className="h-4 w-4 text-gold-300" aria-hidden="true" />
+                      <CalendarDays className="h-4 w-4 text-gold-200/75" aria-hidden="true" />
                       {request.event_date ? formatDateShort(request.event_date) : "Date à préciser"}
                     </p>
                     <p className="flex min-w-0 items-center gap-2 break-words">
-                      <MapPin className="h-4 w-4 text-gold-300" aria-hidden="true" />
+                      <MapPin className="h-4 w-4 text-gold-200/75" aria-hidden="true" />
                       {request.location}
                     </p>
                   </div>
@@ -485,11 +485,11 @@ export function AdminPage() {
           <section className="rounded-lg border border-white/[0.08] bg-night-900 p-4 sm:p-6">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase text-gold-300">Demandes de musique</p>
+                <p className="text-xs font-semibold uppercase text-ivory/56">Demandes de musique</p>
                 <h2 className="mt-2 font-display text-3xl text-ivory">Playlist proposée</h2>
               </div>
               <div className="flex flex-col gap-3 sm:min-w-52 sm:items-end">
-                <Disc3 className="hidden h-7 w-7 text-gold-300 sm:block" aria-hidden="true" />
+                <Disc3 className="hidden h-7 w-7 text-gold-200/75 sm:block" aria-hidden="true" />
                 <Select
                   label="Filtrer les musiques"
                   value={musicFilter}
@@ -510,10 +510,10 @@ export function AdminPage() {
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <div className="flex items-start gap-3">
-                        <Music2 className="mt-1 h-5 w-5 flex-none text-gold-300" aria-hidden="true" />
+                        <Music2 className="mt-1 h-5 w-5 flex-none text-gold-200/75" aria-hidden="true" />
                         <div className="min-w-0">
                           <h3 className="break-words font-display text-2xl text-ivory">{request.song_title}</h3>
-                          <p className="mt-1 break-words text-sm text-gold-300">{request.artist}</p>
+                          <p className="mt-1 break-words text-sm text-gold-200/80">{request.artist}</p>
                         </div>
                       </div>
                     </div>
@@ -524,7 +524,7 @@ export function AdminPage() {
 
                   <div className="mt-4 grid gap-2 text-sm text-ivory/62">
                     <p className="flex items-center gap-2">
-                      <UserRound className="h-4 w-4 text-gold-300" aria-hidden="true" />
+                      <UserRound className="h-4 w-4 text-gold-200/75" aria-hidden="true" />
                       {request.guest_name ?? "Invité anonyme"}
                     </p>
                     <p className="text-ivory/42">{formatDateTime(request.created_at)}</p>

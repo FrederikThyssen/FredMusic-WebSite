@@ -75,7 +75,9 @@ export function WeddingPage() {
             <p className="text-xs font-semibold uppercase text-gold-700">Mariage</p>
             <h1 className="mt-5 font-wedding text-4xl leading-tight text-night-950 sm:text-6xl sm:leading-[1.02]">
               Votre mariage,
-              <span className="block">une histoire unique</span>
+              <span className="mt-2 block font-script text-5xl font-normal leading-none text-gold-700 sm:text-7xl">
+                une histoire unique
+              </span>
             </h1>
             <p className="mt-6 max-w-md text-base leading-7 text-night-800">
               Chaque détail compte pour faire de votre journée un moment inoubliable, élégant et parfaitement orchestré.
@@ -95,7 +97,7 @@ export function WeddingPage() {
       <section id="experience" className="border-b border-warm-300/80 bg-warm-50 px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
-            <p className="font-wedding text-2xl text-night-950">Une expérience sur-mesure</p>
+            <p className="font-script text-4xl leading-none text-gold-700 sm:text-5xl">Une expérience sur-mesure</p>
             <div className="mx-auto mt-3 h-px w-16 bg-gold-400" />
           </div>
 
@@ -119,7 +121,10 @@ export function WeddingPage() {
           <div>
             <p className="text-xs font-semibold uppercase text-gold-700">Pourquoi choisir Fredmusic ?</p>
             <h2 className="mt-4 font-wedding text-4xl leading-tight text-night-950">
-              Une présence rassurante pour un jour qui ne se rejoue pas
+              Une présence rassurante
+              <span className="mt-1 block font-script text-5xl font-normal leading-none text-gold-700 sm:text-6xl">
+                pour un jour unique
+              </span>
             </h2>
             <ul className="mt-7 grid gap-3">
               {reasons.map((reason) => (
