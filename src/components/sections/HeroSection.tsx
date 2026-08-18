@@ -50,10 +50,10 @@ export function HeroSection({
           "absolute inset-0 hidden lg:block",
           isWedding
             ? "bg-gradient-to-r from-warm-100 via-warm-100/86 to-warm-100/10"
-            : "bg-gradient-to-r from-night-950 via-night-950/82 to-night-950/6",
+            : "bg-gradient-to-r from-night-950 via-night-950/76 to-night-950/12",
         )}
       />
-      {!isWedding ? <div className="absolute inset-0 hidden bg-gradient-to-b from-night-950/64 via-transparent to-night-950/68 lg:block" /> : null}
+      {!isWedding ? <div className="absolute inset-0 hidden bg-gradient-to-b from-night-950/36 via-transparent to-night-950/70 lg:block" /> : null}
       <div className="relative mx-auto flex min-h-[68svh] max-w-7xl flex-col justify-center px-4 py-16 sm:min-h-[72vh] sm:px-6 sm:py-20 lg:px-8">
         <HeroMedia
           src={image}
@@ -62,7 +62,7 @@ export function HeroSection({
           className={cn(isWedding && "bg-warm-100")}
           imageClassName={isWedding ? "aspect-[4/3]" : "aspect-[4/3]"}
         />
-        <div className={cn(!isWedding && "max-w-4xl lg:rounded-md lg:bg-night-950/42 lg:p-7 lg:backdrop-blur-[2px]")}>
+        <div className={cn(!isWedding && "max-w-4xl")}>
           <p className={cn("text-xs font-semibold uppercase", isWedding ? "text-gold-700" : "text-gold-300")}>{eyebrow}</p>
           <h1 className={cn("mt-4 max-w-4xl text-4xl leading-tight sm:text-6xl sm:leading-none lg:text-7xl", isWedding ? "font-wedding text-night-950" : "font-display text-ivory")}>
             {title}
