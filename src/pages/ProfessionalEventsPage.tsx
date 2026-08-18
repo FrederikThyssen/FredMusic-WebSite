@@ -40,10 +40,10 @@ export function ProfessionalEventsPage() {
         <img
           src="/images/conception/galerie-evenement-039.webp"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-42"
+          className="absolute inset-0 hidden h-full w-full object-cover object-center opacity-42 lg:block"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/90 to-night-950/42" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-night-950 via-night-950/90 to-night-950/42 lg:block" />
         <div className="relative mx-auto max-w-7xl">
           <HeroMedia
             src="/images/conception/galerie-evenement-039.webp"

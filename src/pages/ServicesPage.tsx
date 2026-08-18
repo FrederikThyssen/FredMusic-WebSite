@@ -59,11 +59,11 @@ export function ServicesPage() {
         <img
           src="/images/conception/galerie-evenement-036.webp"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-38"
+          className="absolute inset-0 hidden h-full w-full object-cover object-center opacity-38 lg:block"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/36" />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-transparent to-transparent" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/36 lg:block" />
+        <div className="absolute inset-0 hidden bg-gradient-to-t from-night-950 via-transparent to-transparent lg:block" />
         <div className="relative mx-auto max-w-7xl">
           <HeroMedia
             src="/images/conception/galerie-evenement-036.webp"

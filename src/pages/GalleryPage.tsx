@@ -355,11 +355,11 @@ export function GalleryPage() {
         <img
           src="/images/conception/galerie-evenement-002.webp"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-34"
+          className="absolute inset-0 hidden h-full w-full object-cover object-center opacity-34 lg:block"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/36" />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-transparent to-night-950" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/36 lg:block" />
+        <div className="absolute inset-0 hidden bg-gradient-to-t from-night-950 via-transparent to-night-950 lg:block" />
         <div className="relative mx-auto max-w-7xl">
           <HeroMedia
             src="/images/conception/galerie-evenement-002.webp"

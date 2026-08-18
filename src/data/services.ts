@@ -22,7 +22,7 @@ export const services: Service[] = [
     shortDescription: "Création d'ambiances lumineuses raffinées, adaptées au lieu et à chaque temps fort.",
     longDescription:
       "La lumière accompagne la scénographie de votre événement avec des ambiances sobres, chaleureuses ou spectaculaires selon les moments. Chaque installation est pensée pour valoriser le lieu sans le dénaturer.",
-    image: "/images/conception/galerie-evenement-029.webp",
+    image: "/images/conception/galerie-evenement-002.webp",
     icon: "Lightbulb",
     benefits: ["Éclairage architectural", "Piste de danse dynamique", "Ambiance dîner chaleureuse", "Mise en valeur du lieu"],
     recommendedFor: ["Mariages", "Entreprises", "Soirées privées", "Salles de réception"],
@@ -48,7 +48,7 @@ export const services: Service[] = [
     shortDescription: "Fumée lourde, étincelles froides, CO2 et effets visuels pour marquer les temps forts.",
     longDescription:
       "Les effets premium subliment les moments clés : ouverture de bal, entrée des mariés, lancement de soirée ou temps fort d'entreprise. Ils sont proposés avec un cadre technique sécurisé.",
-    image: "/images/conception/galerie-evenement-002.webp",
+    image: "/images/conception/galerie-evenement-029.webp",
     icon: "Sparkles",
     benefits: ["Ouverture de bal immersive", "Effets encadrés", "Rendu photo et vidéo premium", "Coordination avec le programme"],
     recommendedFor: ["Mariages", "Soirées privées", "Lancements", "Événements premium"],

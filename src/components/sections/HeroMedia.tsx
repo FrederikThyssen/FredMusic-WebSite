@@ -18,7 +18,7 @@ export function HeroMedia({
   priority = true,
 }: HeroMediaProps) {
   return (
-    <div className={cn("mb-8 overflow-hidden rounded-sm border border-white/[0.07] bg-night-900 lg:hidden", className)}>
+    <div className={cn("relative -mx-4 -mt-16 mb-10 overflow-hidden bg-night-900 sm:-mx-6 sm:-mt-20 lg:hidden", className)}>
       <img
         src={src}
         alt={alt}

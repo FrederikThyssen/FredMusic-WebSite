@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { TestimonialCard } from "../components/cards/TestimonialCard";
 import { CTASection } from "../components/sections/CTASection";
+import { HeroMedia } from "../components/sections/HeroMedia";
 import { ButtonLink } from "../components/ui/Button";
 import { testimonials } from "../data/testimonials";
 
@@ -64,6 +65,12 @@ export function WeddingPage() {
         </div>
 
         <div className="relative mx-auto grid min-h-[620px] max-w-7xl items-center px-4 py-16 sm:px-6 lg:grid-cols-[0.45fr_0.55fr] lg:px-8">
+          <HeroMedia
+            src="/images/conception/galerie-evenement-007.webp"
+            alt="Mariés dans une salle de réception lumineuse avec fumée lourde"
+            className="bg-warm-100"
+            imageClassName="aspect-[4/5] object-center sm:aspect-[4/3]"
+          />
           <div className="max-w-xl">
             <p className="text-xs font-semibold uppercase text-gold-700">Mariage</p>
             <h1 className="mt-5 font-wedding text-4xl leading-tight text-night-950 sm:text-6xl sm:leading-[1.02]">
@@ -81,14 +88,6 @@ export function WeddingPage() {
                 Demander un devis
               </ButtonLink>
             </div>
-          </div>
-
-          <div className="mt-10 overflow-hidden rounded-sm border border-white bg-white shadow-glow lg:hidden">
-            <img
-              src="/images/conception/galerie-evenement-007.webp"
-              alt="Mariés dans une salle de réception lumineuse avec fumée lourde"
-              className="aspect-[4/5] w-full object-cover object-center sm:aspect-[4/3]"
-            />
           </div>
         </div>
       </section>

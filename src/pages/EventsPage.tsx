@@ -106,16 +106,16 @@ export function EventsPage() {
         <img
           src="/images/conception/galerie-evenement-021.webp"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-48"
+          className="absolute inset-0 hidden h-full w-full object-cover object-center opacity-48 lg:block"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/42" />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-transparent to-transparent" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/42 lg:block" />
+        <div className="absolute inset-0 hidden bg-gradient-to-t from-night-950 via-transparent to-transparent lg:block" />
         <div className="relative mx-auto w-full max-w-7xl">
           <HeroMedia
             src="/images/conception/galerie-evenement-021.webp"
             alt="Régie DJ face à une salle événementielle avec invités et éclairage"
-            imageClassName="aspect-[3/2]"
+            imageClassName="aspect-[16/10]"
           />
           <div className="max-w-4xl">
             <Badge>Événements privés</Badge>

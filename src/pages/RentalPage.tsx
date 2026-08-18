@@ -66,21 +66,21 @@ const reassurance = [
 export function RentalPage() {
   return (
     <div className="bg-night-950 text-ivory">
-      <section className="relative min-h-[760px] overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:min-h-[760px] lg:px-8">
         <div className="absolute inset-0 bg-night-950" aria-hidden="true" />
         <img
           src="/images/conception/image-loc.webp"
           alt=""
-          className="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-18 blur-sm"
+          className="absolute inset-0 hidden h-full w-full scale-110 object-cover object-center opacity-18 blur-sm lg:block"
           aria-hidden="true"
         />
         <img
           src="/images/conception/image-loc.webp"
           alt=""
-          className="absolute inset-0 h-full w-full object-contain object-center opacity-42"
+          className="absolute inset-0 hidden h-full w-full object-contain object-center opacity-42 lg:block"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/46" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/46 lg:block" />
         <div className="relative mx-auto max-w-7xl">
           <HeroMedia
             src="/images/conception/image-loc.webp"
