@@ -6,19 +6,20 @@ Dernière mise à jour : 2026-08-18, audit pré-livraison complet après relectu
 
 ## Verdict pré-livraison
 
-**Statut actuel : presque prêt techniquement, non livrable client tant que domaine/email, monitoring et QA visuelle ne sont pas finalisés.**
+**Statut actuel : presque prêt techniquement, non livrable client tant que domaine/email, DSN Sentry production et QA visuelle ne sont pas finalisés.**
 
 Le site a une base fonctionnelle solide : React/Vite, pages vitrines avancées, Supabase branché, admin protégé par Auth, SEO/accessibilité déjà travaillés, build production validé. En revanche, les vérifications pré-livraison ont trouvé des bloquants qualité/sécurité qui doivent être corrigés avant bascule client :
 
 - `npm run build` : ✅ passe après corrections.
 - `npm run lint` : ✅ passe après corrections.
-- `npm test` : ✅ 7 fichiers, 18 tests passants.
+- `npm test` : ✅ 8 fichiers, 19 tests passants.
 - `npm audit --audit-level=moderate` : ✅ 0 vulnérabilité après correction `nanoid`.
 - CI/CD : ✅ workflow GitHub Actions ajouté (`lint`, tests, build, responsive smoke, audit bloquant).
 - Formulaires publics : ✅ validation serveur, honeypot et rate limit via Edge Function.
 - Supabase RLS : ✅ lecture admin protégée, formulaires publics derrière Edge Function.
 - Textes visibles/légaux : ✅ références obsolètes retirées.
 - Galerie : ✅ catégorie vide retirée, chemins d'images référencés vérifiés.
+- Monitoring : ✅ Sentry optionnel branché côté code, DSN production à configurer.
 - Responsive mobile : ⚠️ à valider visuellement avec navigateur/outillage screenshots avant livraison.
 - Déploiement/DNS/email domaine : ❌ non finalisés, transfert Gandi vers OVH à confirmer avant validation Resend/DNS.
 
@@ -86,11 +87,18 @@ Décisions produit à respecter :
 - Limite actuelle Resend : en mode test, l'envoi vers `djfredmusic@outlook.fr` est refusé tant que le domaine `fredmusic.fr` n'est pas validé.
 - Tests Vitest + React Testing Library ajoutés :
   - formulaires Contact et Demande musique;
+  - `ErrorBoundary` et remontée monitoring;
   - accès admin `ProtectedRoute`;
   - actions admin critiques;
   - filtres de statut admin;
   - helpers `slugify`, `formatDate`, SEO.
-- `npm test` validé : 7 fichiers, 18 tests passants.
+- `npm test` validé : 8 fichiers, 19 tests passants.
+- Monitoring Sentry optionnel ajouté :
+  - initialisation via `VITE_SENTRY_DSN`;
+  - environnement via `VITE_APP_ENV`;
+  - release via `VITE_APP_VERSION`;
+  - `ErrorBoundary` branché à `reportError`;
+  - source maps publiques toujours désactivées en build production.
 - Nettoyage galerie :
   - retrait de la catégorie vidéo vide;
   - fusion de la catégorie mariage dans la section unique "Nos différents événements réalisés";
@@ -195,9 +203,11 @@ Décisions produit à respecter :
     - Bloquer livraison si lint, tests, build ou audit dépendances sont rouges.
 
 12. **Ajouter monitoring**
-    - Sentry ou équivalent.
-    - Brancher `ErrorBoundary` à `captureException`.
-    - Source maps désactivées en prod pour le public, mais stratégie de debug interne à décider.
+    - ✅ Sentry ajouté via `@sentry/react`.
+    - ✅ Initialisation optionnelle via `VITE_SENTRY_DSN`.
+    - ✅ `ErrorBoundary` branché à `captureException` via `reportError`.
+    - ✅ Source maps désactivées en prod pour le public (`build.sourcemap: false`).
+    - À faire déploiement : créer le projet Sentry et configurer `VITE_SENTRY_DSN`, `VITE_APP_ENV`, `VITE_APP_VERSION` dans l'hébergeur.
 
 ### P3 — Livraison, SEO, déploiement
 
@@ -259,7 +269,7 @@ Décisions produit à respecter :
 | **Phase 6** | ✅ Terminé | Backend Supabase (client, types, migrations SQL, API, ContactPage, MusicRequestPage, EventDetailPage, AdminPage, ProtectedRoute → Auth, déconnexion admin) |
 | **Phase 7** | ✅ Terminé | SEO (JSON-LD Organization/LocalBusiness/Event/Service/Product, sitemap complet, Open Graph dynamique, règles noindex) |
 | **Phase 8** | ✅ Terminé | Accessibilité (contraste texte/bouton corrigé, alt textes descriptifs, état actif exposé, fermeture clavier menu mobile) |
-| **Phase 9** | ⚠️ Partiel | Tests ajoutés et passants ; monitoring Sentry/GA4 à faire |
+| **Phase 9** | ⚠️ Partiel | Tests ajoutés et passants ; Sentry branché côté code, DSN production/GA4 à configurer |
 | **Phase 10** | ✅ Terminé | CI/CD GitHub Actions build + lint + test + responsive smoke |
 | **Phase 11** | ❌ À faire | Déploiement & DNS (Vercel + Gandi, migration depuis Wix) |
 
