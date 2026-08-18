@@ -9,6 +9,10 @@ type PhotoGalleryItem = {
   title: string;
 };
 
+type NumberedPhotoGalleryItem = PhotoGalleryItem & {
+  referenceNumber: number;
+};
+
 const eventTypes = ["Mariage", "Soirée privée", "Anniversaire", "Garden-party", "Événement professionnel", "Prestation DJ"];
 
 const weddingPhotos = [
@@ -346,7 +350,11 @@ const eventPhotos = [
   },
 ];
 
-const galleryItems: PhotoGalleryItem[] = [...weddingPhotos, ...eventPhotos];
+const hiddenGalleryReferenceNumbers = new Set([2, 7, 8, 11, 13, 15, 17, 18, 28, 41, 44, 46, 47, 48]);
+
+const galleryItems: NumberedPhotoGalleryItem[] = [...weddingPhotos, ...eventPhotos]
+  .map((item, index) => ({ ...item, referenceNumber: index + 1 }))
+  .filter((item) => !hiddenGalleryReferenceNumbers.has(item.referenceNumber));
 
 export function GalleryPage() {
   return (
@@ -411,15 +419,21 @@ export function GalleryPage() {
                   index === 0 ? "sm:col-span-2" : ""
                 }`}
               >
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  className="aspect-[4/3] h-full w-full object-cover opacity-88 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
-                  loading={index < 2 ? "eager" : "lazy"}
-                />
+                <div className="relative overflow-hidden">
+                  <span className="absolute left-3 top-3 z-10 rounded-sm border border-gold-300/55 bg-night-950/82 px-3 py-1.5 text-xs font-bold text-gold-200 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur">
+                    N°{String(item.referenceNumber).padStart(2, "0")}
+                  </span>
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="aspect-[4/3] h-full w-full object-cover opacity-88 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
+                    loading={index < 2 ? "eager" : "lazy"}
+                  />
+                </div>
                 <figcaption className="flex items-center gap-3 border-t border-white/[0.07] px-4 py-3 text-sm text-ivory/74">
                   <Images className="h-4 w-4 text-gold-300" aria-hidden="true" />
-                  {item.title}
+                  <span className="font-semibold text-gold-200">N°{String(item.referenceNumber).padStart(2, "0")}</span>
+                  <span>{item.title}</span>
                 </figcaption>
               </figure>
             ))}

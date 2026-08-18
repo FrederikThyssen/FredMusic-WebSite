@@ -102,21 +102,21 @@ const gallery = [
 export function EventsPage() {
   return (
     <div className="bg-night-950 text-ivory">
-      <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:min-h-[620px] lg:px-8 lg:py-28">
         <img
-          src="/images/conception/galerie-evenement-038.webp"
+          src="/images/conception/galerie-evenement-022.jpg"
           alt=""
-          className="absolute inset-0 hidden h-full w-full object-cover object-[center_48%] opacity-48 lg:block"
+          className="absolute inset-0 hidden h-full w-full object-cover object-[center_44%] opacity-48 lg:block"
           aria-hidden="true"
         />
         <div className="absolute inset-0 hidden bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/42 lg:block" />
         <div className="absolute inset-0 hidden bg-gradient-to-t from-night-950 via-transparent to-transparent lg:block" />
         <div className="relative mx-auto w-full max-w-7xl">
           <HeroMedia
-            src="/images/conception/galerie-evenement-038.webp"
-            alt="Salle de réception privée avec tables dressées, lumière d'ambiance et régie DJ Fredmusic"
+            src="/images/conception/galerie-evenement-022.jpg"
+            alt="Soirée privée avec piste de danse, invités et faisceaux lumineux"
             imageClassName="aspect-[16/10]"
-            objectPosition="center 48%"
+            objectPosition="center 44%"
           />
           <div className="max-w-4xl">
             <Badge>Événements privés</Badge>
