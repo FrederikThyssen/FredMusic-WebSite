@@ -14,7 +14,7 @@ Le site a une base fonctionnelle solide : React/Vite, pages vitrines avancées, 
 - `npm run lint` : ✅ passe après corrections.
 - `npm test` : ✅ 5 fichiers, 10 tests passants.
 - `npm audit --audit-level=moderate` : ✅ 0 vulnérabilité après correction `nanoid`.
-- CI/CD : ✅ workflow GitHub Actions ajouté (`lint`, tests, build, audit bloquant).
+- CI/CD : ✅ workflow GitHub Actions ajouté (`lint`, tests, build, responsive smoke, audit bloquant).
 - Formulaires publics : ✅ validation serveur, honeypot et rate limit via Edge Function.
 - Supabase RLS : ✅ lecture admin protégée, formulaires publics derrière Edge Function.
 - Textes visibles/légaux : ✅ références obsolètes retirées.
@@ -184,6 +184,7 @@ Décisions produit à respecter :
       - `npm run lint`;
       - `npm test`;
       - `npm run build`;
+      - `npm run test:e2e`;
     - ✅ Audit dépendances bloquant :
       - `npm audit --audit-level=moderate`.
     - Bloquer livraison si lint, tests, build ou audit dépendances sont rouges.
@@ -196,12 +197,15 @@ Décisions produit à respecter :
 ### P3 — Livraison, SEO, déploiement
 
 13. **Valider responsive/accessibilité visuellement**
-    - Mobile 360 px, 390 px.
-    - Tablette.
-    - Desktop.
-    - Priorité : `/demande-musique`, `/contact`, `/admin`, `/galerie`.
-    - Vérifier clavier, focus, contrastes, pas de débordement horizontal.
-    - État 2026-08-06 : non validé visuellement dans cette session car l'outil navigateur/screenshot n'était pas disponible.
+    - ✅ Smoke responsive automatisé ajouté avec Playwright :
+      - mobile 360 px;
+      - mobile 390 px;
+      - tablette 768 px;
+      - desktop 1440 px.
+    - ✅ Routes publiques critiques couvertes : `/`, `/contact`, `/demande-musique`, `/galerie`, `/evenements-prives`, `/evenements-professionnels`, `/location-materiel`.
+    - ✅ Vérifications automatisées : pas de débordement horizontal, pas d'erreur console, screenshots attachés au rapport Playwright.
+    - ✅ Validation locale 2026-08-18 : `npm run test:e2e`, 28 tests passants.
+    - À faire manuellement : validation visuelle authentifiée de `/admin`, clavier, focus et parcours admin réels.
 
 14. **Optimiser médias et galerie**
     - ✅ Catégorie vidéo vide retirée de `GalleryPage`.
@@ -251,7 +255,7 @@ Décisions produit à respecter :
 | **Phase 7** | ✅ Terminé | SEO (JSON-LD Organization/LocalBusiness/Event/Service/Product, sitemap complet, Open Graph dynamique, règles noindex) |
 | **Phase 8** | ✅ Terminé | Accessibilité (contraste texte/bouton corrigé, alt textes descriptifs, état actif exposé, fermeture clavier menu mobile) |
 | **Phase 9** | ⚠️ Partiel | Tests ajoutés et passants ; monitoring Sentry/GA4 à faire |
-| **Phase 10** | ✅ Terminé | CI/CD GitHub Actions build + lint + test |
+| **Phase 10** | ✅ Terminé | CI/CD GitHub Actions build + lint + test + responsive smoke |
 | **Phase 11** | ❌ À faire | Déploiement & DNS (Vercel + Gandi, migration depuis Wix) |
 
 ---
