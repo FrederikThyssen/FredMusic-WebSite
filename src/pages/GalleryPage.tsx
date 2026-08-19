@@ -9,10 +9,6 @@ type PhotoGalleryItem = {
   title: string;
 };
 
-type NumberedPhotoGalleryItem = PhotoGalleryItem & {
-  referenceNumber: number;
-};
-
 const eventTypes = ["Mariage", "Soirée privée", "Anniversaire", "Garden-party", "Événement professionnel", "Prestation DJ"];
 
 const weddingPhotos = [
@@ -350,16 +346,30 @@ const eventPhotos = [
   },
 ];
 
-const hiddenGalleryReferenceNumbers = new Set([2, 7, 8, 11, 13, 15, 17, 18, 28, 41, 44, 46, 47, 48]);
-const featuredGalleryReferenceNumber = 27;
+const hiddenGalleryImages = new Set([
+  "/images/conception/galerie-evenement-002.webp",
+  "/images/conception/galerie-evenement-007.webp",
+  "/images/conception/galerie-evenement-008.webp",
+  "/images/conception/galerie-evenement-011.webp",
+  "/images/conception/galerie-evenement-013.webp",
+  "/images/conception/galerie-evenement-015.webp",
+  "/images/conception/galerie-evenement-017.jpg",
+  "/images/conception/galerie-evenement-018.jpg",
+  "/images/conception/galerie-evenement-028.webp",
+  "/images/conception/galerie-evenement-041.webp",
+  "/images/conception/galerie-evenement-044.webp",
+  "/images/conception/galerie-evenement-046.webp",
+  "/images/conception/galerie-evenement-047.jpg",
+  "/images/conception/galerie-evenement-048.jpg",
+]);
+const featuredGalleryImage = "/images/conception/galerie-evenement-027.webp";
 
-const galleryItems: NumberedPhotoGalleryItem[] = [...weddingPhotos, ...eventPhotos]
-  .map((item, index) => ({ ...item, referenceNumber: index + 1 }))
-  .filter((item) => !hiddenGalleryReferenceNumbers.has(item.referenceNumber))
+const galleryItems: PhotoGalleryItem[] = [...weddingPhotos, ...eventPhotos]
+  .filter((item) => !hiddenGalleryImages.has(item.src))
   .sort((a, b) => {
-    if (a.referenceNumber === featuredGalleryReferenceNumber) return -1;
-    if (b.referenceNumber === featuredGalleryReferenceNumber) return 1;
-    return a.referenceNumber - b.referenceNumber;
+    if (a.src === featuredGalleryImage) return -1;
+    if (b.src === featuredGalleryImage) return 1;
+    return 0;
   });
 
 export function GalleryPage() {
@@ -422,23 +432,17 @@ export function GalleryPage() {
               <figure
                 key={item.src}
                 className={`group overflow-hidden rounded-md border border-white/[0.07] bg-night-950 ${
-                  item.referenceNumber === featuredGalleryReferenceNumber ? "sm:col-span-2" : ""
+                  item.src === featuredGalleryImage ? "sm:col-span-2" : ""
                 }`}
               >
-                <div className="relative overflow-hidden">
-                  <span className="absolute left-3 top-3 z-10 rounded-sm border border-gold-300/55 bg-night-950/82 px-3 py-1.5 text-xs font-bold text-gold-200 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur">
-                    N°{String(item.referenceNumber).padStart(2, "0")}
-                  </span>
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="aspect-[4/3] h-full w-full object-cover opacity-88 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
-                    loading={index < 2 ? "eager" : "lazy"}
-                  />
-                </div>
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="aspect-[4/3] h-full w-full object-cover opacity-88 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
+                  loading={index < 2 ? "eager" : "lazy"}
+                />
                 <figcaption className="flex items-center gap-3 border-t border-white/[0.07] px-4 py-3 text-sm text-ivory/74">
                   <Images className="h-4 w-4 text-gold-300" aria-hidden="true" />
-                  <span className="font-semibold text-gold-200">N°{String(item.referenceNumber).padStart(2, "0")}</span>
                   <span>{item.title}</span>
                 </figcaption>
               </figure>
