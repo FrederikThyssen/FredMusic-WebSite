@@ -7,7 +7,6 @@ import { SectionHeader } from "../components/sections/SectionHeader";
 import { Badge } from "../components/ui/Badge";
 import { ButtonLink } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
-import { galleryItems } from "../data/gallery";
 import { services } from "../data/services";
 import { testimonials } from "../data/testimonials";
 
@@ -24,9 +23,26 @@ const qrFeatures = [
   { title: "Ambiance fluide", text: "Zéro interruption, 100% danse et satisfaction garantie.", icon: Users },
 ];
 
+const homeGalleryHighlights = [
+  {
+    id: "home-gallery-regie-privee",
+    image: "/images/conception/galerie-evenement-027.webp",
+    alt: "Régie DJ Fredmusic face à une réception privée colorée",
+  },
+  {
+    id: "home-gallery-dancefloor",
+    image: "/images/conception/galerie-evenement-022.jpg",
+    alt: "Piste de danse avec invités et faisceaux lumineux violets et bleus",
+  },
+  {
+    id: "home-gallery-warm-room",
+    image: "/images/conception/galerie-evenement-045.jpg",
+    alt: "Salle de réception décorée avec guirlandes lumineuses et ambiance chaude",
+  },
+];
+
 export function HomePage() {
   const featuredServices = services.slice(0, 4);
-  const featuredGallery = galleryItems.slice(0, 3);
   const featuredTestimonial = testimonials[0];
 
   return (
@@ -161,7 +177,7 @@ export function HomePage() {
           <div>
             <p className="text-xs font-semibold uppercase text-gold-300">Galerie</p>
             <div className="mt-4 grid grid-cols-3 gap-3">
-              {featuredGallery.map((item) => (
+              {homeGalleryHighlights.map((item) => (
                 <img
                   key={item.id}
                   src={item.image}
