@@ -69,7 +69,7 @@ export default async function handler(req: JsonRequest, res: JsonResponse) {
     return;
   }
 
-  const data: PlacesResponse = await response.json();
+  const data = (await response.json()) as PlacesResponse;
 
   const reviews: NormalizedReview[] = (data.reviews ?? [])
     .filter((r) => {
