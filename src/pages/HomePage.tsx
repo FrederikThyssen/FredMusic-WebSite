@@ -7,8 +7,8 @@ import { SectionHeader } from "../components/sections/SectionHeader";
 import { Badge } from "../components/ui/Badge";
 import { ButtonLink } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
+import { useGoogleReviews } from "../hooks/useGoogleReviews";
 import { services } from "../data/services";
-import { testimonials } from "../data/testimonials";
 
 const weddingHighlights = [
   { title: "Ouverture de bal", text: "Un moment magique qui vous ressemble.", icon: Music2 },
@@ -43,7 +43,7 @@ const homeGalleryHighlights = [
 
 export function HomePage() {
   const featuredServices = services.slice(0, 4);
-  const featuredTestimonial = testimonials[0];
+  const reviewsState = useGoogleReviews();
 
   return (
     <>
@@ -52,6 +52,7 @@ export function HomePage() {
         title="L'expérience DJ premium pour vos événements"
         description="Mariages, soirées privées, entreprises : une ambiance unique, une sonorisation d'exception et une mise en lumière sur mesure."
         image="/images/conception/galerie-evenement-021.webp"
+        imageSrcSet="/images/conception/galerie-evenement-021-640w.webp 640w, /images/conception/galerie-evenement-021-960w.webp 960w, /images/conception/galerie-evenement-021-1200w.webp 1200w, /images/conception/galerie-evenement-021.webp 1536w"
         imageAlt="Régie DJ Fredmusic installée face à une salle événementielle chaleureuse"
         imageObjectPosition="center center"
         primaryLabel="Réserver ma date"
@@ -106,8 +107,11 @@ export function HomePage() {
             <img
               src="/images/conception/galerie-evenement-007.webp"
               alt="Ambiance mariage premium lumineuse avec décor romantique"
+              width={1536}
+              height={1024}
               className="h-full w-full object-cover"
               loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
@@ -119,8 +123,11 @@ export function HomePage() {
             <img
               src="/images/conception/qr-music-request.webp"
               alt="Carte QR code et téléphone Fredmusic pour demander une musique"
+              width={1536}
+              height={1024}
               className="h-full w-full object-cover"
               loading="lazy"
+              decoding="async"
             />
           </div>
           <div>
@@ -165,15 +172,51 @@ export function HomePage() {
             <img
               src="/images/conception/dj-console-gold.webp"
               alt="Régie DJ professionnelle avec éclairage doré"
+              width={1122}
+              height={1402}
               className="h-full w-full object-cover"
               loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
       </section>
 
+      {reviewsState.status === "success" && reviewsState.reviews.length > 0 ? (
+        <section className="border-t border-white/[0.07] bg-night-900 px-4 py-14 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex items-center gap-3">
+              <p className="text-xs font-semibold uppercase text-gold-300">Avis clients</p>
+              <span className="flex items-center gap-1 rounded-full border border-white/10 px-2 py-0.5 text-[10px] font-medium text-ivory/50">
+                <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Google
+              </span>
+            </div>
+            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {reviewsState.reviews.slice(0, 3).map((review) => (
+                <TestimonialCard
+                  key={review.id}
+                  testimonial={{
+                    id: review.id,
+                    author: review.author,
+                    quote: review.quote,
+                    rating: review.rating,
+                    eventType: review.relativeTime,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="border-t border-white/[0.07] bg-night-900 px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.36fr_0.28fr_0.36fr] lg:items-start">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2 lg:items-start">
           <div>
             <p className="text-xs font-semibold uppercase text-gold-300">Galerie</p>
             <div className="mt-4 grid grid-cols-3 gap-3">
@@ -182,8 +225,11 @@ export function HomePage() {
                   key={item.id}
                   src={item.image}
                   alt={item.alt}
+                  width={1536}
+                  height={1024}
                   className="aspect-[4/3] w-full rounded-sm border border-white/[0.07] object-cover"
                   loading="lazy"
+                  decoding="async"
                 />
               ))}
             </div>
@@ -191,12 +237,6 @@ export function HomePage() {
               Voir plus de photos
             </ButtonLink>
           </div>
-          {featuredTestimonial ? (
-            <div>
-              <p className="mb-4 text-xs font-semibold uppercase text-gold-300">Ils nous font confiance</p>
-              <TestimonialCard testimonial={featuredTestimonial} />
-            </div>
-          ) : null}
           <Card className="p-6">
             <p className="text-xs font-semibold uppercase text-gold-300">Prêt à créer votre événement ?</p>
             <h2 className="mt-3 font-display text-3xl text-ivory">Discutons de votre projet</h2>
