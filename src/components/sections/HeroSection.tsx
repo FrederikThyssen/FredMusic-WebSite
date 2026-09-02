@@ -9,7 +9,11 @@ type HeroSectionProps = {
   description: string;
   image: string;
   imageAlt: string;
+  imageWidth?: number;
+  imageHeight?: number;
   imageObjectPosition?: string;
+  imageSrcSet?: string;
+  imageSizes?: string;
   primaryLabel: string;
   primaryTo: string;
   secondaryLabel?: string;
@@ -24,7 +28,11 @@ export function HeroSection({
   description,
   image,
   imageAlt,
+  imageWidth = 1536,
+  imageHeight = 1024,
   imageObjectPosition,
+  imageSrcSet,
+  imageSizes,
   primaryLabel,
   primaryTo,
   secondaryLabel,
@@ -38,8 +46,14 @@ export function HeroSection({
     <section className={cn("relative overflow-hidden", isWedding ? "bg-warm-100 text-night-950" : "bg-night-950 text-ivory")}>
       <img
         src={image}
+        srcSet={imageSrcSet}
+        sizes={imageSrcSet ? imageSizes ?? "100vw" : undefined}
         alt={imageAlt}
+        width={imageWidth}
+        height={imageHeight}
         style={{ objectPosition: imageObjectPosition }}
+        fetchPriority="high"
+        decoding="async"
         className={cn(
           "absolute inset-0 hidden h-full w-full object-cover lg:block",
           isWedding ? "opacity-55" : "opacity-100",
@@ -57,7 +71,11 @@ export function HeroSection({
       <div className="relative mx-auto flex min-h-[68svh] max-w-7xl flex-col justify-center px-4 py-16 sm:min-h-[72vh] sm:px-6 sm:py-20 lg:px-8">
         <HeroMedia
           src={image}
+          srcSet={imageSrcSet}
+          sizes={imageSrcSet ? imageSizes ?? "100vw" : undefined}
           alt={imageAlt}
+          width={imageWidth}
+          height={imageHeight}
           objectPosition={imageObjectPosition}
           className={cn(isWedding && "bg-warm-100")}
           imageClassName={isWedding ? "aspect-[4/3]" : "aspect-[4/3]"}
