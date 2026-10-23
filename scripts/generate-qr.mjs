@@ -5,7 +5,7 @@ const outDir = './public';
 await mkdir(outDir, { recursive: true });
 
 const items = [
-  { file: `${outDir}/fredmusic-qr-prod.png`, url: 'https://www.fredmusic.fr/demande-musique' },
+  { file: `${outDir}/fredmusic-qr-prod.png`, url: 'https://fredmusic.fr/demande-musique' },
   { file: `${outDir}/fredmusic-qr-local.png`, url: 'http://localhost:5173/demande-musique' },
 ];
 

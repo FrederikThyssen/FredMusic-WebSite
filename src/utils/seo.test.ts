@@ -10,8 +10,8 @@ describe("applySeo", () => {
     applySeo({
       title: "FredMusic Test",
       description: "Description test",
-      canonical: "https://www.fredmusic.fr/test",
-      ogImage: "https://www.fredmusic.fr/image.jpg",
+      canonical: "https://fredmusic.fr/test",
+      ogImage: "https://fredmusic.fr/image.jpg",
       keywords: ["DJ", "mariage"],
       structuredData: {
         "@context": "https://schema.org",
@@ -22,8 +22,8 @@ describe("applySeo", () => {
 
     expect(document.title).toBe("FredMusic Test");
     expect(document.querySelector("meta[name='description']")).toHaveAttribute("content", "Description test");
-    expect(document.querySelector("link[rel='canonical']")).toHaveAttribute("href", "https://www.fredmusic.fr/test");
-    expect(document.querySelector("meta[property='og:image']")).toHaveAttribute("content", "https://www.fredmusic.fr/image.jpg");
+    expect(document.querySelector("link[rel='canonical']")).toHaveAttribute("href", "https://fredmusic.fr/test");
+    expect(document.querySelector("meta[property='og:image']")).toHaveAttribute("content", "https://fredmusic.fr/image.jpg");
     expect(document.querySelector("meta[name='keywords']")).toHaveAttribute("content", "DJ, mariage");
     expect(document.querySelectorAll("script[data-seo-structured='true']")).toHaveLength(1);
   });

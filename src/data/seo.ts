@@ -1,6 +1,6 @@
 import type { SeoMetadata, StructuredData } from "../types";
 
-const siteUrl = "https://www.fredmusic.fr";
+const siteUrl = "https://fredmusic.fr";
 const defaultOgImage = `${siteUrl}/images/conception/424.webp`;
 const siteName = "Fredmusic";
 
