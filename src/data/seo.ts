@@ -8,7 +8,7 @@ const businessProfile = {
   name: "Fredmusic",
   founder: "Frédéric Wilkosz",
   phone: "+33 6 48 13 55 56",
-  email: "djfredmusic@outlook.fr",
+  email: "contact@fredmusic.fr",
   addressLocality: "Vis-en-Artois",
   postalCode: "62156",
   addressCountry: "FR",

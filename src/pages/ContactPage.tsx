@@ -25,8 +25,8 @@ const contactDetails = [
   {
     icon: Mail,
     label: "Email",
-    value: "djfredmusic@outlook.fr",
-    href: "mailto:djfredmusic@outlook.fr",
+    value: "contact@fredmusic.fr",
+    href: "mailto:contact@fredmusic.fr",
   },
   {
     icon: MapPin,

@@ -12,7 +12,7 @@ type LegalSection = {
 const owner = {
   name: "Fréderic WILKOSZ",
   address: "62156 Vis-en-Artois, France",
-  email: "djfredmusic@outlook.fr",
+  email: "contact@fredmusic.fr",
   phone: "06 48 13 55 56",
   siren: "813 426 483",
   ape: "9329 Z",
