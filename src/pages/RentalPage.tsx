@@ -71,20 +71,28 @@ export function RentalPage() {
         <img
           src="/images/conception/image-loc.webp"
           alt=""
+          width={1717}
+          height={916}
           className="absolute inset-0 hidden h-full w-full scale-110 object-cover object-center opacity-18 blur-sm lg:block"
           aria-hidden="true"
+          decoding="async"
         />
         <img
           src="/images/conception/image-loc.webp"
           alt=""
+          width={1717}
+          height={916}
           className="absolute inset-0 hidden h-full w-full object-contain object-center opacity-42 lg:block"
           aria-hidden="true"
+          decoding="async"
         />
         <div className="absolute inset-0 hidden bg-gradient-to-r from-night-950 via-night-950/88 to-night-950/46 lg:block" />
         <div className="relative mx-auto max-w-7xl">
           <HeroMedia
             src="/images/conception/image-loc.webp"
             alt="Matériel professionnel de sonorisation et régie Fredmusic"
+            width={1717}
+            height={916}
             imageClassName="aspect-[4/3] object-contain p-3"
           />
           <div className="max-w-4xl">

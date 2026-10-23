@@ -438,8 +438,12 @@ export function GalleryPage() {
                 <img
                   src={item.src}
                   alt={item.alt}
+                  width={1536}
+                  height={1024}
                   className="aspect-[4/3] h-full w-full object-cover opacity-88 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
-                  loading={index < 2 ? "eager" : "lazy"}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "low"}
+                  decoding="async"
                 />
                 <figcaption className="flex items-center gap-3 border-t border-white/[0.07] px-4 py-3 text-sm text-ivory/74">
                   <Images className="h-4 w-4 text-gold-300" aria-hidden="true" />

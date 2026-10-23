@@ -45,4 +45,41 @@ describe("ContactPage", () => {
     await waitFor(() => expect(insertQuoteRequest).toHaveBeenCalledTimes(1));
     expect(await screen.findByText(/demande enregistrée/i)).toBeInTheDocument();
   });
+
+  it("does not show success when the quote request fails", async () => {
+    insertQuoteRequest.mockResolvedValueOnce({ error: new Error("Network error") });
+    render(<ContactPage />);
+
+    await userEvent.type(screen.getByLabelText(/nom \/ prénom/i), "Alice Martin");
+    await userEvent.type(screen.getByLabelText(/téléphone/i), "0612345678");
+    await userEvent.type(screen.getByLabelText(/email/i), "alice@example.com");
+    await userEvent.selectOptions(screen.getByLabelText(/type d'événement/i), "mariage");
+    await userEvent.type(screen.getByLabelText(/votre message/i), "Nous préparons notre mariage.");
+    await userEvent.click(screen.getByRole("button", { name: /envoyer ma demande/i }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(/une erreur est survenue/i);
+    expect(screen.queryByText(/demande enregistrée/i)).not.toBeInTheDocument();
+  });
+
+  it("keeps a slow quote submission pending until the request resolves", async () => {
+    let resolveSubmission: (value: { error: null }) => void = () => undefined;
+    insertQuoteRequest.mockReturnValueOnce(new Promise((resolve) => {
+      resolveSubmission = resolve;
+    }));
+    render(<ContactPage />);
+
+    await userEvent.type(screen.getByLabelText(/nom \/ prénom/i), "Alice Martin");
+    await userEvent.type(screen.getByLabelText(/téléphone/i), "0612345678");
+    await userEvent.type(screen.getByLabelText(/email/i), "alice@example.com");
+    await userEvent.selectOptions(screen.getByLabelText(/type d'événement/i), "mariage");
+    await userEvent.type(screen.getByLabelText(/votre message/i), "Nous préparons notre mariage.");
+    await userEvent.click(screen.getByRole("button", { name: /envoyer ma demande/i }));
+
+    expect(screen.getByRole("button", { name: /envoi en cours/i })).toBeDisabled();
+    expect(screen.queryByText(/demande enregistrée/i)).not.toBeInTheDocument();
+
+    resolveSubmission({ error: null });
+
+    expect(await screen.findByText(/demande enregistrée/i)).toBeInTheDocument();
+  });
 });

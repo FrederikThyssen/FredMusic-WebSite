@@ -14,7 +14,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
         <img
           src={service.image}
           alt={service.title}
+          width={1122}
+          height={1402}
           loading="lazy"
+          decoding="async"
           className="aspect-[16/11] w-full object-cover object-center opacity-88 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
         />
       </div>
@@ -24,6 +27,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
         <p className="mt-3 text-sm leading-6 text-ivory/68">{service.shortDescription}</p>
         <Link
           to={`/prestations/${service.slug}`}
+          aria-label={`En savoir plus sur ${service.title}`}
           className="mt-auto inline-flex items-center gap-2 pt-5 text-xs font-semibold uppercase text-gold-300 hover:text-gold-200"
         >
           En savoir plus

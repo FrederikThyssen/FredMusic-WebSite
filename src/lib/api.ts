@@ -1,6 +1,24 @@
 import { supabase } from "./supabase";
 import type { MusicRequestStatus, QuoteRequestStatus } from "./database.types";
 
+const FORM_SUBMIT_TIMEOUT_MS = 12_000;
+
+type SubmitFormResult = Awaited<ReturnType<typeof supabase.functions.invoke>>;
+
+async function invokeSubmitForm(body: Record<string, unknown>): Promise<SubmitFormResult> {
+  try {
+    return await supabase.functions.invoke("submit-form", {
+      body,
+      timeout: FORM_SUBMIT_TIMEOUT_MS,
+    });
+  } catch (error) {
+    return {
+      data: null,
+      error: error instanceof Error ? error : new Error("Form submission failed."),
+    };
+  }
+}
+
 // ── Quote Requests ───────────────────────────────────────────
 
 export type NewQuoteRequest = {
@@ -15,11 +33,9 @@ export type NewQuoteRequest = {
 };
 
 export async function insertQuoteRequest(data: NewQuoteRequest) {
-  return supabase.functions.invoke("submit-form", {
-    body: {
-      type: "quote",
-      payload: data,
-    },
+  return invokeSubmitForm({
+    type: "quote",
+    payload: data,
   });
 }
 
@@ -54,11 +70,9 @@ export type NewMusicRequest = {
 };
 
 export async function insertMusicRequest(data: NewMusicRequest) {
-  return supabase.functions.invoke("submit-form", {
-    body: {
-      type: "music",
-      payload: data,
-    },
+  return invokeSubmitForm({
+    type: "music",
+    payload: data,
   });
 }
 

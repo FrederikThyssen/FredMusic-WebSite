@@ -15,7 +15,10 @@ export function EventCard({ event }: EventCardProps) {
       <img
         src={event.image}
         alt={event.title}
+        width={1536}
+        height={1024}
         loading="lazy"
+        decoding="async"
         className="aspect-[4/3] h-full w-full object-cover md:h-32"
       />
       <div>
@@ -35,6 +38,7 @@ export function EventCard({ event }: EventCardProps) {
       </div>
       <Link
         to={`/evenements/${event.slug}`}
+        aria-label={`Voir l'événement ${event.title}`}
         className="rounded-sm border border-gold-400 px-4 py-3 text-center text-xs font-semibold uppercase text-gold-200 hover:bg-gold-300 hover:text-night-950"
       >
         Voir l'événement

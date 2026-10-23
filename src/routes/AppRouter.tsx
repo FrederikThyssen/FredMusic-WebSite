@@ -3,13 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import { MainLayout } from "../components/layout/MainLayout";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import { SeoManager } from "../components/seo/SeoManager";
+import { HomePage } from "../pages/HomePage";
 
 const AdminPage = lazy(() => import("../pages/AdminPage").then((m) => ({ default: m.AdminPage })));
 const ContactPage = lazy(() => import("../pages/ContactPage").then((m) => ({ default: m.ContactPage })));
 const EquipmentDetailPage = lazy(() => import("../pages/EquipmentDetailPage").then((m) => ({ default: m.EquipmentDetailPage })));
 const EventsPage = lazy(() => import("../pages/EventsPage").then((m) => ({ default: m.EventsPage })));
 const GalleryPage = lazy(() => import("../pages/GalleryPage").then((m) => ({ default: m.GalleryPage })));
-const HomePage = lazy(() => import("../pages/HomePage").then((m) => ({ default: m.HomePage })));
 const LegalPage = lazy(() => import("../pages/LegalPage").then((m) => ({ default: m.LegalPage })));
 const MusicRequestPage = lazy(() => import("../pages/MusicRequestPage").then((m) => ({ default: m.MusicRequestPage })));
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })));
@@ -22,7 +22,7 @@ const EventDetailPage = lazy(() => import("../pages/EventDetailPage").then((m) =
 
 function PageLoader() {
   return (
-    <div className="grid min-h-[60vh] place-items-center bg-night-950">
+    <div className="grid min-h-[60vh] place-items-center bg-night-950" role="status" aria-label="Chargement de la page">
       <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold-300/30 border-t-gold-300" />
     </div>
   );
@@ -34,7 +34,7 @@ export function AppRouter() {
       <SeoManager />
       <Routes>
         <Route element={<MainLayout />}>
-          <Route index element={<Suspense fallback={<PageLoader />}><HomePage /></Suspense>} />
+          <Route index element={<HomePage />} />
           <Route path="mariages" element={<Suspense fallback={<PageLoader />}><WeddingPage /></Suspense>} />
           <Route path="evenements" element={<Suspense fallback={<PageLoader />}><EventsPage /></Suspense>} />
           <Route path="evenements-prives" element={<Suspense fallback={<PageLoader />}><EventsPage /></Suspense>} />

@@ -6,14 +6,19 @@ const criticalRoutes = [
   { path: "/demande-musique", name: "music-request" },
   { path: "/galerie", name: "gallery" },
   { path: "/evenements-prives", name: "private-events" },
-  { path: "/evenements-professionnels", name: "professional-events" },
-  { path: "/location-materiel", name: "rental" },
+  { path: "/evenements-pro", name: "professional-events" },
+  { path: "/location", name: "rental" },
   { path: "/admin", name: "admin-login" },
 ] as const;
 
 test.describe("responsive delivery smoke", () => {
   test.beforeEach(async ({ page }) => {
-    await page.route("https://example.supabase.co/**", async (route) => {
+    await page.route("https://*/**", async (route) => {
+      if (!route.request().url().includes(".supabase.co")) {
+        await route.continue();
+        return;
+      }
+
       await route.fulfill({
         status: 200,
         contentType: "application/json",

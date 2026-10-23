@@ -101,12 +101,32 @@ export type Database = {
         };
         Relationships: [];
       };
+      admin_users: {
+        Row: {
+          user_id: string;
+          email: string;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          email: string;
+          created_at?: string;
+        };
+        Update: {
+          email?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
       activate_event: {
         Args: { p_event_id: string };
         Returns: null;
+      };
+      is_admin: {
+        Args: Record<PropertyKey, never>;
+        Returns: boolean;
       };
     };
     Enums: Record<string, never>;

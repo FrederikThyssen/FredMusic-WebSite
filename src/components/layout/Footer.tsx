@@ -6,7 +6,15 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
         <div className="flex flex-col items-center text-center">
           <NavLink to="/" className="inline-flex items-center" aria-label="Fredmusic - Accueil">
-            <img src="/images/conception/logo-du-site.webp" alt="Fredmusic" className="h-28 w-auto max-w-full object-contain sm:h-36" />
+            <img
+              src="/images/conception/logo-du-site.webp"
+              alt="Fredmusic"
+              width={747}
+              height={562}
+              className="h-28 w-auto max-w-full object-contain sm:h-36"
+              loading="lazy"
+              decoding="async"
+            />
           </NavLink>
           <p className="mt-3 max-w-sm text-sm leading-6 text-ivory/70">
             DJ mariage et événementiel premium, sonorisation, mise en lumière et location de matériel.
@@ -29,6 +37,17 @@ export function Footer() {
             <NavLink to="/conditions-utilisation" className="hover:text-gold-300">Conditions d'utilisation</NavLink>
           </div>
         </div>
+      </div>
+      <div className="border-t border-white/[0.07] px-4 py-4 text-center text-xs text-ivory/55 sm:px-6 lg:px-8">
+        Site réalisé par{" "}
+        <a
+          href="https://www.thyssendigital.fr"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium text-gold-300 transition-colors hover:text-gold-200"
+        >
+          ThyssenDigital
+        </a>
       </div>
     </footer>
   );

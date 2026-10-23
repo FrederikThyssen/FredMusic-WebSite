@@ -15,7 +15,10 @@ export function EquipmentCard({ item }: EquipmentCardProps) {
         <img
           src={item.marketingImage}
           alt={`${item.name} ${item.brand}`}
+          width={1122}
+          height={1402}
           loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover opacity-82 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
         />
       </div>
@@ -25,6 +28,7 @@ export function EquipmentCard({ item }: EquipmentCardProps) {
         <p className="mt-3 text-sm leading-6 text-ivory/68">{item.shortDescription}</p>
         <Link
           to={`/location/${item.slug}`}
+          aria-label={`Voir le matériel ${item.name} ${item.brand}`}
           className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase text-gold-300 hover:text-gold-200"
         >
           Voir le matériel

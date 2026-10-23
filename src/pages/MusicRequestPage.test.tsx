@@ -43,4 +43,17 @@ describe("MusicRequestPage", () => {
     await waitFor(() => expect(insertMusicRequest).toHaveBeenCalledTimes(1));
     expect(await screen.findByText(/demande envoyée/i)).toBeInTheDocument();
   });
+
+  it("does not show success when the music request fails", async () => {
+    fetchActiveEvent.mockResolvedValueOnce({ data: { id: "event-id" } });
+    insertMusicRequest.mockResolvedValueOnce({ error: new Error("Network error") });
+    render(<MusicRequestPage />);
+
+    await userEvent.type(screen.getByLabelText(/artiste/i), "Daft Punk");
+    await userEvent.type(screen.getByLabelText(/titre de la musique/i), "One More Time");
+    await userEvent.click(screen.getByRole("button", { name: /envoyer ma demande/i }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(/une erreur est survenue/i);
+    expect(screen.queryByText(/demande envoyée/i)).not.toBeInTheDocument();
+  });
 });

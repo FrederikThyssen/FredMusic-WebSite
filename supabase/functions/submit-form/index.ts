@@ -263,9 +263,20 @@ Deno.serve(async (req) => {
     if (body.type === "quote") {
       const validated = validateQuote(body.payload);
       if ("error" in validated) return jsonResponse({ error: validated.error }, 400);
-      const { error } = await supabase.from("quote_requests").insert(validated.data);
+      const { data: quoteRequest, error } = await supabase
+        .from("quote_requests")
+        .insert(validated.data)
+        .select("id")
+        .single();
       if (error) throw error;
-      await sendQuoteEmail(validated.data);
+      try {
+        await sendQuoteEmail(validated.data);
+      } catch (emailError) {
+        console.error("Quote notification failed after database insert.", {
+          quoteRequestId: quoteRequest?.id,
+          error: emailError instanceof Error ? emailError.message : String(emailError),
+        });
+      }
       return jsonResponse({ ok: true });
     }
 

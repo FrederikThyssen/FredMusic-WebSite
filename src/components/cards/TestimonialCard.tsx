@@ -12,7 +12,8 @@ export function TestimonialCard({ testimonial, theme = "dark" }: TestimonialCard
 
   return (
     <Card variant={isWedding ? "wedding" : "dark"} className="p-6">
-      <div className="flex gap-1 text-gold-300" aria-label={`${testimonial.rating} étoiles sur 5`}>
+      <div className="flex gap-1 text-gold-300">
+        <span className="sr-only">{testimonial.rating} étoiles sur 5</span>
         {Array.from({ length: testimonial.rating }).map((_, index) => (
           <Star key={index} className="h-4 w-4 fill-current" aria-hidden="true" />
         ))}

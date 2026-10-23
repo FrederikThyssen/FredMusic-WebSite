@@ -34,7 +34,14 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-night-950/92 backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8" aria-label="Navigation principale">
         <NavLink to="/" className="inline-flex items-center" aria-label="Fredmusic - Accueil" onClick={() => setIsOpen(false)}>
-          <img src="/images/conception/logo-du-site.webp" alt="Fredmusic" className="h-12 w-auto object-contain sm:h-14" />
+          <img
+            src="/images/conception/logo-du-site.webp"
+            alt="Fredmusic"
+            width={747}
+            height={562}
+            className="h-12 w-auto object-contain sm:h-14"
+            decoding="async"
+          />
         </NavLink>
 
         <div className="hidden items-center gap-4 xl:flex xl:gap-5">
