@@ -175,4 +175,19 @@ describe("AdminPage", () => {
     expect(screen.queryByText("One More Time")).not.toBeInTheDocument();
     expect(screen.getByText("D.A.N.C.E.")).toBeInTheDocument();
   });
+
+  it("shows a retryable error instead of spinning forever when loading fails", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    api.fetchQuoteRequests
+      .mockResolvedValueOnce({ data: null, error: { message: "upstream unavailable" } })
+      .mockResolvedValueOnce({ data: [] });
+
+    render(<AdminPage />);
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(/impossible de charger les données/i);
+    await userEvent.click(screen.getByRole("button", { name: /réessayer/i }));
+
+    expect(await screen.findByText("Mariage Claire & Thomas")).toBeInTheDocument();
+    expect(screen.queryByText(/impossible de charger les données/i)).not.toBeInTheDocument();
+  });
 });

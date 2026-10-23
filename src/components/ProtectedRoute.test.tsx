@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -26,6 +26,7 @@ describe("ProtectedRoute", () => {
   beforeEach(() => {
     auth.getSession.mockReset();
     auth.signInWithPassword.mockReset();
+    vi.restoreAllMocks();
   });
 
   it("shows the login form when no session exists", async () => {
@@ -71,5 +72,51 @@ describe("ProtectedRoute", () => {
     await userEvent.click(screen.getByRole("button", { name: /accéder/i }));
 
     await waitFor(() => expect(screen.getByText(/tableau de bord admin/i)).toBeInTheDocument());
+  });
+
+  it("shows an unavailable screen when the session check fails, and recovers on retry", async () => {
+    auth.getSession
+      .mockRejectedValueOnce(new TypeError("Failed to fetch"))
+      .mockResolvedValueOnce({ data: { session: null } });
+    vi.spyOn(console, "error").mockImplementation(() => {});
+
+    renderProtectedRoute();
+
+    expect(await screen.findByRole("heading", { name: /service indisponible/i })).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: /réessayer/i }));
+
+    expect(await screen.findByRole("heading", { name: /accès admin/i })).toBeInTheDocument();
+  });
+
+  it("does not blame the password when Supabase is unreachable", async () => {
+    auth.getSession.mockResolvedValueOnce({ data: { session: null } });
+    auth.signInWithPassword.mockResolvedValueOnce({
+      error: { name: "AuthRetryableFetchError", status: 0, message: "Failed to fetch" },
+    });
+    vi.spyOn(console, "error").mockImplementation(() => {});
+
+    renderProtectedRoute();
+
+    await userEvent.type(await screen.findByLabelText(/email/i), "admin@example.com");
+    await userEvent.type(screen.getByLabelText(/mot de passe/i), "strong-password");
+    await userEvent.click(screen.getByRole("button", { name: /accéder/i }));
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent(/momentanément indisponible/i);
+    expect(alert).not.toHaveTextContent(/mot de passe incorrect/i);
+  });
+
+  it("stops waiting when the session check hangs", async () => {
+    vi.useFakeTimers();
+    auth.getSession.mockReturnValueOnce(new Promise(() => {}));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+
+    renderProtectedRoute();
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(10_000);
+    });
+    vi.useRealTimers();
+
+    expect(screen.getByRole("heading", { name: /service indisponible/i })).toBeInTheDocument();
   });
 });

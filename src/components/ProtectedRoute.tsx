@@ -1,20 +1,48 @@
-import { type FormEvent, useEffect, useState } from "react";
-import { Lock } from "lucide-react";
+import { type FormEvent, useCallback, useEffect, useState } from "react";
+import { CloudOff, Lock } from "lucide-react";
 import type { ReactNode } from "react";
 import { supabase } from "../lib/supabase";
+import { withTimeout } from "../utils/withTimeout";
 
 type Props = { children: ReactNode };
 
+type AuthState = "checking" | "authed" | "anonymous" | "unavailable";
+
+const AUTH_TIMEOUT_MS = 10_000;
+const UNAVAILABLE_MESSAGE =
+  "Le service d'administration est momentanément indisponible. Réessayez dans quelques instants.";
+
+type AuthErrorLike = { status?: number; code?: string; message?: string };
+
+/** Vrai uniquement quand Supabase a répondu et refusé les identifiants. */
+function isCredentialError(error: AuthErrorLike) {
+  return (
+    error.status === 400 ||
+    error.code === "invalid_credentials" ||
+    /invalid login credentials/i.test(error.message ?? "")
+  );
+}
+
 export function ProtectedRoute({ children }: Props) {
-  const [authed, setAuthed] = useState<boolean | null>(null);
+  const [authState, setAuthState] = useState<AuthState>("checking");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setAuthed(!!data.session);
-    });
+  const checkSession = useCallback(async () => {
+    setAuthState("checking");
+    try {
+      const { data, error: sessionError } = await withTimeout(supabase.auth.getSession(), AUTH_TIMEOUT_MS);
+      if (sessionError) throw sessionError;
+      setAuthState(data.session ? "authed" : "anonymous");
+    } catch (err) {
+      console.error("Admin session check failed.", err);
+      setAuthState("unavailable");
+    }
   }, []);
+
+  useEffect(() => {
+    void checkSession();
+  }, [checkSession]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -23,29 +51,59 @@ export function ProtectedRoute({ children }: Props) {
     setError("");
 
     const formData = new FormData(e.currentTarget);
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email: String(formData.get("email") ?? ""),
-      password: String(formData.get("password") ?? ""),
-    });
+    try {
+      const { error: authError } = await withTimeout(
+        supabase.auth.signInWithPassword({
+          email: String(formData.get("email") ?? ""),
+          password: String(formData.get("password") ?? ""),
+        }),
+        AUTH_TIMEOUT_MS,
+      );
 
-    setSubmitting(false);
-
-    if (authError) {
-      setError("Email ou mot de passe incorrect.");
-    } else {
-      setAuthed(true);
+      if (!authError) {
+        setAuthState("authed");
+      } else if (isCredentialError(authError)) {
+        setError("Email ou mot de passe incorrect.");
+      } else {
+        console.error("Admin sign-in failed.", authError);
+        setError(UNAVAILABLE_MESSAGE);
+      }
+    } catch (err) {
+      console.error("Admin sign-in failed.", err);
+      setError(UNAVAILABLE_MESSAGE);
+    } finally {
+      setSubmitting(false);
     }
   }
 
-  if (authed === null) {
+  if (authState === "checking") {
     return (
-      <div className="grid min-h-[60vh] place-items-center bg-night-950">
+      <div className="grid min-h-[60vh] place-items-center bg-night-950" role="status" aria-label="Vérification de la session">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold-300/20 border-t-gold-200" />
       </div>
     );
   }
 
-  if (authed) return <>{children}</>;
+  if (authState === "authed") return <>{children}</>;
+
+  if (authState === "unavailable") {
+    return (
+      <div className="grid min-h-[70vh] place-items-center px-4">
+        <div className="w-full max-w-sm rounded-md border border-white/[0.08] bg-night-900/78 p-8 text-center shadow-glow">
+          <CloudOff className="mx-auto h-8 w-8 text-gold-200/75" aria-hidden="true" />
+          <h1 className="mt-3 font-display text-2xl text-ivory">Service indisponible</h1>
+          <p role="alert" className="mt-4 text-sm leading-6 text-ivory/70">{UNAVAILABLE_MESSAGE}</p>
+          <button
+            type="button"
+            onClick={() => void checkSession()}
+            className="mt-6 min-h-11 w-full rounded-sm border border-gold-500 bg-gold-500 px-5 py-3 text-xs font-semibold uppercase text-night-950 transition hover:border-gold-400 hover:bg-gold-400"
+          >
+            Réessayer
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="grid min-h-[70vh] place-items-center px-4">

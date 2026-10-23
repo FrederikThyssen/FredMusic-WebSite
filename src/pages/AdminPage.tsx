@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { CalendarDays, Check, Disc3, Inbox, Mail, MapPin, Music2, Phone, Plus, Power, PowerOff, UserRound, X, Download } from "lucide-react";
+import { CalendarDays, Check, CloudOff, Disc3, Inbox, Mail, MapPin, Music2, Phone, Plus, Power, PowerOff, UserRound, X, Download } from "lucide-react";
 import {
   activateEvent,
   archiveEvent,
@@ -16,6 +16,9 @@ import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
 import { Select } from "../components/ui/Select";
 import { formatDateShort, formatDateTime } from "../utils/formatDate";
+import { withTimeout } from "../utils/withTimeout";
+
+const LOAD_TIMEOUT_MS = 12_000;
 
 const quoteStatusLabels: Record<QuoteRequestStatus, string> = {
   pending: "Nouvelle",
@@ -89,22 +92,36 @@ export function AdminPage() {
   const [musicFilter, setMusicFilter] = useState<MusicFilter>("all");
   const [newEventName, setNewEventName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [qrGenerating, setQrGenerating] = useState(false);
   const [qrError, setQrError] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
   const [actionInFlight, setActionInFlight] = useState<AdminAction | null>(null);
 
   const loadData = useCallback(async () => {
-    const [q, m, e] = await Promise.all([
-      fetchQuoteRequests(),
-      fetchMusicRequests(),
-      fetchAllEvents(),
-    ]);
-    setQuotes((q.data as QuoteRow[]) ?? []);
-    setMusic((m.data as MusicRow[]) ?? []);
-    setEvents((e.data as EventRow[]) ?? []);
-    setLoading(false);
+    setLoadError(null);
+    try {
+      const [q, m, e] = await withTimeout(
+        Promise.all([fetchQuoteRequests(), fetchMusicRequests(), fetchAllEvents()]),
+        LOAD_TIMEOUT_MS,
+      );
+      const queryError = q.error ?? m.error ?? e.error;
+      if (queryError) throw queryError;
+      setQuotes((q.data as QuoteRow[]) ?? []);
+      setMusic((m.data as MusicRow[]) ?? []);
+      setEvents((e.data as EventRow[]) ?? []);
+    } catch (err) {
+      console.error("Admin data loading failed.", err);
+      setLoadError("Impossible de charger les données. La base est peut-être momentanément indisponible.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  async function handleRetryLoad() {
+    setLoading(true);
+    await loadData();
+  }
 
   useEffect(() => { loadData(); }, [loadData]);
 
@@ -208,8 +225,13 @@ export function AdminPage() {
   async function handleSignOut() {
     if (actionInFlight) return;
     setActionInFlight("signout");
-    await supabase.auth.signOut();
-    window.location.reload();
+    try {
+      await withTimeout(supabase.auth.signOut(), 5_000);
+    } catch (err) {
+      console.error("Admin sign-out failed.", err);
+    } finally {
+      window.location.reload();
+    }
   }
 
   async function handleDownloadQR(useEvent: boolean) {
@@ -245,8 +267,27 @@ export function AdminPage() {
 
   if (loading) {
     return (
-      <div className="grid min-h-[60vh] place-items-center bg-night-950">
+      <div className="grid min-h-[60vh] place-items-center bg-night-950" role="status" aria-label="Chargement des données">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold-300/30 border-t-gold-300" />
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="grid min-h-[60vh] place-items-center bg-night-950 px-4">
+        <div className="w-full max-w-md rounded-md border border-red-300/25 bg-red-300/[0.06] p-8 text-center">
+          <CloudOff className="mx-auto h-8 w-8 text-red-200" aria-hidden="true" />
+          <p role="alert" className="mt-4 leading-7 text-red-100">{loadError}</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <Button size="sm" variant="secondary" onClick={handleRetryLoad}>
+              Réessayer
+            </Button>
+            <Button size="sm" variant="ghost" onClick={handleSignOut} disabled={hasActionInFlight}>
+              Déconnexion
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }

@@ -14,12 +14,16 @@ type GoogleReview = {
   originalText?: { text: string };
   authorAttribution: {
     displayName: string;
+    uri?: string;
     photoUri?: string;
   };
   relativePublishTimeDescription: string;
 };
 
 type PlacesResponse = {
+  rating?: number;
+  userRatingCount?: number;
+  googleMapsUri?: string;
   reviews?: GoogleReview[];
 };
 
@@ -29,7 +33,15 @@ export type NormalizedReview = {
   quote: string;
   rating: 1 | 2 | 3 | 4 | 5;
   relativeTime: string;
+  authorUri?: string;
   photoUri?: string;
+};
+
+export type ReviewsPayload = {
+  reviews: NormalizedReview[];
+  rating: number | null;
+  totalCount: number | null;
+  mapsUrl: string | null;
 };
 
 export default async function handler(req: JsonRequest, res: JsonResponse) {
@@ -53,7 +65,7 @@ export default async function handler(req: JsonRequest, res: JsonResponse) {
     response = await fetch(`https://places.googleapis.com/v1/places/${placeId}?languageCode=fr`, {
       headers: {
         "X-Goog-Api-Key": apiKey,
-        "X-Goog-FieldMask": "reviews",
+        "X-Goog-FieldMask": "rating,userRatingCount,googleMapsUri,reviews",
       },
     });
   } catch (error) {
@@ -82,8 +94,16 @@ export default async function handler(req: JsonRequest, res: JsonResponse) {
       quote: (r.text?.text ?? r.originalText?.text ?? "").trim().slice(0, 500),
       rating: Math.min(5, Math.max(1, Math.round(r.rating))) as 1 | 2 | 3 | 4 | 5,
       relativeTime: r.relativePublishTimeDescription,
+      authorUri: r.authorAttribution.uri,
       photoUri: r.authorAttribution.photoUri,
     }));
 
-  res.status(200).json({ reviews });
+  const payload: ReviewsPayload = {
+    reviews,
+    rating: typeof data.rating === "number" ? data.rating : null,
+    totalCount: typeof data.userRatingCount === "number" ? data.userRatingCount : null,
+    mapsUrl: data.googleMapsUri ?? null,
+  };
+
+  res.status(200).json(payload);
 }

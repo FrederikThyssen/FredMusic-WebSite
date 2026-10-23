@@ -9,11 +9,10 @@ import {
   Sparkles,
   UsersRound,
 } from "lucide-react";
-import { TestimonialCard } from "../components/cards/TestimonialCard";
+import { GoogleReviewsSection } from "../components/sections/GoogleReviewsSection";
 import { CTASection } from "../components/sections/CTASection";
 import { HeroMedia } from "../components/sections/HeroMedia";
 import { ButtonLink } from "../components/ui/Button";
-import { testimonials } from "../data/testimonials";
 
 const weddingMoments = [
   { title: "Cérémonie", detail: "Sonorisation élégante et discrète.", icon: HeartHandshake },
@@ -49,8 +48,6 @@ const gallery = [
 ];
 
 export function WeddingPage() {
-  const weddingTestimonials = testimonials.filter((testimonial) => testimonial.eventType === "Mariage");
-
   return (
     <div className="bg-warm-100 text-night-950">
       <section className="relative overflow-hidden border-b border-warm-300/80">
@@ -204,17 +201,12 @@ export function WeddingPage() {
         </div>
       </section>
 
-      {weddingTestimonials.length > 0 ? (
-        <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="text-xs font-semibold uppercase text-gold-700">Témoignages</p>
-            <h2 className="mt-4 font-wedding text-4xl text-night-950">Ils nous ont confié leur mariage</h2>
-            <div className="mt-8">
-              <TestimonialCard testimonial={weddingTestimonials[0]} theme="wedding" />
-            </div>
-          </div>
-        </section>
-      ) : null}
+      <GoogleReviewsSection
+        theme="wedding"
+        eyebrow="Témoignages"
+        title="Ce que disent les mariés et leurs invités"
+        prioritizeKeyword="mariage"
+      />
 
       <CTASection
         theme="wedding"
