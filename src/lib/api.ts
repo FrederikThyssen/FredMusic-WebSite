@@ -34,6 +34,15 @@ export async function updateQuoteStatus(id: string, status: QuoteRequestStatus) 
   return supabase.from("quote_requests").update({ status }).eq("id", id);
 }
 
+/**
+ * Supprime un ou plusieurs devis. Renvoie les identifiants réellement supprimés :
+ * si les règles de sécurité refusent une ligne, Supabase ne renvoie pas d'erreur
+ * mais l'identifiant manque dans la réponse.
+ */
+export async function deleteQuoteRequests(ids: string[]) {
+  return supabase.from("quote_requests").delete().in("id", ids).select("id");
+}
+
 // ── Music Requests ───────────────────────────────────────────
 
 export type NewMusicRequest = {

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { CalendarDays, Check, CloudOff, Disc3, Inbox, Mail, MapPin, Music2, Phone, Plus, Power, PowerOff, UserRound, X, Download } from "lucide-react";
+import { CalendarDays, Check, CloudOff, Disc3, Inbox, Mail, MapPin, Music2, Phone, Plus, Power, PowerOff, Trash2, UserRound, X, Download } from "lucide-react";
 import {
   activateEvent,
   archiveEvent,
   createEvent,
+  deleteQuoteRequests,
   fetchAllEvents,
   fetchMusicRequests,
   fetchQuoteRequests,
@@ -75,6 +76,8 @@ type EventRow = {
 
 type AdminAction =
   | `quote:${string}:${QuoteRequestStatus}`
+  | `quote:delete:${string}`
+  | "quote:delete-selected"
   | `music:${string}:${MusicRequestStatus}`
   | `event:activate:${string}`
   | `event:archive:${string}`
@@ -89,6 +92,7 @@ export function AdminPage() {
   const [music, setMusic] = useState<MusicRow[]>([]);
   const [events, setEvents] = useState<EventRow[]>([]);
   const [quoteFilter, setQuoteFilter] = useState<QuoteFilter>("all");
+  const [selectedQuoteIds, setSelectedQuoteIds] = useState<Set<string>>(() => new Set());
   const [musicFilter, setMusicFilter] = useState<MusicFilter>("all");
   const [newEventName, setNewEventName] = useState("");
   const [loading, setLoading] = useState(true);
@@ -140,6 +144,60 @@ export function AdminPage() {
     } finally {
       setActionInFlight(null);
     }
+  }
+
+  async function deleteQuotes(ids: string[], action: AdminAction, confirmMessage: string) {
+    if (actionInFlight || ids.length === 0) return;
+    if (!window.confirm(confirmMessage)) return;
+
+    setActionInFlight(action);
+    setActionError(null);
+    try {
+      const { data, error } = await deleteQuoteRequests(ids);
+      if (error) {
+        setActionError("Impossible de supprimer ce devis.");
+        return;
+      }
+      const deletedIds = new Set((data ?? []).map((row) => row.id));
+      setQuotes((prev) => prev.filter((q) => !deletedIds.has(q.id)));
+      setSelectedQuoteIds((prev) => new Set([...prev].filter((id) => !deletedIds.has(id))));
+      if (deletedIds.size < ids.length) {
+        setActionError(
+          `${ids.length - deletedIds.size} devis n'ont pas pu être supprimés. Vérifiez que votre compte a les droits administrateur.`,
+        );
+      }
+    } catch (err) {
+      console.error("Quote deletion failed.", err);
+      setActionError("Impossible de supprimer ce devis.");
+    } finally {
+      setActionInFlight(null);
+    }
+  }
+
+  function handleDeleteQuote(request: QuoteRow) {
+    void deleteQuotes(
+      [request.id],
+      `quote:delete:${request.id}`,
+      `Supprimer définitivement le devis de "${request.name}" ? Cette action est irréversible.`,
+    );
+  }
+
+  function handleDeleteSelectedQuotes() {
+    const ids = quotes.filter((q) => selectedQuoteIds.has(q.id)).map((q) => q.id);
+    void deleteQuotes(
+      ids,
+      "quote:delete-selected",
+      `Supprimer définitivement ${ids.length} devis ? Cette action est irréversible.`,
+    );
+  }
+
+  function toggleQuoteSelection(id: string) {
+    setSelectedQuoteIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   }
 
   async function handleMusicStatus(id: string, status: MusicRequestStatus) {
@@ -263,6 +321,12 @@ export function AdminPage() {
   const activeEvent = events.find((e) => e.is_active);
   const hasActionInFlight = actionInFlight !== null;
   const filteredQuotes = quoteFilter === "all" ? quotes : quotes.filter((q) => q.status === quoteFilter);
+  const selectedVisibleCount = filteredQuotes.filter((q) => selectedQuoteIds.has(q.id)).length;
+  const allVisibleSelected = filteredQuotes.length > 0 && selectedVisibleCount === filteredQuotes.length;
+
+  function toggleSelectAllVisible() {
+    setSelectedQuoteIds(allVisibleSelected ? new Set() : new Set(filteredQuotes.map((q) => q.id)));
+  }
   const filteredMusic = musicFilter === "all" ? music : music.filter((m) => m.status === musicFilter);
 
   if (loading) {
@@ -448,13 +512,43 @@ export function AdminPage() {
                   label="Filtrer les devis"
                   value={quoteFilter}
                   options={quoteFilterOptions}
-                  onChange={(event) => setQuoteFilter(event.target.value as QuoteFilter)}
+                  onChange={(event) => {
+                    setQuoteFilter(event.target.value as QuoteFilter);
+                    setSelectedQuoteIds(new Set());
+                  }}
                   className="text-sm"
                 />
               </div>
             </div>
 
-            <div className="mt-6 grid gap-4">
+            {filteredQuotes.length > 0 ? (
+              <div className="mt-6 flex flex-col gap-3 rounded-md border border-white/[0.07] bg-night-950/60 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                <label className="flex cursor-pointer items-center gap-3 text-sm text-ivory/72">
+                  <input
+                    type="checkbox"
+                    checked={allVisibleSelected}
+                    onChange={toggleSelectAllVisible}
+                    disabled={hasActionInFlight}
+                    className="h-4 w-4 accent-gold-400"
+                  />
+                  Tout sélectionner ({filteredQuotes.length})
+                </label>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  icon={<Trash2 className="h-4 w-4" />}
+                  onClick={handleDeleteSelectedQuotes}
+                  disabled={hasActionInFlight || selectedVisibleCount === 0}
+                  className="text-red-200 hover:text-red-100"
+                >
+                  {actionInFlight === "quote:delete-selected"
+                    ? "Suppression…"
+                    : `Supprimer la sélection (${selectedVisibleCount})`}
+                </Button>
+              </div>
+            ) : null}
+
+            <div className="mt-4 grid gap-4">
               {quotes.length === 0 ? (
                 <p className="text-sm text-ivory/42">Aucune demande pour l'instant.</p>
               ) : filteredQuotes.length === 0 ? (
@@ -464,6 +558,14 @@ export function AdminPage() {
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={selectedQuoteIds.has(request.id)}
+                          onChange={() => toggleQuoteSelection(request.id)}
+                          disabled={hasActionInFlight}
+                          aria-label={`Sélectionner le devis de ${request.name}`}
+                          className="h-4 w-4 accent-gold-400"
+                        />
                         <h3 className="min-w-0 break-words font-display text-2xl text-ivory">{request.name}</h3>
                         <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses[request.status]}`}>
                           {quoteStatusLabels[request.status]}
@@ -516,6 +618,16 @@ export function AdminPage() {
                       disabled={hasActionInFlight || request.status === "refused"}
                     >
                       {actionInFlight === `quote:${request.id}:refused` ? "Mise à jour…" : "Refuser"}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      icon={<Trash2 className="h-4 w-4" />}
+                      onClick={() => handleDeleteQuote(request)}
+                      disabled={hasActionInFlight}
+                      className="text-red-200 hover:text-red-100 sm:ml-auto"
+                    >
+                      {actionInFlight === `quote:delete:${request.id}` ? "Suppression…" : "Supprimer"}
                     </Button>
                   </div>
                 </article>

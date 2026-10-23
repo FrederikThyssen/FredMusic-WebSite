@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AdminPage } from "./AdminPage";
@@ -7,6 +7,7 @@ const api = vi.hoisted(() => ({
   activateEvent: vi.fn(),
   archiveEvent: vi.fn(),
   createEvent: vi.fn(),
+  deleteQuoteRequests: vi.fn(),
   fetchAllEvents: vi.fn(),
   fetchMusicRequests: vi.fn(),
   fetchQuoteRequests: vi.fn(),
@@ -189,5 +190,85 @@ describe("AdminPage", () => {
 
     expect(await screen.findByText("Mariage Claire & Thomas")).toBeInTheDocument();
     expect(screen.queryByText(/impossible de charger les données/i)).not.toBeInTheDocument();
+  });
+
+  describe("quote deletion", () => {
+    beforeEach(() => {
+      setupAdminDataWithRequests();
+    });
+
+    it("deletes a single quote after confirmation", async () => {
+      vi.spyOn(window, "confirm").mockReturnValue(true);
+      api.deleteQuoteRequests.mockResolvedValue({ data: [{ id: "quote-pending" }], error: null });
+
+      render(<AdminPage />);
+      await screen.findByText("Alice Martin");
+
+      const aliceCard = screen.getByText("Alice Martin").closest("article")!;
+      await userEvent.click(within(aliceCard).getByRole("button", { name: /^supprimer$/i }));
+
+      expect(api.deleteQuoteRequests).toHaveBeenCalledWith(["quote-pending"]);
+      await waitFor(() => expect(screen.queryByText("Alice Martin")).not.toBeInTheDocument());
+      expect(screen.getByText("Bob Durant")).toBeInTheDocument();
+    });
+
+    it("does nothing when the confirmation is cancelled", async () => {
+      vi.spyOn(window, "confirm").mockReturnValue(false);
+
+      render(<AdminPage />);
+      const aliceCard = (await screen.findByText("Alice Martin")).closest("article")!;
+      await userEvent.click(within(aliceCard).getByRole("button", { name: /^supprimer$/i }));
+
+      expect(api.deleteQuoteRequests).not.toHaveBeenCalled();
+      expect(screen.getByText("Alice Martin")).toBeInTheDocument();
+    });
+
+    it("deletes all selected quotes at once", async () => {
+      const confirm = vi.spyOn(window, "confirm").mockReturnValue(true);
+      api.deleteQuoteRequests.mockResolvedValue({
+        data: [{ id: "quote-pending" }, { id: "quote-accepted" }],
+        error: null,
+      });
+
+      render(<AdminPage />);
+      await screen.findByText("Alice Martin");
+
+      const bulkButton = screen.getByRole("button", { name: /supprimer la sélection \(0\)/i });
+      expect(bulkButton).toBeDisabled();
+
+      await userEvent.click(screen.getByLabelText(/tout sélectionner/i));
+      await userEvent.click(screen.getByRole("button", { name: /supprimer la sélection \(2\)/i }));
+
+      expect(confirm).toHaveBeenCalledWith(expect.stringContaining("2 devis"));
+      expect(api.deleteQuoteRequests).toHaveBeenCalledWith(["quote-pending", "quote-accepted"]);
+      expect(await screen.findByText(/aucune demande pour l'instant/i)).toBeInTheDocument();
+    });
+
+    it("only deletes visible selected quotes after a filter change", async () => {
+      vi.spyOn(window, "confirm").mockReturnValue(true);
+      api.deleteQuoteRequests.mockResolvedValue({ data: [{ id: "quote-accepted" }], error: null });
+
+      render(<AdminPage />);
+      await screen.findByText("Alice Martin");
+
+      await userEvent.click(screen.getByLabelText(/sélectionner le devis de alice martin/i));
+      await userEvent.selectOptions(screen.getByLabelText(/filtrer les devis/i), "accepted");
+      await userEvent.click(screen.getByLabelText(/sélectionner le devis de bob durant/i));
+      await userEvent.click(screen.getByRole("button", { name: /supprimer la sélection \(1\)/i }));
+
+      expect(api.deleteQuoteRequests).toHaveBeenCalledWith(["quote-accepted"]);
+    });
+
+    it("warns when the database refuses to delete some quotes", async () => {
+      vi.spyOn(window, "confirm").mockReturnValue(true);
+      api.deleteQuoteRequests.mockResolvedValue({ data: [], error: null });
+
+      render(<AdminPage />);
+      const aliceCard = (await screen.findByText("Alice Martin")).closest("article")!;
+      await userEvent.click(within(aliceCard).getByRole("button", { name: /^supprimer$/i }));
+
+      expect(await screen.findByRole("alert")).toHaveTextContent(/n'ont pas pu être supprimés/i);
+      expect(screen.getByText("Alice Martin")).toBeInTheDocument();
+    });
   });
 });
