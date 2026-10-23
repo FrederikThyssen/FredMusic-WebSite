@@ -45,7 +45,8 @@ export type ReviewsPayload = {
 };
 
 export default async function handler(req: JsonRequest, res: JsonResponse) {
-  res.setHeader("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=3600");
+  // Les erreurs ne doivent jamais être mises en cache : seul le succès l'est (voir plus bas).
+  res.setHeader("Cache-Control", "no-store");
 
   if (req.method !== "GET") {
     res.status(405).json({ error: "Method not allowed" });
@@ -105,5 +106,6 @@ export default async function handler(req: JsonRequest, res: JsonResponse) {
     mapsUrl: data.googleMapsUri ?? null,
   };
 
+  res.setHeader("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=3600");
   res.status(200).json(payload);
 }
