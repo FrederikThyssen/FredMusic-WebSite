@@ -1,0 +1,61 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.fredmusic.fr"
+        }
+      ],
+      "destination": "https://fredmusic.fr/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/book-online",
+      "destination": "/location",
+      "permanent": true
+    },
+    {
+      "source": "/presentation-du-materiel",
+      "destination": "/location",
+      "permanent": true
+    },
+    {
+      "source": "/s-projects-side-by-side",
+      "destination": "/evenements-prives",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/((?!api/|.*\\.).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/keep-alive",
+      "schedule": "0 6 * * *"
+    }
+  ]
+}
